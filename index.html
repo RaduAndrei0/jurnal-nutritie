@@ -325,46 +325,139 @@ input:focus,select:focus{outline:none;border-color:var(--pink)}
 // Poti inlocui acest URL cu scriptul tau valid cand il ai gata.
 const API = 'https://script.google.com/macros/s/AKfycbzdKTvouX3f3bqV99jlHnV5iDxigEg6a3L08EQF_zjBqlo6nWiZ5KCkxsv2rAhaYyhZIQ/exec';
 
-// BAZĂ DE DATE COMPLETĂ CU TAG-URI PENTRU MESE
+// BAZĂ DE DATE MEGA-EXTINSĂ (Zeci de variante pentru diversitate maximă)
 const DB = {
   proteins: [
+    // --- OUĂ ȘI LACTATE ---
     { name: "Ouă (fierte/poșate/omletă)", kcal100: 155, prot100: 13, carb100: 1.1, fat100: 11, meals: ['Mic dejun', 'Cină'] },
-    { name: "Cottage Cheese (Perle)", kcal100: 98, prot100: 11, carb100: 3.4, fat100: 4.3, meals: ['Mic dejun', 'Cină', 'Gustare'] },
-    { name: "Telemea de vacă", kcal100: 270, prot100: 18, carb100: 1, fat100: 21, meals: ['Mic dejun', 'Gustare'] },
+    { name: "Ouă de prepeliță", kcal100: 158, prot100: 13, carb100: 0.4, fat100: 11, meals: ['Mic dejun', 'Gustare', 'Cină'] },
+    { name: "Albuș de ou", kcal100: 52, prot100: 11, carb100: 0.7, fat100: 0.2, meals: ['Mic dejun', 'Cină'] },
+    { name: "Cottage Cheese (Perle de brânză)", kcal100: 98, prot100: 11, carb100: 3.4, fat100: 4.3, meals: ['Mic dejun', 'Cină', 'Gustare'] },
+    { name: "Telemea de vacă (maturată)", kcal100: 270, prot100: 18, carb100: 1, fat100: 21, meals: ['Mic dejun', 'Gustare'] },
+    { name: "Telemea de oaie / capră", kcal100: 280, prot100: 16, carb100: 1, fat100: 23, meals: ['Mic dejun'] },
+    { name: "Halloumi la grătar", kcal100: 320, prot100: 22, carb100: 2, fat100: 25, meals: ['Mic dejun', 'Prânz'] },
+    { name: "Mozzarella light", kcal100: 165, prot100: 20, carb100: 1.5, fat100: 9, meals: ['Mic dejun', 'Cină'] },
+    { name: "Ricotta / Urdă dulce", kcal100: 135, prot100: 11, carb100: 4, fat100: 8, meals: ['Mic dejun', 'Gustare', 'Cină'] },
     { name: "Iaurt grecesc 2%", kcal100: 60, prot100: 10, carb100: 3, fat100: 2, meals: ['Mic dejun', 'Gustare'] },
-    
+    { name: "Kefir / Sana", kcal100: 50, prot100: 3.3, carb100: 4, fat100: 2, meals: ['Mic dejun', 'Gustare'] },
+
+    // --- PĂSĂRI ---
     { name: "Piept de pui la grătar", kcal100: 165, prot100: 31, carb100: 0, fat100: 3.6, meals: ['Prânz', 'Cină'] },
-    { name: "Pulpe de pui dezosate la cuptor", kcal100: 180, prot100: 24, carb100: 0, fat100: 9, meals: ['Prânz', 'Cină'] },
+    { name: "Pulpe de pui dezosate (cuptor)", kcal100: 180, prot100: 24, carb100: 0, fat100: 9, meals: ['Prânz', 'Cină'] },
+    { name: "Ficat de pui la tigaie", kcal100: 172, prot100: 25, carb100: 0, fat100: 6.4, meals: ['Prânz', 'Cină'] },
+    { name: "Pipote și inimi de pui", kcal100: 153, prot100: 27, carb100: 0, fat100: 4, meals: ['Prânz', 'Cină'] },
+    { name: "Piept de curcan la grătar", kcal100: 147, prot100: 30, carb100: 0, fat100: 2, meals: ['Prânz', 'Cină'] },
+    { name: "Pastramă de curcan (mezel curat)", kcal100: 110, prot100: 22, carb100: 1, fat100: 2, meals: ['Mic dejun', 'Gustare'] },
+
+    // --- VITĂ, PORC & MIEL ---
     { name: "Mușchi de vită la grătar", kcal100: 250, prot100: 26, carb100: 0, fat100: 15, meals: ['Prânz', 'Cină'] },
-    { name: "Ficat de pui la grătar", kcal100: 172, prot100: 25, carb100: 0, fat100: 6.4, meals: ['Prânz', 'Cină'] },
-    
+    { name: "Antricot de vită", kcal100: 290, prot100: 24, carb100: 0, fat100: 21, meals: ['Prânz'] },
+    { name: "Carne tocată de vită (slabă)", kcal100: 212, prot100: 26, carb100: 0, fat100: 11, meals: ['Prânz', 'Cină'] },
+    { name: "Cotlet de porc (fără os)", kcal100: 180, prot100: 28, carb100: 0, fat100: 7, meals: ['Prânz', 'Cină'] },
+    { name: "Mușchiuleț de porc la cuptor", kcal100: 143, prot100: 26, carb100: 0, fat100: 3.5, meals: ['Prânz', 'Cină'] },
+    { name: "Cotlet de miel la grătar", kcal100: 250, prot100: 25, carb100: 0, fat100: 16, meals: ['Prânz'] },
+
+    // --- PEȘTE ȘI FRUCTE DE MARE ---
     { name: "Somon la cuptor", kcal100: 208, prot100: 20, carb100: 0, fat100: 13, meals: ['Prânz', 'Cină'] },
-    { name: "Cod / Pește alb", kcal100: 82, prot100: 18, carb100: 0, fat100: 0.7, meals: ['Prânz', 'Cină'] },
-    { name: "Ton în suc propriu (conservă)", kcal100: 110, prot100: 25, carb100: 0, fat100: 1, meals: ['Prânz', 'Cină'] },
-    
-    { name: "Tofu", kcal100: 76, prot100: 8, carb100: 1.9, fat100: 4.8, meals: ['Mic dejun', 'Prânz', 'Cină'] }
+    { name: "Păstrăv la grătar", kcal100: 148, prot100: 21, carb100: 0, fat100: 6.6, meals: ['Prânz', 'Cină'] },
+    { name: "Doradă la cuptor", kcal100: 115, prot100: 20, carb100: 0, fat100: 3, meals: ['Prânz', 'Cină'] },
+    { name: "Cod / Șalău / Merluciu", kcal100: 82, prot100: 18, carb100: 0, fat100: 0.7, meals: ['Prânz', 'Cină'] },
+    { name: "Macrou la cuptor", kcal100: 262, prot100: 19, carb100: 0, fat100: 20, meals: ['Prânz', 'Cină'] },
+    { name: "Sardine din conservă (în apă)", kcal100: 160, prot100: 20, carb100: 0, fat100: 8, meals: ['Prânz', 'Cină', 'Gustare'] },
+    { name: "Ton în suc propriu", kcal100: 110, prot100: 25, carb100: 0, fat100: 1, meals: ['Prânz', 'Cină', 'Gustare'] },
+    { name: "Creveți trași la tigaie", kcal100: 99, prot100: 24, carb100: 0.2, fat100: 0.3, meals: ['Prânz', 'Cină'] },
+    { name: "Calamar la grătar", kcal100: 90, prot100: 16, carb100: 3, fat100: 1.5, meals: ['Prânz', 'Cină'] },
+    { name: "Midii în sos de roșii", kcal100: 86, prot100: 14, carb100: 4, fat100: 2, meals: ['Prânz', 'Cină'] },
+
+    // --- PROTEINE VEGETALE ---
+    { name: "Tofu simplu / afumat", kcal100: 76, prot100: 8, carb100: 1.9, fat100: 4.8, meals: ['Mic dejun', 'Prânz', 'Cină'] },
+    { name: "Edamame fierte", kcal100: 121, prot100: 11.9, carb100: 8.9, fat100: 5.2, meals: ['Prânz', 'Cină', 'Gustare'] }
   ],
+  
   carbs: [
+    // --- CEREALE & PÂINE ---
     { name: "Pâine integrală (cu maia)", kcal100: 247, prot100: 13, carb100: 41, fat100: 3.4, meals: ['Mic dejun', 'Prânz'] },
+    { name: "Pâine de secară", kcal100: 259, prot100: 9, carb100: 48, fat100: 3.3, meals: ['Mic dejun', 'Prânz'] },
+    { name: "Lipie integrală / Tortilla", kcal100: 280, prot100: 9, carb100: 46, fat100: 6, meals: ['Mic dejun', 'Prânz'] },
+    { name: "Wasa / Crispbread integral", kcal100: 334, prot100: 10, carb100: 60, fat100: 1.5, meals: ['Mic dejun', 'Gustare'] },
     { name: "Fulgi de ovăz integral", kcal100: 389, prot100: 16.9, carb100: 66, fat100: 6.9, meals: ['Mic dejun', 'Gustare'] },
     
-    { name: "Orez fiert (Alb/Brun)", kcal100: 130, prot100: 2.7, carb100: 28, fat100: 0.3, meals: ['Prânz', 'Cină'] },
-    { name: "Cartof copt/fiert", kcal100: 86, prot100: 1.6, carb100: 20, fat100: 0.1, meals: ['Prânz', 'Cină'] },
-    { name: "Cartof dulce copt", kcal100: 90, prot100: 2, carb100: 21, fat100: 0.2, meals: ['Prânz', 'Cină'] },
-    { name: "Mămăligă (fiartă)", kcal100: 70, prot100: 2, carb100: 15, fat100: 0.2, meals: ['Prânz', 'Cină'] },
+    // --- GARNITURI CLASICE ---
+    { name: "Orez alb fiert", kcal100: 130, prot100: 2.7, carb100: 28, fat100: 0.3, meals: ['Prânz', 'Cină'] },
+    { name: "Orez brun / negru fiert", kcal100: 112, prot100: 2.6, carb100: 23, fat100: 0.9, meals: ['Prânz', 'Cină'] },
+    { name: "Orez Basmati fiert", kcal100: 121, prot100: 3.5, carb100: 25, fat100: 0.4, meals: ['Prânz', 'Cină'] },
     { name: "Paste integrale fierte", kcal100: 124, prot100: 5.3, carb100: 26, fat100: 0.5, meals: ['Prânz', 'Cină'] },
+    { name: "Mămăligă (fiartă)", kcal100: 70, prot100: 2, carb100: 15, fat100: 0.2, meals: ['Prânz', 'Cină'] },
+    { name: "Cartof copt / fiert", kcal100: 86, prot100: 1.6, carb100: 20, fat100: 0.1, meals: ['Prânz', 'Cină'] },
+    { name: "Cartof dulce copt", kcal100: 90, prot100: 2, carb100: 21, fat100: 0.2, meals: ['Prânz', 'Cină'] },
+
+    // --- PSEUDOCEREALE & LEGUMINOASE ---
     { name: "Quinoa fiartă", kcal100: 120, prot100: 4.4, carb100: 21, fat100: 1.9, meals: ['Prânz', 'Cină'] },
-    { name: "Linte / Năut fiert", kcal100: 116, prot100: 9, carb100: 20, fat100: 0.4, meals: ['Prânz', 'Cină'] }
+    { name: "Hrișcă fiartă", kcal100: 92, prot100: 3.4, carb100: 20, fat100: 0.6, meals: ['Prânz', 'Cină'] },
+    { name: "Bulgur fiert", kcal100: 83, prot100: 3.1, carb100: 18, fat100: 0.2, meals: ['Prânz', 'Cină'] },
+    { name: "Cușcuș fiert", kcal100: 112, prot100: 3.8, carb100: 23, fat100: 0.2, meals: ['Prânz'] },
+    { name: "Mazăre verde fiartă", kcal100: 81, prot100: 5.4, carb100: 14, fat100: 0.4, meals: ['Prânz', 'Cină'] },
+    { name: "Linte (Verde/Roșie) fiartă", kcal100: 116, prot100: 9, carb100: 20, fat100: 0.4, meals: ['Prânz', 'Cină'] },
+    { name: "Năut fiert", kcal100: 164, prot100: 8.9, carb100: 27, fat100: 2.6, meals: ['Prânz', 'Cină', 'Gustare'] },
+    { name: "Fasole boabe fiartă", kcal100: 127, prot100: 8.7, carb100: 22.8, fat100: 0.5, meals: ['Prânz', 'Cină'] },
+
+    // --- LEGUME (Aport mare de fibre) ---
+    { name: "Broccoli la abur", kcal100: 34, prot100: 2.8, carb100: 7, fat100: 0.4, meals: ['Prânz', 'Cină'] },
+    { name: "Conopidă coaptă/abur", kcal100: 25, prot100: 1.9, carb100: 5, fat100: 0.3, meals: ['Prânz', 'Cină'] },
+    { name: "Fasole verde păstăi (sote)", kcal100: 31, prot100: 1.8, carb100: 7, fat100: 0.2, meals: ['Prânz', 'Cină'] },
+    { name: "Dovlecel / Zucchini la grătar", kcal100: 17, prot100: 1.2, carb100: 3.1, fat100: 0.3, meals: ['Prânz', 'Cină'] },
+    { name: "Vinete coapte / grătar", kcal100: 35, prot100: 0.8, carb100: 8, fat100: 0.2, meals: ['Prânz', 'Cină'] },
+    { name: "Ciuperci Champignon la tigaie", kcal100: 22, prot100: 3.1, carb100: 3.3, fat100: 0.3, meals: ['Mic dejun', 'Prânz', 'Cină'] },
+    { name: "Sparanghel sote", kcal100: 20, prot100: 2.2, carb100: 3.9, fat100: 0.1, meals: ['Mic dejun', 'Prânz', 'Cină'] },
+    { name: "Morcov crud / fiert", kcal100: 41, prot100: 0.9, carb100: 10, fat100: 0.2, meals: ['Prânz', 'Gustare', 'Cină'] },
+    { name: "Sfeclă roșie coaptă", kcal100: 43, prot100: 1.6, carb100: 10, fat100: 0.2, meals: ['Prânz', 'Cină'] },
+    { name: "Ardei gras / Capia", kcal100: 20, prot100: 0.9, carb100: 4.6, fat100: 0.2, meals: ['Mic dejun', 'Prânz', 'Cină', 'Gustare'] },
+    { name: "Roșii proaspete", kcal100: 18, prot100: 0.9, carb100: 3.9, fat100: 0.2, meals: ['Mic dejun', 'Prânz', 'Cină'] },
+    { name: "Roșii cherry", kcal100: 18, prot100: 0.9, carb100: 3.9, fat100: 0.2, meals: ['Mic dejun', 'Prânz', 'Cină', 'Gustare'] },
+    { name: "Castraveți", kcal100: 15, prot100: 0.7, carb100: 3.6, fat100: 0.1, meals: ['Mic dejun', 'Prânz', 'Cină', 'Gustare'] },
+    { name: "Varză albă / roșie (salată)", kcal100: 25, prot100: 1.3, carb100: 5.8, fat100: 0.1, meals: ['Prânz', 'Cină'] },
+    { name: "Varză de Bruxelles coaptă", kcal100: 43, prot100: 3.4, carb100: 9, fat100: 0.3, meals: ['Prânz', 'Cină'] },
+    { name: "Spanac (baby spanac)", kcal100: 23, prot100: 2.9, carb100: 3.6, fat100: 0.4, meals: ['Mic dejun', 'Prânz', 'Cină'] },
+    { name: "Mix Salată verde / Rucola", kcal100: 20, prot100: 1.5, carb100: 3, fat100: 0.2, meals: ['Mic dejun', 'Prânz', 'Cină'] },
+    { name: "Țelină Apio (tije)", kcal100: 14, prot100: 0.7, carb100: 3, fat100: 0.2, meals: ['Prânz', 'Gustare'] },
+
+    // --- FRUCTE ---
+    { name: "Fructe de pădure (Afine/Zmeură)", kcal100: 50, prot100: 1, carb100: 12, fat100: 0.5, meals: ['Mic dejun', 'Gustare'] },
+    { name: "Căpșuni proaspete", kcal100: 32, prot100: 0.7, carb100: 7.7, fat100: 0.3, meals: ['Mic dejun', 'Gustare'] },
+    { name: "Măr (verde/roșu)", kcal100: 52, prot100: 0.3, carb100: 14, fat100: 0.2, meals: ['Mic dejun', 'Gustare'] },
+    { name: "Banană", kcal100: 89, prot100: 1.1, carb100: 23, fat100: 0.3, meals: ['Mic dejun', 'Gustare'] },
+    { name: "Grapefruit / Portocală", kcal100: 42, prot100: 0.8, carb100: 11, fat100: 0.1, meals: ['Mic dejun', 'Gustare'] },
+    { name: "Kiwi", kcal100: 61, prot100: 1.1, carb100: 15, fat100: 0.5, meals: ['Mic dejun', 'Gustare'] }
   ],
+
   fats: [
-    { name: "Unt 82%", kcal100: 717, prot100: 0.8, carb100: 0.1, fat100: 81, meals: ['Mic dejun'] },
+    // --- ULEIURI & UNT ---
+    { name: "Ulei de măsline extravirgin", kcal100: 884, prot100: 0, carb100: 0, fat100: 100, meals: ['Prânz', 'Cină'] },
+    { name: "Ulei de cocos", kcal100: 862, prot100: 0, carb100: 0, fat100: 100, meals: ['Mic dejun', 'Prânz'] },
+    { name: "Unt 82% grăsime", kcal100: 717, prot100: 0.8, carb100: 0.1, fat100: 81, meals: ['Mic dejun', 'Prânz', 'Cină'] },
+    { name: "Ghee (Unt clarificat)", kcal100: 900, prot100: 0, carb100: 0, fat100: 100, meals: ['Mic dejun', 'Prânz', 'Cină'] },
     
-    { name: "Ulei de măsline", kcal100: 884, prot100: 0, carb100: 0, fat100: 100, meals: ['Prânz', 'Cină'] },
-    { name: "Măsline", kcal100: 115, prot100: 0.8, carb100: 6, fat100: 11, meals: ['Mic dejun', 'Prânz', 'Cină'] },
-    { name: "Avocado", kcal100: 160, prot100: 2, carb100: 8.5, fat100: 14.7, meals: ['Mic dejun', 'Prânz', 'Cină'] },
-    
-    { name: "Nuci / Migdale", kcal100: 600, prot100: 15, carb100: 14, fat100: 55, meals: ['Mic dejun', 'Gustare'] },
-    { name: "Semințe de dovleac", kcal100: 559, prot100: 30, carb100: 10, fat100: 49, meals: ['Mic dejun', 'Prânz', 'Cină'] }
+    // --- NUCI & SEMINȚE ---
+    { name: "Miez de nucă", kcal100: 654, prot100: 15, carb100: 14, fat100: 65, meals: ['Mic dejun', 'Gustare'] },
+    { name: "Migdale crude", kcal100: 579, prot100: 21, carb100: 22, fat100: 50, meals: ['Mic dejun', 'Gustare'] },
+    { name: "Caju crud", kcal100: 553, prot100: 18, carb100: 30, fat100: 44, meals: ['Mic dejun', 'Gustare'] },
+    { name: "Fistic (fără sare)", kcal100: 560, prot100: 20, carb100: 28, fat100: 45, meals: ['Mic dejun', 'Gustare'] },
+    { name: "Nuci Macadamia", kcal100: 718, prot100: 8, carb100: 14, fat100: 76, meals: ['Gustare'] },
+    { name: "Semințe de dovleac crude", kcal100: 559, prot100: 30, carb100: 10, fat100: 49, meals: ['Mic dejun', 'Prânz', 'Cină', 'Gustare'] },
+    { name: "Semințe de floarea soarelui", kcal100: 584, prot100: 21, carb100: 20, fat100: 51, meals: ['Mic dejun', 'Gustare'] },
+    { name: "Semințe de in (măcinate)", kcal100: 534, prot100: 18, carb100: 29, fat100: 42, meals: ['Mic dejun'] },
+    { name: "Unt de arahide (100% natural)", kcal100: 588, prot100: 25, carb100: 20, fat100: 50, meals: ['Mic dejun', 'Gustare'] },
+    { name: "Unt de migdale", kcal100: 614, prot100: 21, carb100: 19, fat100: 56, meals: ['Mic dejun', 'Gustare'] },
+
+    // --- ALTELE ---
+    { name: "Avocado proaspăt", kcal100: 160, prot100: 2, carb100: 8.5, fat100: 14.7, meals: ['Mic dejun', 'Prânz', 'Cină'] },
+    { name: "Guacamole (preparat)", kcal100: 150, prot100: 2, carb100: 8, fat100: 13, meals: ['Mic dejun', 'Prânz', 'Cină'] },
+    { name: "Măsline Kalamata", kcal100: 239, prot100: 2, carb100: 1, fat100: 25, meals: ['Mic dejun', 'Prânz', 'Cină'] },
+    { name: "Măsline verzi / negre", kcal100: 115, prot100: 0.8, carb100: 6, fat100: 11, meals: ['Mic dejun', 'Prânz', 'Cină', 'Gustare'] },
+    { name: "Smântână fermentată 20%", kcal100: 206, prot100: 2.8, carb100: 3, fat100: 20, meals: ['Prânz', 'Cină'] },
+    { name: "Mascarpone", kcal100: 355, prot100: 5.8, carb100: 3, fat100: 36, meals: ['Mic dejun', 'Gustare'] },
+    { name: "Cremă de brânză (Philadelphia)", kcal100: 235, prot100: 5.4, carb100: 4, fat100: 22, meals: ['Mic dejun', 'Gustare'] },
+    { name: "Ciocolată neagră >80%", kcal100: 598, prot100: 8, carb100: 34, fat100: 43, meals: ['Gustare'] }
   ]
 };
 
