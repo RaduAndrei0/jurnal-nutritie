@@ -222,11 +222,78 @@ input:focus,select:focus{outline:none;border-color:var(--pink)}
 
 <script>
 const API='https://script.google.com/macros/s/AKfycbzdKTvouX3f3bqV99jlHnV5iDxigEg6a3L08EQF_zjBqlo6nWiZ5KCkxsv2rAhaYyhZIQ/exec';
-const DB={
-  proteins:[{name:"Piept de pui",kcal100:165,prot100:31,carb100:0,fat100:3.6},{name:"Vită",kcal100:250,prot100:26,carb100:0,fat100:15},{name:"Somon",kcal100:208,prot100:20,carb100:0,fat100:13},{name:"Cod/Pește slab",kcal100:82,prot100:18,carb100:0,fat100:0.7},{name:"Ficat de pui",kcal100:172,prot100:25,carb100:0,fat100:6.4},{name:"Ouă",kcal100:155,prot100:13,carb100:1.1,fat100:11},{name:"Cottage Cheese",kcal100:98,prot100:11,carb100:3.4,fat100:4.3}],
-  carbs:[{name:"Orez fiert",kcal100:130,prot100:2.7,carb100:28,fat100:0.3},{name:"Cartof copt",kcal100:86,prot100:1.6,carb100:20,fat100:0.1},{name:"Paste integrale",kcal100:124,prot100:5.3,carb100:26,fat100:0.5},{name:"Mămăligă",kcal100:70,prot100:2,carb100:15,fat100:0.2},{name:"Pâine integrală",kcal100:247,prot100:13,carb100:41,fat100:3.4},{name:"Ovăz",kcal100:389,prot100:17,carb100:66,fat100:7}],
-  fats:[{name:"Ulei măsline",kcal100:884,prot100:0,carb100:0,fat100:100},{name:"Unt",kcal100:717,prot100:0.8,carb100:0.1,fat100:81},{name:"Avocado",kcal100:160,prot100:2,carb100:8.5,fat100:14.7},{name:"Măsline",kcal100:115,prot100:0.8,carb100:6,fat100:11}],
-  veggies:[{name:"Broccoli/Sparanghel",kcal100:34,prot100:2.8,carb100:7,fat100:0.4},{name:"Salată verde",kcal100:20,prot100:1.5,carb100:3,fat100:0.2},{name:"Roșii/Castraveți",kcal100:16,prot100:0.8,carb100:3.5,fat100:0.1}]
+const DB = {
+  proteins: [
+    { name: "Piept de pui (gătit)", kcal100: 165, prot100: 31, carb100: 0, fat100: 3.6 },
+    { name: "Pulpe de pui dezosate", kcal100: 180, prot100: 24, carb100: 0, fat100: 9 },
+    { name: "Ficat de pui", kcal100: 172, prot100: 25, carb100: 0, fat100: 6.4 },
+    { name: "Piept de curcan", kcal100: 135, prot100: 30, carb100: 0, fat100: 1.5 },
+    { name: "Mușchiuleț de porc", kcal100: 143, prot100: 26, carb100: 0, fat100: 3.5 },
+    { name: "Carne de vită slabă", kcal100: 250, prot100: 26, carb100: 0, fat100: 15 },
+    { name: "Somon (cuptor/grătar)", kcal100: 208, prot100: 20, carb100: 0, fat100: 13 },
+    { name: "Ton în saramură", kcal100: 116, prot100: 26, carb100: 0, fat100: 1 },
+    { name: "Păstrăv / Doradă", kcal100: 90, prot100: 19, carb100: 0, fat100: 1.5 },
+    { name: "Ou întreg (fiert/poșat)", kcal100: 155, prot100: 13, carb100: 1.1, fat100: 11 },
+    { name: "Albuș de ou", kcal100: 52, prot100: 11, carb100: 1, fat100: 0 },
+    { name: "Cottage Cheese (Perle)", kcal100: 98, prot100: 11, carb100: 3.4, fat100: 4.3 },
+    { name: "Iaurt grecesc 2%", kcal100: 60, prot100: 10, carb100: 3, fat100: 2 },
+    { name: "Kefir / Sana", kcal100: 50, prot100: 3.5, carb100: 4, fat100: 2 },
+    { name: "Telemea de vacă", kcal100: 270, prot100: 18, carb100: 1, fat100: 21 },
+    { name: "Cașcaval", kcal100: 330, prot100: 25, carb100: 1, fat100: 25 },
+    { name: "Tofu", kcal100: 76, prot100: 8, carb100: 2, fat100: 5 },
+    { name: "Șuncă de curcan/pui", kcal100: 110, prot100: 18, carb100: 2, fat100: 3 },
+    { name: "Pudră proteică (Whey)", kcal100: 370, prot100: 80, carb100: 5, fat100: 3 }
+  ],
+  carbs: [
+    { name: "Orez alb fiert", kcal100: 130, prot100: 2.7, carb100: 28, fat100: 0.3 },
+    { name: "Orez brun/sălbatic fiert", kcal100: 112, prot100: 2.6, carb100: 23, fat100: 0.9 },
+    { name: "Cartof alb copt/fiert", kcal100: 86, prot100: 1.6, carb100: 20, fat100: 0.1 },
+    { name: "Cartof dulce copt", kcal100: 90, prot100: 2, carb100: 21, fat100: 0.2 },
+    { name: "Paste integrale fierte", kcal100: 124, prot100: 5.3, carb100: 26, fat100: 0.5 },
+    { name: "Mămăligă (fiartă)", kcal100: 70, prot100: 2, carb100: 15, fat100: 0.2 },
+    { name: "Pâine integrală", kcal100: 247, prot100: 13, carb100: 41, fat100: 3.4 },
+    { name: "Pâine albă", kcal100: 265, prot100: 9, carb100: 49, fat100: 3 },
+    { name: "Fulgi de ovăz", kcal100: 389, prot100: 17, carb100: 66, fat100: 7 },
+    { name: "Quinoa fiartă", kcal100: 120, prot100: 4.4, carb100: 21, fat100: 1.9 },
+    { name: "Linte fiartă", kcal100: 116, prot100: 9, carb100: 20, fat100: 0.4 },
+    { name: "Năut fiert", kcal100: 164, prot100: 9, carb100: 27, fat100: 2.6 },
+    { name: "Fasole boabe fiartă", kcal100: 127, prot100: 9, carb100: 23, fat100: 0.5 },
+    { name: "Mazăre fiartă", kcal100: 81, prot100: 5, carb100: 14, fat100: 0.4 },
+    { name: "Măr (proaspăt)", kcal100: 52, prot100: 0.3, carb100: 14, fat100: 0.2 },
+    { name: "Banană", kcal100: 89, prot100: 1, carb100: 23, fat100: 0.3 },
+    { name: "Afine / Zmeură", kcal100: 57, prot100: 0.7, carb100: 14, fat100: 0.3 }
+  ],
+  fats: [
+    { name: "Ulei de măsline", kcal100: 884, prot100: 0, carb100: 0, fat100: 100 },
+    { name: "Ulei de floarea-soarelui", kcal100: 884, prot100: 0, carb100: 0, fat100: 100 },
+    { name: "Unt 82%", kcal100: 717, prot100: 0.8, carb100: 0.1, fat100: 81 },
+    { name: "Avocado", kcal100: 160, prot100: 2, carb100: 8.5, fat100: 14.7 },
+    { name: "Măsline", kcal100: 115, prot100: 0.8, carb100: 6, fat100: 11 },
+    { name: "Nuci românești", kcal100: 654, prot100: 15, carb100: 14, fat100: 65 },
+    { name: "Migdale / Caju", kcal100: 579, prot100: 21, carb100: 22, fat100: 50 },
+    { name: "Unt de arahide (100%)", kcal100: 588, prot100: 25, carb100: 20, fat100: 50 },
+    { name: "Semințe de dovleac", kcal100: 559, prot100: 30, carb100: 10, fat100: 49 },
+    { name: "Smântână 12%", kcal100: 134, prot100: 3, carb100: 4, fat100: 12 },
+    { name: "Smântână 20%", kcal100: 206, prot100: 3, carb100: 3, fat100: 20 },
+    { name: "Bacon / Pancetta", kcal100: 541, prot100: 37, carb100: 1, fat100: 42 }
+  ],
+  veggies: [
+    { name: "Broccoli", kcal100: 34, prot100: 2.8, carb100: 7, fat100: 0.4 },
+    { name: "Sparanghel", kcal100: 20, prot100: 2.2, carb100: 3.9, fat100: 0.1 },
+    { name: "Spanac (proaspăt/gătit)", kcal100: 23, prot100: 2.9, carb100: 3.6, fat100: 0.4 },
+    { name: "Salată verde / Mix frunze", kcal100: 15, prot100: 1.5, carb100: 3, fat100: 0.2 },
+    { name: "Roșii", kcal100: 18, prot100: 0.9, carb100: 3.9, fat100: 0.2 },
+    { name: "Castraveți", kcal100: 15, prot100: 0.7, carb100: 3.6, fat100: 0.1 },
+    { name: "Ardei gras", kcal100: 20, prot100: 0.9, carb100: 4.6, fat100: 0.2 },
+    { name: "Dovlecel / Zucchini", kcal100: 17, prot100: 1.2, carb100: 3.1, fat100: 0.3 },
+    { name: "Ciuperci", kcal100: 22, prot100: 3.1, carb100: 3.3, fat100: 0.3 },
+    { name: "Varză albă", kcal100: 25, prot100: 1.3, carb100: 6, fat100: 0.1 },
+    { name: "Conopidă", kcal100: 25, prot100: 1.9, carb100: 5, fat100: 0.3 },
+    { name: "Fasole verde păstăi", kcal100: 31, prot100: 1.8, carb100: 7, fat100: 0.2 },
+    { name: "Morcov", kcal100: 41, prot100: 0.9, carb100: 10, fat100: 0.2 },
+    { name: "Ceapă", kcal100: 40, prot100: 1.1, carb100: 9, fat100: 0.1 },
+    { name: "Usturoi", kcal100: 149, prot100: 6.4, carb100: 33, fat100: 0.5 }
+  ]
 };
 const ALL_FOODS=[...DB.proteins,...DB.carbs,...DB.fats,...DB.veggies];
 
