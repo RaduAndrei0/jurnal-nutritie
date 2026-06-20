@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sănătatea Mea - Elite Low GI</title>
+<title>Sănătatea Mea - Elite Low-GI</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#0d0d14;--bg2:#13131f;--bg3:#1a1a2e;--border:#2a2a45;--text:#f0eeff;--text2:#a09ec0;--text3:#6b6a85;--pink:#ff6eb4;--purple:#b06bff;--teal:#4ecdc4;--red:#ff4f6e;--green:#4ade80;--orange:#ff9f43;--font:'Space Grotesk',sans-serif;--font2:'Outfit',sans-serif}
@@ -14,7 +14,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .logo{display:flex;align-items:center;gap:10px}
 .logo-icon{width:34px;height:34px;background:linear-gradient(135deg,var(--pink),var(--purple));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 0 15px rgba(255,110,180,0.3)}
 .logo-text{font-size:16px;font-weight:700;color:white}
-.badge{font-size:10px;padding:4px 8px;border-radius:12px;background:var(--bg3);border:1px solid var(--border);color:var(--teal)}
+.badge{font-size:10px;padding:4px 8px;border-radius:12px;background:var(--bg3);border:1px solid var(--border);display:flex;align-items:center;gap:4px}
 
 .nav{display:flex;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--border);background:var(--bg2);padding:0 1rem;gap:5px}
 .nav::-webkit-scrollbar{display:none}
@@ -24,18 +24,18 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .main{max-width:800px;margin:0 auto;padding:1rem}
 .tab{display:none} .tab.active{display:block}
 .card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.2rem;margin-bottom:1rem}
-.card-title{font-size:13px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin-bottom:1rem}
+.card-title{font-size:13px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin-bottom:1rem;display:flex;align-items:center;gap:8px;justify-content:space-between}
 
-/* Donuts Elite */
+/* Donuts */
 .d-grid{display:flex;gap:10px;margin-bottom:1.5rem;flex-wrap:wrap}
 .d-card{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:15px 10px;display:flex;flex-direction:column;align-items:center;flex:1;min-width:110px}
-.d-wrap{width:64px;height:64px;border-radius:50%;display:flex;justify-content:center;align-items:center;background:conic-gradient(var(--bg3) 100%,transparent 0);position:relative;margin-bottom:10px;transition:0.5s ease}
+.d-wrap{width:64px;height:64px;border-radius:50%;display:flex;justify-content:center;align-items:center;background:conic-gradient(var(--bg3) 100%,transparent 0);position:relative;margin-bottom:10px}
 .d-in{width:50px;height:50px;background:var(--bg3);border-radius:50%;display:flex;flex-direction:column;justify-content:center;align-items:center;position:absolute;z-index:2}
 .d-val{font-size:14px;font-weight:700} .d-lbl{font-size:11px;color:var(--text2);text-transform:uppercase;font-weight:600}
 .d-sub{font-size:10px;color:var(--text3);margin-top:4px}
 
-/* UI Elements */
-.btn{padding:10px 16px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);color:var(--text);cursor:pointer;font-size:13px;transition:0.2s;font-weight:500;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+/* Forms & Buttons */
+.btn{padding:10px 16px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);color:var(--text);cursor:pointer;font-size:13px;transition:0.2s;font-weight:500;display:inline-flex;align-items:center;justify-content:center}
 .btn:hover{border-color:var(--border2)}
 .btn-p{background:linear-gradient(135deg,var(--pink),var(--purple));border:none;font-weight:600}
 input,select{background:var(--bg3);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:10px 12px;width:100%;font-size:14px;font-family:var(--font);margin-top:5px;outline:none}
@@ -44,29 +44,27 @@ input:focus,select:focus{border-color:var(--pink)}
 .form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px}
 .form-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px}
 
-/* List Items */
+/* Lists */
 .li-item{display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;margin-bottom:8px}
 .li-n{font-size:14px;font-weight:600} .li-m{font-size:11px;color:var(--text3);margin-top:4px} .li-k{color:var(--pink);font-size:13px;font-weight:600}
 .li-del{background:none;border:none;color:var(--red);cursor:pointer;font-size:18px;padding:0 5px;margin-left:10px}
 .meal-lbl{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;margin:15px 0 8px;padding-left:4px}
 
-/* Smart Planner Daily */
-.sm-meal{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:15px}
-.sm-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);padding-bottom:8px;margin-bottom:10px}
-.sm-row{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:5px 0}
-.sm-n{flex:1;color:var(--text)} .sm-q{color:var(--teal);font-weight:700;width:50px;text-align:right}
-.sm-swap{background:rgba(176,107,255,0.1);color:var(--purple2);border:1px solid rgba(176,107,255,0.3);border-radius:6px;width:24px;height:24px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;margin-left:10px}
-.sm-swap:hover{background:var(--purple);color:white}
-
-/* Istoric */
-.history-chart{display:flex;align-items:flex-end;gap:8px;height:140px;padding:10px 0;margin-top:10px;border-bottom:1px solid var(--border)}
-.history-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px}
-.history-bar-wrap{width:100%;height:100px;background:var(--bg3);border-radius:6px;position:relative;display:flex;align-items:flex-end;overflow:hidden}
-.history-bar{width:100%;background:linear-gradient(180deg,var(--pink),var(--purple));border-radius:6px;transition:height 0.5s ease}
+/* Water Tracker */
+.water-grid{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.glass{width:32px;height:42px;border:2px solid var(--teal);border-radius:4px 4px 8px 8px;cursor:pointer;position:relative;overflow:hidden;background:var(--bg3)}
+.glass.full::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:85%;background:rgba(78,205,196,0.6)}
 
 /* Modals */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;z-index:999;padding:1rem}
 .modal{background:var(--bg2);border-radius:16px;border:1px solid var(--border);padding:1.5rem;width:100%;max-width:450px;max-height:90vh;overflow-y:auto}
+
+/* Istoric Bar Chart */
+.history-chart{display:flex;align-items:flex-end;gap:8px;height:140px;padding:10px 0;margin-top:10px;border-bottom:1px solid var(--border)}
+.history-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px}
+.history-bar-wrap{width:100%;height:100px;background:var(--bg3);border-radius:6px;position:relative;display:flex;align-items:flex-end;overflow:hidden}
+.history-bar{width:100%;background:linear-gradient(180deg,var(--pink),var(--purple));border-radius:6px;transition:height 0.5s ease}
+.history-val{font-size:10px;color:var(--text2);position:absolute;top:4px;width:100%;text-align:center;font-weight:600}
 </style>
 </head>
 <body>
@@ -77,16 +75,16 @@ input:focus,select:focus{border-color:var(--pink)}
 </div>
 
 <div class="nav">
-  <button class="nav-btn active" onclick="sTab('j')">🥗 Jurnal</button>
-  <button class="nav-btn" onclick="sTab('s')">🤖 Smart Planner</button>
-  <button class="nav-btn" onclick="sTab('h')">📈 Istoric</button>
-  <button class="nav-btn" onclick="sTab('p')">⚙️ Profil</button>
+  <button class="nav-btn active" onclick="sTab('jurnal')">🥗 Jurnal</button>
+  <button class="nav-btn" onclick="sTab('smart')">🤖 Smart Planner</button>
+  <button class="nav-btn" onclick="sTab('istoric')">📈 Istoric</button>
+  <button class="nav-btn" onclick="sTab('profil')">⚙️ Profil</button>
 </div>
 
 <div class="main">
 
-  <!-- JURNAL TAB -->
-  <div id="t-j" class="tab active">
+  <!-- JURNAL -->
+  <div id="tab-jurnal" class="tab active">
     
     <div style="display:flex;justify-content:space-between;margin-bottom:1.5rem;align-items:center">
       <button class="btn" style="width:40px" onclick="cDay(-1)">‹</button>
@@ -95,42 +93,80 @@ input:focus,select:focus{border-color:var(--pink)}
     </div>
 
     <!-- DONUTS -->
-    <div class="d-grid">
+    <div class="donuts-grid">
       <div class="d-card"><div class="d-wrap" id="dn-k"><div class="d-in"><span class="d-val" id="v-k">0</span></div></div><div class="d-lbl">Calorii</div><div class="d-sub" id="s-k">din 1500</div></div>
       <div class="d-card"><div class="d-wrap" id="dn-p"><div class="d-in"><span class="d-val" id="v-p" style="color:var(--pink)">0</span></div></div><div class="d-lbl" style="color:var(--pink)">Prot</div><div class="d-sub" id="s-p">din 100g</div></div>
       <div class="d-card"><div class="d-wrap" id="dn-c"><div class="d-in"><span class="d-val" id="v-c" style="color:var(--orange)">0</span></div></div><div class="d-lbl" style="color:var(--orange)">Carbo</div><div class="d-sub" id="s-c">din 120g</div></div>
       <div class="d-card"><div class="d-wrap" id="dn-f"><div class="d-in"><span class="d-val" id="v-f" style="color:var(--teal)">0</span></div></div><div class="d-lbl" style="color:var(--teal)">Grăs</div><div class="d-sub" id="s-f">din 55g</div></div>
     </div>
 
+    <!-- APA TRACKER -->
+    <div class="card" style="padding:1rem 1.2rem">
+      <div class="card-title" style="margin-bottom:5px">💧 Apă (Pahare 250ml) <span id="water-label" style="margin-left:auto;color:var(--teal)">0 / 8</span></div>
+      <div class="water-grid" id="water-grid"></div>
+    </div>
+
     <div style="display:flex;justify-content:flex-end;margin-bottom:1rem">
       <button class="btn btn-p" onclick="openM('m-add')">+ Adaugă Aliment</button>
     </div>
+    
     <div id="log-list"></div>
   </div>
 
-  <!-- SMART PLANNER TAB (NEW!) -->
-  <div id="t-s" class="tab">
+  <!-- SMART PLANNER -->
+  <div id="tab-smart" class="tab">
     <div class="card">
-      <div class="card-title">🤖 Planificator Inteligent (IG < 55)</div>
-      <p style="font-size:12px;color:var(--text3);margin-bottom:15px">Generează o zi întreagă cu alimente sigure pentru indicele HOMA. Apasă pe [ 🔄 ] pentru a schimba un ingredient care nu îți place, iar aplicația va recalcula gramajele pe loc!</p>
-      <button class="btn btn-p" style="width:100%;margin-bottom:15px" onclick="genSmDay()">🎲 Generează o zi nouă</button>
+      <div class="card-title">🤖 Asistent Inteligent (Reguli Gastronomice)</div>
+      <p style="font-size:13px;color:var(--text3);margin-bottom:1.5rem">Alege tipul mesei. Aplicația va filtra ingredientele astfel încât să faci asocieri culinare perfecte (IG < 55).</p>
       
-      <div id="sm-day-container"></div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" style="color:var(--pink)">Pentru ce masă?</label>
+          <select id="sm-type" onchange="updSmLists()">
+            <option value="bv">Mic dejun (Sărat)</option>
+            <option value="bs">Mic dejun (Dulce / Fructe)</option>
+            <option value="l">Prânz</option>
+            <option value="d">Cină</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" style="color:var(--teal)">Mod de calcul</label>
+          <select id="sm-mode">
+            <option value="rest">Completează din ce a rămas azi</option>
+            <option value="standard">O masă standard (1/3 din zi)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group"><label class="form-label">🥩 Proteine</label><select id="sm-p"></select></div>
+      <div class="form-group"><label class="form-label">🌾 Carbohidrați complecși (Fără zahăr)</label><select id="sm-c"></select></div>
+      <div class="form-group"><label class="form-label">🥑 Grăsimi sănătoase</label><select id="sm-f"></select></div>
+      <div class="form-group" id="sm-v-group"><label class="form-label">🥦 Fibre / Legume (Vitamine & Volum)</label><select id="sm-v"></select></div>
       
-      <button class="btn btn-p" id="sm-save-btn" style="width:100%;margin-top:10px;display:none" onclick="saveSmToLog()">+ Adaugă toată ziua în Jurnal</button>
+      <div class="form-row" style="margin-top:1.5rem">
+        <button class="btn" style="border-color:var(--purple);color:var(--purple2)" onclick="calcSmart(true)">🎲 Surprinde-mă</button>
+        <button class="btn btn-p" onclick="calcSmart()">⚖️ Calculează</button>
+      </div>
+    </div>
+    
+    <div id="sm-res" class="card" style="display:none;background:rgba(78,205,196,0.05);border-color:var(--teal)">
+      <div class="card-title" style="color:var(--teal)">Masa ta echilibrată:</div>
+      <div id="sm-items" style="margin-bottom:15px"></div>
+      <button class="btn btn-p" style="width:100%" onclick="addSmLog()">+ Adaugă această masă în Jurnal</button>
     </div>
   </div>
 
   <!-- ISTORIC -->
-  <div id="t-h" class="tab">
+  <div id="tab-istoric" class="tab">
     <div class="card"><div class="card-title">Evoluție Calorii (7 zile)</div><div id="h-chk" class="history-chart"></div></div>
     <div class="card"><div class="card-title">Evoluție Proteine (7 zile)</div><div id="h-chp" class="history-chart"></div></div>
   </div>
 
   <!-- PROFIL -->
-  <div id="t-p" class="tab">
+  <div id="tab-profil" class="tab">
     <div class="card">
       <div class="card-title">Setări Ținte Macro</div>
+      <p style="font-size:12px;color:var(--text3);margin-bottom:1rem">Aici introduci necesarul tău zilnic. Aplicația se va raporta automat la aceste cifre.</p>
       <div class="form-row">
         <div><label class="form-label">Calorii</label><input type="number" id="p-k"></div>
         <div><label class="form-label">Proteine (g)</label><input type="number" id="p-p"></div>
@@ -147,26 +183,31 @@ input:focus,select:focus{border-color:var(--pink)}
 
 <!-- MODAL ADAUGARE IN JURNAL -->
 <div id="m-add" class="overlay"><div class="modal">
-  <h3 style="margin-bottom: 1.2rem; font-size: 18px">Adaugă în Jurnal</h3>
+  <h3 style="margin-bottom: 1.2rem; font-size: 18px; color: var(--text)">Adaugă în Jurnal</h3>
+  
   <div class="form-group">
     <label class="form-label">Masă</label>
     <select id="a-m"><option>Mic dejun</option><option>Prânz</option><option>Cină</option><option>Gustare</option></select>
   </div>
+  
   <div class="form-group" style="position: relative;">
     <label class="form-label">Caută aliment</label>
-    <input type="text" id="a-q" placeholder="Ex: Pui, Linte, Măr..." autocomplete="off">
-    <div id="a-sug" style="position:absolute;top:100%;left:0;width:100%;max-height:180px;overflow-y:auto;background:var(--bg2);border:1px solid var(--border);border-radius:8px;z-index:10;box-shadow:0 4px 15px rgba(0,0,0,0.8)"></div>
+    <input type="text" id="a-q" placeholder="Ex: Pui, Orez brun, Măr..." autocomplete="off">
+    <div id="a-sug" style="position: absolute; top: 100%; left: 0; width: 100%; max-height:180px; overflow-y:auto; background:var(--bg2); border:1px solid var(--border); border-radius:8px; z-index: 10; box-shadow: 0 4px 15px rgba(0,0,0,0.8);"></div>
   </div>
+  
   <div class="form-row-3">
     <div><label class="form-label">Cant. (g)</label><input type="number" id="a-g" value="100" oninput="calcF()"></div>
     <div><label class="form-label">Kcal/100g</label><input type="number" id="f-k100" readonly style="opacity:0.7"></div>
-    <div><label class="form-label">Total Kcal</label><input type="number" id="f-k" readonly style="color:var(--pink);font-weight:bold;background:rgba(255,110,180,0.1)"></div>
+    <div><label class="form-label">Total Kcal</label><input type="number" id="f-k" readonly style="color:var(--pink); font-weight:bold; background:rgba(255,110,180,0.1)"></div>
   </div>
+
   <div class="form-row-3">
     <div><label class="form-label">Prot (g)</label><input type="number" id="f-p" readonly style="opacity:0.7"></div>
     <div><label class="form-label">Carbo (g)</label><input type="number" id="f-c" readonly style="opacity:0.7"></div>
     <div><label class="form-label">Grăs (g)</label><input type="number" id="f-f" readonly style="opacity:0.7"></div>
   </div>
+
   <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:1.5rem">
     <button class="btn" onclick="closeM('m-add')">Anulează</button>
     <button class="btn btn-p" onclick="addF()">Adaugă</button>
@@ -174,49 +215,64 @@ input:focus,select:focus{border-color:var(--pink)}
 </div></div>
 
 <script>
-/* BAZA DE DATE STRICTĂ (Fără IG > 55)
-   Format Array pt compresie maximă: [Nume, Kcal, Prot, Carbo, Fat, Tip]
-   Tip: 1=Prot, 2=Carb, 3=Fat, 4=Veg
-*/
+// ==========================================
+// 1. BAZA DE DATE (CU TAGURI PENTRU MESE)
+// ==========================================
+// Format: [Nume, Kcal, Prot, Carb, Fat, Type (1=p, 2=c, 3=f, 4=v), Tags string]
 const DB = [
-  // Proteine (IG 0)
-  ["Ou întreg fiert/poșat", 155, 13, 1, 11, 1], ["Ou ochi/Scrob (puțin ulei)", 190, 13, 1, 15, 1], ["Albuș de ou", 52, 11, 1, 0, 1],
-  ["Piept pui (crud)", 110, 23, 0, 1.2, 1], ["Piept pui grătar", 165, 31, 0, 3.6, 1], ["Pulpe pui gătite", 180, 24, 0, 9, 1], ["Ficat de pui/vită", 170, 25, 2, 6, 1],
-  ["Ceafă porc grătar", 250, 18, 0, 19, 1], ["Mușchiuleț porc slab", 143, 26, 0, 3.5, 1], ["Vită slabă gătită", 250, 26, 0, 15, 1],
-  ["Somon cuptor", 208, 20, 0, 13, 1], ["Păstrăv/Doradă", 90, 19, 0, 1.5, 1], ["Ton conservă suc", 116, 26, 0, 1, 1], ["Macrou/Sardine", 205, 19, 0, 14, 1],
-  ["Cottage Cheese", 98, 11, 3.4, 4.3, 1], ["Telemea vacă/oaie", 275, 17, 1, 22, 1], ["Cașcaval clasic", 330, 25, 1, 25, 1], ["Iaurt grecesc 2%", 60, 10, 3, 2, 1],
+  // PROTEINE
+  ["Ou întreg fiert/poșat", 155, 13, 1, 11, 1, 'bv,d'],
+  ["Ou ochi (puțin ulei)", 190, 13, 1, 15, 1, 'bv'],
+  ["Omletă simplă", 154, 11, 1, 12, 1, 'bv'],
+  ["Albuș de ou", 52, 11, 1, 0, 1, 'bv,d'],
+  ["Piept de pui grătar", 165, 31, 0, 3.6, 1, 'l,d'],
+  ["Pulpe de pui gătite", 180, 24, 0, 9, 1, 'l'],
+  ["Ficat de pui/vită", 170, 25, 2, 6, 1, 'l'],
+  ["Ceafă porc grătar", 250, 18, 0, 19, 1, 'l'],
+  ["Mușchiuleț de porc slab", 143, 26, 0, 3.5, 1, 'l,d'],
+  ["Vită slabă (mușchi)", 250, 26, 0, 15, 1, 'l'],
+  ["Somon la cuptor", 208, 20, 0, 13, 1, 'l,d'],
+  ["Păstrăv / Doradă", 90, 19, 0, 1.5, 1, 'l,d'],
+  ["Ton în suc propriu", 116, 26, 0, 1, 1, 'l,d'],
+  ["Cottage Cheese (Perle)", 98, 11, 3.4, 4.3, 1, 'bs,bv,d'],
+  ["Telemea de vacă/oaie", 275, 17, 1, 22, 1, 'bv'],
+  ["Iaurt grecesc 2%", 60, 10, 3, 2, 1, 'bs'],
   
-  // Carbohidrați (IG < 55 STRICT) - Fara Orez alb, Fara Cartof Alb, Fara Mamaliga
-  ["Orez sălbatic/brun fiert", 112, 2.6, 23, 0.9, 2],
-  ["Cartof dulce fiert", 86, 1.6, 20, 0.1, 2],
-  ["Paste integrale fierte", 124, 5.3, 26, 0.5, 2],
-  ["Pâine de secară 100%", 259, 9, 48, 3.3, 2],
-  ["Fulgi de ovăz integral", 389, 17, 66, 7, 2],
-  ["Quinoa fiartă", 120, 4.4, 21, 1.9, 2],
-  ["Linte fiartă", 116, 9, 20, 0.4, 2],
-  ["Năut fiert", 164, 9, 27, 2.6, 2],
-  ["Fasole boabe fiartă", 127, 9, 23, 0.5, 2],
-  ["Mazăre verde", 81, 5, 14, 0.4, 2],
-  ["Măr proaspăt", 52, 0, 14, 0, 2],
-  ["Portocală/Grepfrut", 45, 0.9, 11, 0.1, 2],
-  ["Fructe de pădure (Zmeură/Afine)", 57, 0.7, 14, 0.3, 2],
+  // CARBOHIDRATI (IG Mici / Fara Zahar Rafinat)
+  ["Orez brun / sălbatic fiert", 112, 2.6, 23, 0.9, 2, 'l'],
+  ["Cartof dulce fiert", 86, 1.6, 20, 0.1, 2, 'l'],
+  ["Paste integrale fierte", 124, 5.3, 26, 0.5, 2, 'l'],
+  ["Pâine de secară 100%", 259, 9, 48, 3.3, 2, 'bv,l'],
+  ["Fulgi de ovăz integral", 389, 17, 66, 7, 2, 'bs'],
+  ["Quinoa fiartă", 120, 4.4, 21, 1.9, 2, 'l,d'],
+  ["Linte fiartă", 116, 9, 20, 0.4, 2, 'l,d'],
+  ["Năut fiert", 164, 9, 27, 2.6, 2, 'l'],
+  ["Măr proaspăt", 52, 0, 14, 0, 2, 'bs'],
+  ["Portocală / Grapefruit", 45, 0.9, 11, 0.1, 2, 'bs'],
+  ["Fructe de pădure", 57, 0.7, 14, 0.3, 2, 'bs'],
 
-  // Grăsimi (IG 0)
-  ["Ulei măsline/floare", 884, 0, 0, 100, 3], ["Unt 82%", 717, 0.8, 0, 81, 3], ["Avocado", 160, 2, 8, 15, 3],
-  ["Nuci / Migdale", 600, 15, 14, 60, 3], ["Smântână 20%", 206, 3, 3, 20, 3],
+  // GRASIMI
+  ["Ulei de măsline", 884, 0, 0, 100, 3, 'l,d'],
+  ["Unt 82%", 717, 0.8, 0, 81, 3, 'bv'],
+  ["Avocado", 160, 2, 8, 15, 3, 'bv,l,d'],
+  ["Nuci / Migdale", 600, 15, 14, 60, 3, 'bs,l'],
+  ["Măsline", 115, 0.8, 6, 11, 3, 'bv,l'],
 
-  // Legume Verzi / Fibre (IG < 15)
-  ["Roșii", 18, 0.9, 3.9, 0.2, 4], ["Castraveți", 15, 0.7, 3.6, 0.1, 4], ["Salată verde/Rucola", 15, 1.5, 3, 0.2, 4],
-  ["Ardei gras", 20, 0.9, 4.6, 0.2, 4], ["Broccoli/Sparanghel", 30, 3, 5, 0.3, 4], ["Ceapă", 40, 1, 9, 0, 4], ["Spanac", 23, 2.9, 3.6, 0.4, 4]
+  // LEGUME (Fibre - Umplu stomacul)
+  ["Roșii", 18, 0.9, 3.9, 0.2, 4, 'bv,l,d'],
+  ["Castraveți", 15, 0.7, 3.6, 0.1, 4, 'bv,l,d'],
+  ["Ardei gras", 20, 0.9, 4.6, 0.2, 4, 'bv,l,d'],
+  ["Salată verde / Rucola", 15, 1.5, 3, 0.2, 4, 'l,d'],
+  ["Broccoli / Sparanghel", 30, 3, 5, 0.3, 4, 'l,d'],
+  ["Spanac", 23, 2.9, 3.6, 0.4, 4, 'bv,l,d']
 ];
 
-// STATE
-let S={p:{k:1500,p:100,c:120,f:55}, f:[]};
+// ==========================================
+// 2. STATE & INITIALIZARE
+// ==========================================
+let S={p:{k:1500,p:100,c:120,f:55}, f:[], w:{}};
 let cD=new Date(); cD.setHours(0,0,0,0);
-let selF=null;
-
-// Planificator Zilnic State
-let smPlan = []; // [{m: "Mic dejun", p: obj, c: obj, f: obj, v: obj}, ...]
+let selF=null, cSM=[];
 
 const gI=i=>document.getElementById(i);
 const nS=s=>s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
@@ -224,16 +280,21 @@ const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+Stri
 const getFmt=d=>String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+d.getFullYear();
 
 function initApp() {
-  try{let ls=localStorage.getItem('he_db_elite');if(ls)S=JSON.parse(ls);}catch(e){}
-  updP(); rend();
+  try { let ls=localStorage.getItem('he_db_elite'); if(ls) S=JSON.parse(ls); } catch(e){}
+  updP(); updSmLists(); rend();
 }
-function backup() { try{localStorage.setItem('he_db_elite',JSON.stringify(S));}catch(e){} }
+
+function backupData() { try{localStorage.setItem('he_db_elite',JSON.stringify(S));}catch(e){} }
 
 function sTab(t) {
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active')); event.target.classList.add('active'); 
-  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active')); gI('t-'+t).classList.add('active'); 
-  if(t==='h') drH(); 
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active')); 
+  event.target.classList.add('active'); 
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active')); 
+  gI('tab-'+t).classList.add('active'); 
+  if(t==='istoric') drH(); 
+  rend();
 }
+
 function cDay(x) { cD.setDate(cD.getDate()+x); rend(); }
 function openM(i) {
   gI(i).style.display='flex';
@@ -241,46 +302,75 @@ function openM(i) {
 } 
 function closeM(i) { gI(i).style.display='none'; }
 
-// JURNAL & DONUTS
-function updDonut(id, val, tgt, color) {
-  gI(`v-${id}`).innerText = Math.round(val); gI(`s-${id}`).innerText = id==='k' ? `din ${tgt} kcal` : `din ${tgt}g`;
-  let pct = Math.min(100, Math.round((val / tgt) * 100)) || 0;
-  gI(`dn-${id}`).style.background = `conic-gradient(${val>tgt?'var(--red)':color} ${pct}%, var(--bg3) ${pct}%)`;
+// ==========================================
+// 3. JURNAL & CALCUL MACRO ZILNIC
+// ==========================================
+function updateDonutUI(id, current, target, color) {
+  gI(`v-${id}`).innerText = Math.round(current);
+  gI(`s-${id}`).innerText = id==='k' ? `din ${target} kcal` : `din ${target}g`;
+  let pct = Math.min(100, Math.round((current / target) * 100)) || 0;
+  let activeColor = current > target ? 'var(--red)' : color;
+  gI(`dn-${id}`).style.background = `conic-gradient(${activeColor} ${pct}%, var(--bg3) ${pct}%)`;
 }
 
 function rend() {
-  let is = iso(cD); gI('d-lbl').innerText = getFmt(cD) + (is === iso(new Date()) ? ' (Azi)' : '');
+  let is = iso(cD);
+  let isToday = is === iso(new Date());
+  gI('d-lbl').innerText = getFmt(cD) + (isToday ? ' (Azi)' : '');
+
   let dF = S.f.filter(x => x.d === is);
   let t = { k: 0, p: 0, c: 0, f: 0 };
   dF.forEach(x => { t.k += x.k; t.p += x.p; t.c += x.c; t.f += x.f; });
 
-  updDonut('k', t.k, S.p.k, 'var(--purple)'); updDonut('p', t.p, S.p.p, 'var(--pink)');
-  updDonut('c', t.c, S.p.c, 'var(--orange)'); updDonut('f', t.f, S.p.f, 'var(--teal)');
+  let p = S.p;
+  updateDonutUI('k', t.k, p.k, 'var(--purple)');
+  updateDonutUI('p', t.p, p.p, 'var(--pink)');
+  updateDonutUI('c', t.c, p.c, 'var(--orange)');
+  updateDonutUI('f', t.f, p.f, 'var(--teal)');
 
-  let c = gI('log-list');
-  if (!dF.length) c.innerHTML = '<div style="text-align:center;color:var(--text3);padding:20px;font-size:13px">Niciun aliment adăugat azi.</div>';
-  else {
+  let container = gI('log-list');
+  if (!dF.length) {
+    container.innerHTML = '<div style="text-align:center;color:var(--text3);padding:20px;font-size:13px">Niciun aliment adăugat azi.</div>';
+  } else {
     let lh = '';
     ['Mic dejun', 'Prânz', 'Cină', 'Gustare'].forEach(m => {
-      let mF = dF.filter(x => x.m === m); if (!mF.length) return;
+      let mF = dF.filter(x => x.m === m);
+      if (!mF.length) return;
       lh += `<div class="meal-lbl">${m}</div>`;
       mF.forEach(x => {
         lh += `<div class="li-item">
-          <div><div class="li-n">${x.n}</div><div class="li-m">${x.q}g · P:${Math.round(x.p)} C:${Math.round(x.c)} G:${Math.round(x.f)}</div></div>
-          <div style="display:flex;align-items:center;"><span class="li-k">${x.k} kcal</span><button class="li-del" onclick="dlF(${x.id})">×</button></div>
-        </div>`;
+            <div>
+              <div class="li-n">${x.n}</div>
+              <div class="li-m">${x.q}g · P:${Math.round(x.p)} C:${Math.round(x.c)} G:${Math.round(x.f)}</div>
+            </div>
+            <div style="display:flex;align-items:center;">
+              <span class="li-k">${x.k} kcal</span>
+              <button class="li-del" onclick="dlF(${x.id})">×</button>
+            </div>
+          </div>`;
       });
-    }); c.innerHTML = lh;
+    });
+    container.innerHTML = lh;
   }
-}
-function dlF(id) { S.f = S.f.filter(x => x.id !== id); backup(); rend(); }
 
-// ADAUGA MANUAL
+  // Water
+  let wCount = S.w[is] || 0;
+  gI('water-label').innerText = `${wCount} / 8`;
+  gI('water-grid').innerHTML = Array(8).fill(0).map((_,i) => `<div class="glass ${i < wCount ? 'full' : ''}" onclick="tW(${i < wCount ? -1 : 1})"></div>`).join('');
+}
+
+function tW(v) { let is=iso(cD); S.w[is] = Math.max(0, (S.w[is] || 0) + v); backupData(); rend(); }
+function dlF(id) { S.f = S.f.filter(x => x.id !== id); backupData(); rend(); }
+
+// ==========================================
+// 4. CAUTARE MANUALA
+// ==========================================
 gI('a-q').addEventListener('input', e => {
   let val = nS(e.target.value); let sugBox = gI('a-sug'); sugBox.innerHTML = ''; if(val.length < 2) return;
   let matches = DB.filter(x => nS(x[0]).includes(val)).slice(0, 15);
   matches.forEach(m => {
-    let div = document.createElement('div'); div.style.cssText = "padding:12px; border-bottom:1px solid var(--border); cursor:pointer; font-size:13px;";
+    let div = document.createElement('div');
+    div.style.cssText = "padding:12px; border-bottom:1px solid var(--border); cursor:pointer; font-size:13px;";
     div.innerHTML = `${m[0]} <span style="color:var(--text3);font-size:11px">(${m[1]} kcal)</span>`;
     div.onclick = () => { selF = m; gI('a-q').value = m[0]; gI('f-k100').value = m[1]; sugBox.innerHTML = ''; calcF(); };
     sugBox.appendChild(div);
@@ -297,101 +387,147 @@ function calcF() {
 function addF() {
   if(!selF) return; let q = +gI('a-g').value || 0;
   S.f.push({ id: Date.now(), d: iso(cD), m: gI('a-m').value, n: selF[0], q: q, k: Math.round(q * selF[1] / 100), p: +(q * selF[2] / 100).toFixed(1), c: +(q * selF[3] / 100).toFixed(1), f: +(q * selF[4] / 100).toFixed(1) });
-  backup(); closeM('m-add'); rend();
+  backupData(); closeM('m-add'); rend();
 }
 
-// SMART PLANNER ZILNIC CU SWAP
-function rollItem(type, excludeName) {
-  let items = DB.filter(x => x[5] === type && x[0] !== excludeName);
-  return items[Math.floor(Math.random() * items.length)];
-}
-
-function genSmDay() {
-  smPlan = ['Mic dejun', 'Prânz', 'Cină'].map(m => ({
-    name: m, p: rollItem(1, ''), c: Math.random()>0.3 ? rollItem(2, '') : null, f: rollItem(3, ''), v: m!=='Mic dejun' ? rollItem(4, '') : null
-  }));
-  drSmDay();
-  gI('sm-save-btn').style.display='block';
-}
-
-function swapSm(mIdx, typeCode) {
-  let mapT = {'p':1, 'c':2, 'f':3, 'v':4};
-  let currentObj = smPlan[mIdx][typeCode];
-  smPlan[mIdx][typeCode] = rollItem(mapT[typeCode], currentObj ? currentObj[0] : '');
-  drSmDay();
-}
-
-function drSmDay() {
-  let tP = S.p.p / 3, tC = S.p.c / 3, tF = S.p.f / 3;
-  let html = '';
-
-  smPlan.forEach((m, idx) => {
-    html += `<div class="sm-meal"><div class="sm-head"><b style="color:var(--pink2)">${m.name}</b></div>`;
-    
-    // Calcul balantat
-    let calcRows = [];
-    let gP = (tP / m.p[2]) * 100; 
-    let exC = gP * m.p[3] / 100, exF = gP * m.p[4] / 100;
-    calcRows.push({ t:'p', n: m.p[0], q: Math.round(gP) });
-
-    let nC = tC - exC;
-    if(m.c && nC > 5) {
-      let gC = (nC / m.c[3]) * 100; exF += gC * m.c[4] / 100;
-      calcRows.push({ t:'c', n: m.c[0], q: Math.round(gC) });
-    }
-
-    let nF = tF - exF;
-    if(m.f && nF > 3) {
-      let gF = (nF / m.f[4]) * 100;
-      calcRows.push({ t:'f', n: m.f[0], q: Math.round(gF) });
-    }
-
-    if(m.v) calcRows.push({ t:'v', n: m.v[0], q: Math.round(Math.random()*100 + 100) }); // Legume 100-200g
-
-    calcRows.forEach(row => {
-      html += `<div class="sm-row"><span class="sm-n">${row.n}</span><div style="display:flex;align-items:center"><span class="sm-q">${row.q}g</span> <button class="sm-swap" onclick="swapSm(${idx}, '${row.t}')">🔄</button></div></div>`;
-    });
-    
-    // Salvez gramajele inapoi in smPlan pt butonul de Save
-    m.calc = calcRows;
-    html += `</div>`;
-  });
+// ==========================================
+// 5. SMART PLANNER (CU FILTRARE PE MESE)
+// ==========================================
+function updSmLists() {
+  let th = gI('sm-type').value; // 'bs', 'bv', 'l', 'd'
   
-  gI('sm-day-container').innerHTML = html;
+  let p = DB.filter(x => x[5]===1 && x[6].includes(th));
+  let c = DB.filter(x => x[5]===2 && x[6].includes(th));
+  let f = DB.filter(x => x[5]===3 && x[6].includes(th));
+  let v = DB.filter(x => x[5]===4 && x[6].includes(th));
+
+  gI('sm-p').innerHTML = p.map(x => `<option value="${x[0]}">${x[0]}</option>`).join('');
+  gI('sm-c').innerHTML = '<option value="-1">Fără carbo extra</option>' + c.map(x => `<option value="${x[0]}">${x[0]}</option>`).join('');
+  gI('sm-f').innerHTML = '<option value="-1">Fără grăsimi extra</option>' + f.map(x => `<option value="${x[0]}">${x[0]}</option>`).join('');
+  
+  if (th === 'bs') { // Fara legume la mic dejun dulce
+    gI('sm-v-group').style.display = 'none'; gI('sm-v').innerHTML = '<option value="-1"></option>';
+  } else {
+    gI('sm-v-group').style.display = 'block';
+    gI('sm-v').innerHTML = '<option value="-1">Fără legume</option>' + v.map(x => `<option value="${x[0]}">${x[0]}</option>`).join('');
+  }
 }
 
-function saveSmToLog() {
-  let is = iso(cD);
-  smPlan.forEach(m => {
-    m.calc.forEach(r => {
-      let obj = DB.find(x => x[0] === r.n);
-      if(obj) {
-        S.f.push({
-          id: Date.now() + Math.random(), d: is, m: m.name, n: obj[0], q: r.q,
-          k: Math.round(r.q * obj[1] / 100), p: +(r.q * obj[2] / 100).toFixed(1), c: +(r.q * obj[3] / 100).toFixed(1), f: +(r.q * obj[4] / 100).toFixed(1)
-        });
-      }
+function calcSmart(rnd=false) {
+  let th = gI('sm-type').value;
+  let pObj, cObj, fObj, vObj;
+  
+  if(rnd) {
+    let pA=DB.filter(x=>x[5]===1 && x[6].includes(th));
+    let cA=DB.filter(x=>x[5]===2 && x[6].includes(th));
+    let fA=DB.filter(x=>x[5]===3 && x[6].includes(th));
+    let vA=DB.filter(x=>x[5]===4 && x[6].includes(th));
+
+    pObj = pA[Math.floor(Math.random()*pA.length)];
+    // Daca e mic dejun dulce, punem fruct/ovaz mereu, altfel sansa de 80% sa luam carbo
+    cObj = (th==='bs' || Math.random()<0.8) && cA.length ? cA[Math.floor(Math.random()*cA.length)] : null;
+    fObj = fA[Math.floor(Math.random()*fA.length)];
+    vObj = th!=='bs' && vA.length ? vA[Math.floor(Math.random()*vA.length)] : null;
+    
+    gI('sm-p').value = pObj ? pObj[0] : ""; 
+    gI('sm-c').value = cObj ? cObj[0] : "-1"; 
+    gI('sm-f').value = fObj ? fObj[0] : "-1";
+    gI('sm-v').value = vObj ? vObj[0] : "-1";
+  } else {
+    pObj = DB.find(x => x[0] === gI('sm-p').value);
+    cObj = gI('sm-c').value!=="-1" ? DB.find(x => x[0] === gI('sm-c').value) : null;
+    fObj = gI('sm-f').value!=="-1" ? DB.find(x => x[0] === gI('sm-f').value) : null;
+    vObj = gI('sm-v').value!=="-1" ? DB.find(x => x[0] === gI('sm-v').value) : null;
+  }
+
+  // Mod calcul
+  let mode = gI('sm-mode').value;
+  let tP = 0, tC = 0, tF = 0;
+
+  if (mode === 'standard') {
+    tP = S.p.p / 3; tC = S.p.c / 3; tF = S.p.f / 3;
+  } else {
+    let is = iso(cD); let dF = S.f.filter(x => x.d === is);
+    let cP = 0, cC = 0, cF = 0;
+    dF.forEach(x => { cP += x.p; cC += x.c; cF += x.f; });
+    tP = Math.max(0, S.p.p - cP); tC = Math.max(0, S.p.c - cC); tF = Math.max(0, S.p.f - cF);
+  }
+
+  if (tP <= 0 && tC <= 0 && tF <= 0) {
+    gI('sm-items').innerHTML = '<div style="color:var(--orange);font-size:13px;text-align:center">Nu mai ai macro necesari azi!</div>';
+    gI('sm-res').style.display = 'block'; return;
+  }
+
+  cSM=[]; 
+  let gP = pObj ? (tP/pObj[2])*100 : 0; 
+  let exC = pObj ? gP*pObj[3]/100 : 0;
+  let exF = pObj ? gP*pObj[4]/100 : 0; 
+  if(gP > 0) cSM.push({o:pObj, q:Math.round(gP)});
+  
+  let nC = tC - exC; 
+  if(cObj && nC > 3) {
+    let gC = (nC/cObj[3])*100; exF += gC*cObj[4]/100; 
+    cSM.push({o:cObj, q:Math.round(gC)});
+  }
+  
+  let nF = tF - exF; 
+  if(fObj && nF > 3) {
+    let gF = (nF/fObj[4])*100; 
+    cSM.push({o:fObj, q:Math.round(gF)});
+  }
+
+  if(vObj) {
+    cSM.push({o:vObj, q:Math.round(Math.random()*100 + 100)}); // 100-200g
+  }
+  
+  let html = cSM.map(x => `
+    <div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(78,205,196,0.3);padding:8px 0">
+      <span style="font-size:13px">${x.o[0]}</span><span style="color:var(--teal);font-weight:700">${x.q}g</span>
+    </div>
+  `).join('');
+  
+  gI('sm-items').innerHTML = html;
+  gI('sm-res').style.display = 'block';
+}
+
+function addSmLog() {
+  let th = gI('sm-type').value;
+  let masaMap = {'bs':'Mic dejun', 'bv':'Mic dejun', 'l':'Prânz', 'd':'Cină'};
+  let masa = masaMap[th];
+
+  cSM.forEach(x => {
+    S.f.push({
+      id: Date.now() + Math.random(), d: iso(cD), m: masa, n: x.o[0], q: x.q,
+      k: Math.round(x.q * x.o[1] / 100), p: +(x.q * x.o[2] / 100).toFixed(1), c: +(x.q * x.o[3] / 100).toFixed(1), f: +(x.q * x.o[4] / 100).toFixed(1)
     });
   });
-  backup(); sTab('j'); rend();
+  backupData(); sTab('jurnal');
 }
 
-// ISTORIC
+// ==========================================
+// 6. ISTORIC 7 ZILE
+// ==========================================
 function drH() {
   let hK='', hP='', tk=S.p.k, tp=S.p.p;
   for(let i=6; i>=0; i--) {
     let d = new Date(); d.setDate(d.getDate() - i); let is = iso(d);
     let t = S.f.filter(x => x.d === is).reduce((a,b)=>({k: a.k+b.k, p: a.p+b.p}), {k:0, p:0});
-    let pk = Math.min(100, (t.k / tk) * 100) || 0, pp = Math.min(100, (t.p / tp) * 100) || 0;
-    hK += `<div class="history-col"><div class="history-bar-wrap"><div class="history-val" style="bottom:${pk}%">${Math.round(t.k)}</div><div class="history-bar" style="height:${pk}%;background:${t.k>tk?'var(--red)':'var(--purple)'}"></div></div><div style="font-size:9px;color:var(--text3)">${getFmt(d).substring(0,5)}</div></div>`;
-    hP += `<div class="history-col"><div class="history-bar-wrap"><div class="history-val" style="bottom:${pp}%">${Math.round(t.p)}g</div><div class="history-bar" style="height:${pp}%;background:var(--teal)"></div></div><div style="font-size:9px;color:var(--text3)">${getFmt(d).substring(0,5)}</div></div>`;
+    let pk = Math.min(100, (t.k / tk) * 100) || 0; let pp = Math.min(100, (t.p / tp) * 100) || 0;
+    let bC = t.k > tk ? 'var(--red)' : 'var(--purple)';
+
+    hK += `<div class="history-col"><div class="history-bar-wrap"><div class="history-val" style="bottom:${pk}%">${Math.round(t.k)}</div><div class="history-bar" style="height:${pk}%;background:${bC}"></div></div><div style="font-size:9px;color:var(--text3)">${getFmt(d).substring(0,5)}</div></div>`;
+    hP += `<div class="history-col"><div class="history-bar-wrap"><div class="history-val" style="bottom:${pp}%">${Math.round(t.p)}g</div><div class="history-bar" style="height:${pp}%;background:linear-gradient(180deg,var(--teal),#38b2ac)"></div></div><div style="font-size:9px;color:var(--text3)">${getFmt(d).substring(0,5)}</div></div>`;
   }
   gI('h-chk').innerHTML = hK; gI('h-chp').innerHTML = hP;
 }
 
+// ==========================================
+// 7. SETARI PROFIL
+// ==========================================
 function updP() { ['k', 'p', 'c', 'f'].forEach(x => gI('p-' + x).value = S.p[x]); }
-function saveP() { ['k', 'p', 'c', 'f'].forEach(x => S.p[x] = +gI('p-' + x).value); backup(); rend(); }
+function saveP() { ['k', 'p', 'c', 'f'].forEach(x => S.p[x] = +gI('p-' + x).value); backupData(); rend(); sTab('jurnal'); }
 
+// RUN APP
 initApp();
 </script>
 </body>
