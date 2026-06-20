@@ -22,7 +22,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .nav-btn.active{color:var(--pink);border-bottom-color:var(--pink);color:white}
 
 .main{max-width:800px;margin:0 auto;padding:1rem}
-.tab-content{display:none} .tab-content.active{display:block}
+.tab{display:none} .tab.active{display:block}
 .card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.2rem;margin-bottom:1rem}
 .card-title{font-size:13px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin-bottom:1rem;display:flex;align-items:center;gap:8px;justify-content:space-between}
 
@@ -57,13 +57,14 @@ input:focus,select:focus{border-color:var(--pink)}
 
 /* Modals */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;z-index:999;padding:1rem}
-.modal{background:var(--bg2);width:100%;max-width:450px;padding:1.5rem;border-radius:16px;border:1px solid var(--border)}
+.modal{background:var(--bg2);border-radius:16px;border:1px solid var(--border);padding:1.5rem;width:100%;max-width:450px;max-height:90vh;overflow-y:auto}
 
 /* Istoric Bar Chart */
 .history-chart{display:flex;align-items:flex-end;gap:8px;height:140px;padding:10px 0;margin-top:10px;border-bottom:1px solid var(--border)}
 .history-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px}
 .history-bar-wrap{width:100%;height:100px;background:var(--bg3);border-radius:6px;position:relative;display:flex;align-items:flex-end;overflow:hidden}
 .history-bar{width:100%;background:linear-gradient(180deg,var(--pink),var(--purple));border-radius:6px;transition:height 0.5s ease}
+.history-val{font-size:10px;color:var(--text2);position:absolute;top:4px;width:100%;text-align:center;font-weight:600}
 </style>
 </head>
 <body>
@@ -74,29 +75,29 @@ input:focus,select:focus{border-color:var(--pink)}
 </div>
 
 <div class="nav">
-  <button class="nav-btn active" onclick="sTab('jurnal')">🥗 Jurnal</button>
-  <button class="nav-btn" onclick="sTab('smart')">🤖 Smart Planner</button>
-  <button class="nav-btn" onclick="sTab('istoric')">📈 Istoric</button>
-  <button class="nav-btn" onclick="sTab('profil')">⚙️ Profil</button>
+  <button class="nav-btn active" onclick="sTab('j')">🥗 Jurnal</button>
+  <button class="nav-btn" onclick="sTab('s')">🤖 Smart Planner</button>
+  <button class="nav-btn" onclick="sTab('h')">📈 Istoric</button>
+  <button class="nav-btn" onclick="sTab('p')">⚙️ Profil</button>
 </div>
 
 <div class="main">
 
-  <!-- JURNAL TAB -->
-  <div id="tab-jurnal" class="tab-content active">
+  <!-- JURNAL -->
+  <div id="t-j" class="tab active">
     
     <div style="display:flex;justify-content:space-between;margin-bottom:1.5rem;align-items:center">
       <button class="btn" style="width:40px" onclick="cDay(-1)">‹</button>
-      <div id="date-label" style="font-weight:600;font-size:15px;color:var(--text)"></div>
+      <div id="d-lbl" style="font-weight:600;font-size:15px"></div>
       <button class="btn" style="width:40px" onclick="cDay(1)">›</button>
     </div>
 
     <!-- DONUTS -->
     <div class="donuts-grid">
-      <div class="d-card"><div class="d-wrap" id="donut-kcal"><div class="d-in"><span class="d-val" id="val-kcal">0</span></div></div><div class="d-lbl">Calorii</div><div class="d-sub" id="sub-kcal">din 1500</div></div>
-      <div class="d-card"><div class="d-wrap" id="donut-prot"><div class="d-in"><span class="d-val" id="val-prot" style="color:var(--pink)">0</span></div></div><div class="d-lbl" style="color:var(--pink)">Prot</div><div class="d-sub" id="sub-prot">din 100g</div></div>
-      <div class="d-card"><div class="d-wrap" id="donut-carb"><div class="d-in"><span class="d-val" id="val-carb" style="color:var(--orange)">0</span></div></div><div class="d-lbl" style="color:var(--orange)">Carbo</div><div class="d-sub" id="sub-carb">din 120g</div></div>
-      <div class="d-card"><div class="d-wrap" id="donut-fat"><div class="d-in"><span class="d-val" id="val-fat" style="color:var(--teal)">0</span></div></div><div class="d-lbl" style="color:var(--teal)">Grăs</div><div class="d-sub" id="sub-fat">din 55g</div></div>
+      <div class="d-card"><div class="d-wrap" id="dn-k"><div class="d-in"><span class="d-val" id="v-k">0</span></div></div><div class="d-lbl">Calorii</div><div class="d-sub" id="s-k">din 1500</div></div>
+      <div class="d-card"><div class="d-wrap" id="dn-p"><div class="d-in"><span class="d-val" id="v-p" style="color:var(--pink)">0</span></div></div><div class="d-lbl" style="color:var(--pink)">Prot</div><div class="d-sub" id="s-p">din 100g</div></div>
+      <div class="d-card"><div class="d-wrap" id="dn-c"><div class="d-in"><span class="d-val" id="v-c" style="color:var(--orange)">0</span></div></div><div class="d-lbl" style="color:var(--orange)">Carbo</div><div class="d-sub" id="s-c">din 120g</div></div>
+      <div class="d-card"><div class="d-wrap" id="dn-f"><div class="d-in"><span class="d-val" id="v-f" style="color:var(--teal)">0</span></div></div><div class="d-lbl" style="color:var(--teal)">Grăs</div><div class="d-sub" id="s-f">din 55g</div></div>
     </div>
 
     <!-- APA TRACKER -->
@@ -112,12 +113,20 @@ input:focus,select:focus{border-color:var(--pink)}
     <div id="log-list"></div>
   </div>
 
-  <!-- SMART PLANNER TAB -->
-  <div id="tab-smart" class="tab-content">
+  <!-- SMART PLANNER -->
+  <div id="t-s" class="tab">
     <div class="card">
       <div class="card-title">🤖 Asistent Inteligent</div>
-      <p style="font-size:13px;color:var(--text3);margin-bottom:1.5rem">Alege alimentele pe care vrei să le mănânci, iar aplicația îți va calcula instant gramajele perfecte pentru porția ta.</p>
+      <p style="font-size:13px;color:var(--text3);margin-bottom:1.5rem">Aplicația verifică ce ai mâncat deja azi și calculează gramajele perfecte ca să-ți atingi milimetric țintele zilnice.</p>
       
+      <div class="form-group">
+        <label class="form-label" style="color:var(--pink)">Mod Calcul</label>
+        <select id="sm-type">
+          <option value="rest">Completează ziua (Din ce a mai rămas azi)</option>
+          <option value="standard">O masă standard (1/3 din totalul zilnic)</option>
+        </select>
+      </div>
+
       <div class="form-group"><label class="form-label">Sursă Proteine</label><select id="sm-p"></select></div>
       <div class="form-group"><label class="form-label">Sursă Carbohidrați</label><select id="sm-c"></select></div>
       <div class="form-group"><label class="form-label">Sursă Grăsimi extra</label><select id="sm-f"></select></div>
@@ -131,15 +140,15 @@ input:focus,select:focus{border-color:var(--pink)}
       <div class="card-title" style="color:var(--teal)">Masa ta echilibrată:</div>
       <div id="sm-items" style="margin-bottom:15px"></div>
       
-      <div class="form-row">
+      <div class="form-row" id="sm-actions" style="display:none;">
         <select id="sm-m"><option>Mic dejun</option><option>Prânz</option><option>Cină</option></select>
         <button class="btn btn-p" onclick="addSmLog()">+ Adaugă în Jurnal</button>
       </div>
     </div>
   </div>
 
-  <!-- ISTORIC TAB -->
-  <div id="tab-istoric" class="tab-content">
+  <!-- ISTORIC -->
+  <div id="t-h" class="tab">
     <div class="card">
       <div class="card-title">Evoluție Calorii (7 zile)</div>
       <div id="h-chk" class="history-chart"></div>
@@ -150,18 +159,16 @@ input:focus,select:focus{border-color:var(--pink)}
     </div>
   </div>
 
-  <!-- PROFIL TAB -->
-  <div id="tab-profil" class="tab-content">
+  <!-- PROFIL -->
+  <div id="t-p" class="tab">
     <div class="card">
       <div class="card-title">Setări Ținte Macro</div>
-      <p style="font-size:12px;color:var(--text3);margin-bottom:1rem">Aici introduci necesarul tău zilnic. Aplicația se va raporta automat la aceste cifre.</p>
-      
       <div class="form-row">
-        <div><label class="form-label">Calorii Zilinice</label><input type="number" id="p-k"></div>
+        <div><label class="form-label">Calorii</label><input type="number" id="p-k"></div>
         <div><label class="form-label">Proteine (g)</label><input type="number" id="p-p"></div>
       </div>
       <div class="form-row" style="margin-top:10px">
-        <div><label class="form-label">Carbohidrați (g)</label><input type="number" id="p-c"></div>
+        <div><label class="form-label">Carbo (g)</label><input type="number" id="p-c"></div>
         <div><label class="form-label">Grăsimi (g)</label><input type="number" id="p-f"></div>
       </div>
       <button class="btn btn-p" style="width:100%;margin-top:20px" onclick="saveP()">💾 Salvează Datele</button>
@@ -268,7 +275,7 @@ const DB = [
 
   { n: "Ulei măsline / floare", k: 884, p: 0, c: 0, f: 100, t: 'f' },
   { n: "Unt 82%", k: 717, p: 0.8, c: 0.1, f: 81, t: 'f' },
-  { n: "Avocado", k: 160, p: 2, c: 8, f: 15, t: 'f' },
+  { n: "Avocado proaspăt", k: 160, p: 2, c: 8, f: 15, t: 'f' },
   { n: "Nuci / Migdale", k: 600, p: 15, c: 14, f: 60, t: 'f' },
   { n: "Smântână 20%", k: 206, p: 3, c: 3, f: 20, t: 'f' },
 
@@ -283,6 +290,7 @@ const DB = [
 // ==========================================
 // 2. STATE & INITIALIZARE
 // ==========================================
+const API='https://script.google.com/macros/s/AKfycbzdKTvouX3f3bqV99jlHnV5iDxigEg6a3L08EQF_zjBqlo6nWiZ5KCkxsv2rAhaYyhZIQ/exec';
 let S={p:{k:1500,p:100,c:120,f:55}, f:[], w:{}};
 let cD=new Date(); cD.setHours(0,0,0,0);
 let selF=null, cSM=[];
@@ -292,26 +300,37 @@ const nS=s=>s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
 const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 const getFmt=d=>String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+d.getFullYear();
 
-function initApp() {
-  try{let ls=localStorage.getItem('he_db_clean');if(ls)S=JSON.parse(ls);}catch(e){}
-  updP(); popSm(); rend();
+async function initApp() {
+  gI('c-status').innerHTML='☁️ Se sincronizează...';
+  try {
+    let r=await fetch(`${API}?action=getAll`), d=await r.json();
+    if(d.healthData){let x=JSON.parse(d.healthData); S={...S,...x};}
+    gI('c-status').innerHTML='☁️ Salvat local/cloud';
+  } catch(e) {
+    gI('c-status').innerHTML='⚠️ Deconectat (Local mode)'; 
+    try{let ls=localStorage.getItem('he_db');if(ls)S=JSON.parse(ls);}catch(er){}
+  }
+  updP(); populateSmartPlanner(); renderApp();
 }
 
-function backup() { try{localStorage.setItem('he_db_clean',JSON.stringify(S));}catch(e){} }
+function backupData() {
+  try{localStorage.setItem('he_db',JSON.stringify(S));}catch(e){} 
+  fetch(API,{method:'POST',body:JSON.stringify({action:'saveHealthData',healthData:JSON.stringify(S)})});
+}
 
 // ==========================================
 // 3. UI & TAB NAVIGATION
 // ==========================================
 function sTab(t) {
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-  event.target.classList.add('active');
-  document.querySelectorAll('.tab-content').forEach(b=>b.classList.remove('active'));
-  gI('tab-'+t).classList.add('active');
-  if(t==='istoric') drH();
-  rend();
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active')); 
+  event.target.classList.add('active'); 
+  document.querySelectorAll('.tab-content').forEach(b=>b.classList.remove('active')); 
+  gI('t-'+t).classList.add('active'); 
+  if(t==='h') drH(); 
+  renderApp();
 }
 
-function cDay(x) { cD.setDate(cD.getDate()+x); rend(); }
+function cDay(x) { cD.setDate(cD.getDate()+x); renderApp(); }
 
 function openM(i) {
   gI(i).style.display='flex';
@@ -325,41 +344,41 @@ function closeM(i) { gI(i).style.display='none'; }
 // ==========================================
 // 4. JURNAL & CALCUL MACRO ZILNIC
 // ==========================================
-function updDonut(id, val, tgt, color) {
-  gI(`val-${id}`).innerText = Math.round(val);
-  gI(`sub-${id}`).innerText = id==='kcal' ? `din ${tgt} kcal` : `din ${tgt}g`;
-  let pct = Math.min(100, Math.round((val / tgt) * 100)) || 0;
-  let activeColor = val > tgt ? 'var(--red)' : color;
-  gI(`donut-${id}`).style.background = `conic-gradient(${activeColor} ${pct}%, var(--bg3) ${pct}%)`;
+function updateDonutUI(id, current, target, color) {
+  gI(`v-${id}`).innerText = Math.round(current);
+  gI(`s-${id}`).innerText = id==='k' ? `din ${target} kcal` : `din ${target}g`;
+  let pct = Math.min(100, Math.round((current / target) * 100)) || 0;
+  let activeColor = current > target ? 'var(--red)' : color;
+  gI(`dn-${id}`).style.background = `conic-gradient(${activeColor} ${pct}%, var(--bg3) ${pct}%)`;
 }
 
-function rend() {
+function renderApp() {
   let is = iso(cD);
   let isToday = is === iso(new Date());
-  gI('date-label').innerText = getFmt(cD) + (isToday ? ' (Azi)' : '');
+  gI('d-lbl').innerText = getFmt(cD) + (isToday ? ' (Azi)' : '');
 
-  // Calcul Macro
-  let dF = S.f.filter(x => x.d === is);
-  let t = { k: 0, p: 0, c: 0, f: 0 };
-  dF.forEach(x => { t.k += x.k; t.p += x.p; t.c += x.c; t.f += x.f; });
+  // Calcul Macro Jurnal Zilinic
+  let dayFoods = S.f.filter(x => x.d === is);
+  let totals = { k: 0, p: 0, c: 0, f: 0 };
+  dayFoods.forEach(x => { totals.k += x.k; totals.p += x.p; totals.c += x.c; totals.f += x.f; });
 
   let p = S.p;
-  updDonut('kcal', t.k, p.k, 'var(--purple)');
-  updDonut('prot', t.p, p.p, 'var(--pink)');
-  updDonut('carb', t.c, p.c, 'var(--orange)');
-  updDonut('fat', t.f, p.f, 'var(--teal)');
+  updateDonutUI('k', totals.k, p.k, 'var(--purple)');
+  updateDonutUI('p', totals.p, p.p, 'var(--pink)');
+  updateDonutUI('c', totals.c, p.c, 'var(--orange)');
+  updateDonutUI('f', totals.f, p.f, 'var(--teal)');
 
   // Liste alimente
-  let c = gI('log-list');
-  if (!dF.length) {
-    c.innerHTML = '<div style="text-align:center;color:var(--text3);padding:20px;font-size:13px">Niciun aliment adăugat azi.</div>';
+  let container = gI('log-list');
+  if (!dayFoods.length) {
+    container.innerHTML = '<div style="text-align:center;color:var(--text3);padding:20px;font-size:13px">Niciun aliment adăugat azi.</div>';
   } else {
     let lh = '';
     ['Mic dejun', 'Prânz', 'Cină', 'Gustare'].forEach(m => {
-      let mF = dF.filter(x => x.m === m);
-      if (!mF.length) return;
+      let mFoods = dayFoods.filter(x => x.m === m);
+      if (!mFoods.length) return;
       lh += `<div class="meal-lbl">${m}</div>`;
-      mF.forEach(x => {
+      mFoods.forEach(x => {
         lh += `
           <div class="li-item">
             <div>
@@ -374,21 +393,22 @@ function rend() {
         `;
       });
     });
-    c.innerHTML = lh;
+    container.innerHTML = lh;
   }
 
   // Water Tracker
-  let wCount = S.w[is] || 0;
-  gI('water-label').innerText = `${wCount} / 8`;
+  let waterCount = S.w[is] || 0;
+  gI('water-label').innerText = `${waterCount} / 8`;
   let wHtml = '';
   for(let i=0; i<8; i++) {
-    wHtml += `<div class="glass ${i < wCount ? 'full' : ''}" onclick="tW(${i < wCount ? -1 : 1})"></div>`;
+    wHtml += `<div class="glass ${i < waterCount ? 'full' : ''}" onclick="tW(${i < waterCount ? -1 : 1})"></div>`;
   }
-  gI('water-grid').innerHTML = wHtml;
+  gI('w-grid').innerHTML = wHtml;
 }
 
-function tW(v) { let is=iso(cD); S.w[is] = Math.max(0, (S.w[is] || 0) + v); backup(); rend(); }
-function dlF(id) { S.f = S.f.filter(x => x.id !== id); backup(); rend(); }
+function tW(v) { let i=iso(cD); S.w[i] = Math.max(0, (S.w[i] || 0) + v); backupData(); renderApp(); }
+
+function dlF(id) { S.f = S.f.filter(x => x.id !== id); backupData(); renderApp(); }
 
 // ==========================================
 // 5. CAUTARE & ADAUGARE IN JURNAL (MANUAL)
@@ -427,7 +447,7 @@ function calcF() {
   gI('f-f').value = +(q * selF.f / 100).toFixed(1);
 }
 
-function addF() {
+function addL() {
   if(!selF) return;
   let q = +gI('a-g').value || 0;
   S.f.push({
@@ -441,15 +461,15 @@ function addF() {
     c: +(q * selF.c / 100).toFixed(1),
     f: +(q * selF.f / 100).toFixed(1)
   });
-  backup();
+  backupData();
   closeM('m-add');
-  rend();
+  renderApp();
 }
 
 // ==========================================
-// 6. SMART PLANNER
+// 6. SMART PLANNER (AI-ul care citeste restul de macro)
 // ==========================================
-function popSm() {
+function populateSmartPlanner() {
   let p = DB.filter(x => x.t === 'p');
   let c = DB.filter(x => x.t === 'c');
   let f = DB.filter(x => x.t === 'f');
@@ -459,7 +479,7 @@ function popSm() {
   gI('sm-f').innerHTML = '<option value="-1">Fără grăsimi extra</option>' + f.map(x => `<option value="${x.n}">${x.n}</option>`).join('');
 }
 
-function calcSmart(rnd=false) {
+function calcS(rnd=false) {
   let pObj, cObj, fObj;
   
   if(rnd) {
@@ -475,12 +495,50 @@ function calcSmart(rnd=false) {
     fObj=gI('sm-f').value!=="-1"?DB.find(x=>x.n===gI('sm-f').value):null;
   }
 
+  // Verificam modul de calcul ales
+  let mode = gI('sm-type').value;
+  let tP = 0, tC = 0, tF = 0;
+
+  if (mode === 'standard') {
+    // Împarte profilul la 3
+    tP = S.p.p / 3;
+    tC = S.p.c / 3;
+    tF = S.p.f / 3;
+  } else {
+    // Calculează ce a mai rămas pe ziua curentă (Din Jurnal)
+    let is = iso(cD);
+    let dayFoods = S.f.filter(x => x.d === is);
+    let consP = 0, consC = 0, consF = 0;
+    dayFoods.forEach(x => { consP += x.p; consC += x.c; consF += x.f; });
+    
+    tP = Math.max(0, S.p.p - consP);
+    tC = Math.max(0, S.p.c - consC);
+    tF = Math.max(0, S.p.f - consF);
+  }
+
+  if (tP <= 0 && tC <= 0 && tF <= 0) {
+    gI('sm-items').innerHTML = '<div style="color:var(--orange);font-size:13px;text-align:center;padding:10px 0">Nu mai ai macro necesari! Ți-ai atins sau depășit țintele.</div>';
+    gI('sm-actions').style.display = 'none';
+    gI('sm-res').style.display = 'block';
+    return;
+  }
+
   cSM=[]; 
-  let tP=S.p.p/3, tC=S.p.c/3, tF=S.p.f/3;
+  let gP = (tP/pObj.p)*100 || 0; 
+  let exC = gP*pObj.c/100, exF = gP*pObj.f/100; 
+  if(gP > 0) cSM.push({o:pObj, q:Math.round(gP)});
   
-  let gP=(tP/pObj.p)*100, exC=gP*pObj.c/100, exF=gP*pObj.f/100; cSM.push({o:pObj,q:Math.round(gP)});
-  let nC=tC-exC; if(cObj&&nC>0){let gC=(nC/cObj.c)*100; exF+=gC*cObj.f/100; cSM.push({o:cObj,q:Math.round(gC)});}
-  let nF=tF-exF; if(fObj&&nF>2){let gF=(nF/fObj.f)*100; cSM.push({o:fObj,q:Math.round(gF)});}
+  let nC = tC - exC; 
+  if(cObj && nC > 0) {
+    let gC = (nC/cObj.c)*100; exF += gC*cObj.f/100; 
+    cSM.push({o:cObj, q:Math.round(gC)});
+  }
+  
+  let nF = tF - exF; 
+  if(fObj && nF > 0) {
+    let gF = (nF/fObj.f)*100; 
+    cSM.push({o:fObj, q:Math.round(gF)});
+  }
   
   let html = cSM.map(x => `
     <div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(78,205,196,0.3);padding:8px 0">
@@ -490,6 +548,7 @@ function calcSmart(rnd=false) {
   `).join('');
   
   gI('sm-items').innerHTML = html;
+  gI('sm-actions').style.display = 'flex';
   gI('sm-res').style.display = 'block';
 }
 
@@ -505,7 +564,7 @@ function addSmLog() {
       f: +(x.q * x.o.f / 100).toFixed(1)
     });
   });
-  backup(); sTab('jurnal');
+  backupData(); sTab('j');
 }
 
 // ==========================================
@@ -526,8 +585,8 @@ function drH() {
 
     let bC = t.k > tk ? 'var(--red)' : 'var(--purple)';
 
-    hK += `<div class="history-col"><div class="history-bar-wrap"><div class="history-val" style="bottom:${pk}%">${Math.round(t.k)}</div><div class="history-bar" style="height:${pk}%;background:${bC}"></div></div><div style="font-size:9px;color:var(--text3)">${getFmt(d).substring(0,5)}</div></div>`;
-    hP += `<div class="history-col"><div class="history-bar-wrap"><div class="history-val" style="bottom:${pp}%">${Math.round(t.p)}g</div><div class="history-bar" style="height:${pp}%;background:linear-gradient(180deg,var(--teal),#38b2ac)"></div></div><div style="font-size:9px;color:var(--text3)">${getFmt(d).substring(0,5)}</div></div>`;
+    hK += `<div class="history-col"><div class="history-bar-wrap"><div class="history-val" style="bottom:${pk}%">${Math.round(t.k)}</div><div class="history-bar" style="height:${pk}%;background:${bC}"></div></div><div style="font-size:9px;color:var(--text3)">${getFmtDate(d).substring(0,5)}</div></div>`;
+    hP += `<div class="history-col"><div class="history-bar-wrap"><div class="history-val" style="bottom:${pp}%">${Math.round(t.p)}g</div><div class="history-bar" style="height:${pp}%;background:linear-gradient(180deg,var(--teal),#38b2ac)"></div></div><div style="font-size:9px;color:var(--text3)">${getFmtDate(d).substring(0,5)}</div></div>`;
   }
   
   gI('h-chk').innerHTML = hK;
@@ -538,7 +597,7 @@ function drH() {
 // 8. SETARI PROFIL
 // ==========================================
 function updP() { ['k', 'p', 'c', 'f'].forEach(x => gI('p-' + x).value = S.p[x]); }
-function saveP() { ['k', 'p', 'c', 'f'].forEach(x => S.p[x] = +gI('p-' + x).value); backup(); rend(); }
+function saveP() { ['k', 'p', 'c', 'f'].forEach(x => S.p[x] = +gI('p-' + x).value); backupData(); renderApp(); }
 
 // RUN APP
 initApp();
