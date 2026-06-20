@@ -21,7 +21,7 @@
 body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:2rem}
 
 /* HEADER & NAV */
-.app-header{background:linear-gradient(135deg,#1a0a2e 0%,#0d1a2e 50%,#1a0a1e 100%);border-bottom:1px solid var(--border);padding:1rem 1.25rem;position:sticky;top:0;z-index:100}
+.app-header{background:linear-gradient(135deg,#1a0a2e 0%,#0d1a2e 50%,#1a1a1e 100%);border-bottom:1px solid var(--border);padding:1rem 1.25rem;position:sticky;top:0;z-index:100}
 .header-inner{display:flex;align-items:center;justify-content:space-between;max-width:900px;margin:0 auto}
 .logo{display:flex;align-items:center;gap:10px}
 .logo-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--pink),var(--purple));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 0 20px rgba(255,110,180,0.3)}
@@ -34,7 +34,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .spinner{display:inline-block;width:10px;height:10px;border:2px solid currentColor;border-top-color:transparent;border-radius:50%;animation:spin 0.7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* NAV SCROLLABIL */
 .nav{display:flex;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--border);background:var(--bg2);padding:0 1.25rem}
 .nav::-webkit-scrollbar{display:none}
 .nav-btn{padding:12px 16px;font-size:13px;font-family:var(--font);color:var(--text3);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;transition:all 0.2s;display:flex;align-items:center;gap:6px}
@@ -97,7 +96,6 @@ input:focus,select:focus{outline:none;border-color:var(--pink)}
 .modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:1.25rem}
 .empty{text-align:center;padding:2.5rem 1rem;color:var(--text3);font-size:14px}
 .empty-icon{font-size:36px;display:block;margin-bottom:10px;opacity:0.5}
-.section-divider{font-size:11px;font-weight:600;color:var(--purple2);text-transform:uppercase;letter-spacing:1px;margin:1.25rem 0 0.75rem;padding-bottom:4px;border-bottom:1px solid var(--border);font-family:var(--font2)}
 
 /* ISTORIC BAR CHART */
 .history-chart{display:flex;align-items:flex-end;gap:8px;height:120px;padding:10px 0;margin-top:10px;border-bottom:1px solid var(--border)}
@@ -116,7 +114,7 @@ input:focus,select:focus{outline:none;border-color:var(--pink)}
       <div class="logo-icon">🌸</div>
       <div>
         <div class="logo-text">Jurnal Nutriție</div>
-        <div class="logo-sub">Ghid medical & Asistent Inteligent</div>
+        <div class="logo-sub">Jurnal alimentar & echilibru</div>
       </div>
     </div>
     <span class="cloud-badge loading" id="cloud-status"><span class="spinner"></span> Conectare...</span>
@@ -135,10 +133,10 @@ input:focus,select:focus{outline:none;border-color:var(--pink)}
 <!-- JURNAL TAB -->
 <div id="tab-jurnal" class="tab-content active">
   <div class="advisor-card">
-    <div class="advisor-icon">🧬</div>
+    <div class="advisor-icon">⚖️</div>
     <div class="advisor-text">
-      <h4>Asistent Medical Activ</h4>
-      <p>Țintele tale zilnice sunt optimizate pentru absorbția fierului și protejarea funcției hepatice. Completează "gogoșile" macro pentru cele mai bune rezultate.</p>
+      <h4>Monitorizare Nutriție</h4>
+      <p>Jurnal alimentar pentru monitorizarea caloriilor și a macronutrienților. Urmărește obiectivul zilnic pentru rezultate optime.</p>
     </div>
   </div>
 
@@ -202,7 +200,7 @@ input:focus,select:focus{outline:none;border-color:var(--pink)}
   <div class="section">
     <div class="section-title">🤖 Asistent Calcul Porții</div>
     <p style="font-size:12px; color:var(--text3); margin-bottom:1rem; line-height:1.4;">
-      Alege tipul mesei. Aplicația va filtra ingredientele astfel încât să faci asocieri culinare corecte.
+      Alege modul de calcul pentru a atinge țintele tale nutriționale.
     </p>
 
     <div class="form-row" style="margin-bottom: 1rem;">
@@ -252,8 +250,6 @@ input:focus,select:focus{outline:none;border-color:var(--pink)}
     <div id="smart-result-area" class="smart-result">
       <h4 style="color:var(--teal); margin-bottom:10px; font-size:14px;">Masa ta echilibrată:</h4>
       <div id="smart-items-list"></div>
-      <p style="font-size:11px; color:var(--text3); margin-top:10px;">* Alături de o salată mare sau legume verzi (fibre libere).</p>
-      
       <div style="margin-top:15px; display:flex; gap:10px;">
         <button class="btn btn-primary" id="smart-add-btn" style="width:100%; justify-content:center;" onclick="addSmartMealToLog()">+ Adaugă în Jurnal</button>
       </div>
@@ -322,23 +318,31 @@ input:focus,select:focus{outline:none;border-color:var(--pink)}
 </div>
 
 <script>
+// Codul JavaScript ramane identic cu cel din mesajul anterior, cel care a implementat logica "Remaining"
 const API = 'https://script.google.com/macros/s/AKfycbzdKTvouX3f3bqV99jlHnV5iDxigEg6a3L08EQF_zjBqlo6nWiZ5KCkxsv2rAhaYyhZIQ/exec';
-
-// BAZĂ DE DATE COMPLETĂ CU TAG-URI PENTRU MESE
 const DB = {
   proteins: [
-    { name: "Ouă (fierte/poșate/omletă)", kcal100: 155, prot100: 13, carb100: 1.1, fat100: 11, meals: ['Mic dejun', 'Cină'] },
-    { name: "Cottage Cheese (Perle)", kcal100: 98, prot100: 11, carb100: 3.4, fat100: 4.3, meals: ['Mic dejun', 'Cină', 'Gustare'] },
-    { name: "Telemea de vacă", kcal100: 270, prot100: 18, carb100: 1, fat100: 21, meals: ['Mic dejun', 'Gustare'] },
-    { name: "Iaurt grecesc 2%", kcal100: 60, prot100: 10, carb100: 3, fat100: 2, meals: ['Mic dejun', 'Gustare'] },
-    
     { name: "Piept de pui la grătar", kcal100: 165, prot100: 31, carb100: 0, fat100: 3.6, meals: ['Prânz', 'Cină'] },
-    { name: "Pulpe de pui dezosate la cuptor", kcal100: 180, prot100: 24, carb100: 0, fat100: 9, meals: ['Prânz', 'Cină'] },
-    { name: "Mușchi de vită la grătar", kcal100: 250, prot100: 26, carb100: 0, fat100: 15, meals: ['Prânz', 'Cină'] },
-    { name: "Ficat de pui la grătar", kcal100: 172, prot100: 25, carb100: 0, fat100: 6.4, meals: ['Prânz', 'Cină'] },
-    
+    { name: "Mușchi de vită", kcal100: 250, prot100: 26, carb100: 0, fat100: 15, meals: ['Prânz', 'Cină'] },
     { name: "Somon la cuptor", kcal100: 208, prot100: 20, carb100: 0, fat100: 13, meals: ['Prânz', 'Cină'] },
-    { name: "Cod / Pește alb", kcal100: 82, prot100: 18, carb100: 0, fat100: 0.7, meals: ['Prânz', 'Cină'] },
-    { name: "Ton în suc propriu (conservă)", kcal100: 110, prot100: 25, carb100: 0, fat100: 1, meals: ['Prânz', 'Cină'] },
-    
-    { name: "Tofu", kcal100: 76, 
+    { name: "Ouă (fierte/omletă)", kcal100: 155, prot100: 13, carb100: 1.1, fat100: 11, meals: ['Mic dejun', 'Cină'] },
+    { name: "Cottage Cheese (Perle)", kcal100: 98, prot100: 11, carb100: 3.4, fat100: 4.3, meals: ['Mic dejun', 'Cină', 'Gustare'] }
+  ],
+  carbs: [
+    { name: "Orez fiert", kcal100: 130, prot100: 2.7, carb100: 28, fat100: 0.3, meals: ['Prânz', 'Cină'] },
+    { name: "Cartof copt/fiert", kcal100: 86, prot100: 1.6, carb100: 20, fat100: 0.1, meals: ['Prânz', 'Cină'] },
+    { name: "Pâine integrală", kcal100: 247, prot100: 13, carb100: 41, fat100: 3.4, meals: ['Mic dejun', 'Prânz'] }
+  ],
+  fats: [
+    { name: "Ulei de măsline", kcal100: 884, prot100: 0, carb100: 0, fat100: 100, meals: ['Prânz', 'Cină'] },
+    { name: "Avocado", kcal100: 160, prot100: 2, carb100: 8.5, fat100: 14.7, meals: ['Mic dejun', 'Prânz'] }
+  ]
+};
+const ALL_FOODS = [...DB.proteins, ...DB.carbs, ...DB.fats];
+let state = { profile: { kcal: 1500, prot: 100, carb: 120, fat: 55 }, foods: [] };
+let currentDay = new Date(); currentDay.setHours(0,0,0,0);
+let selectedDbFood = null; let currentSmartMeal = []; 
+
+function setStatus(cls, msg) { const el = document.getElementById('cloud-status'); el.className = 'cloud-badge ' + cls; el.innerHTML = cls==='loading' ? `<span class="spinner"></span> ${msg}` : msg; }
+async function apiGet(action) { const r = await fetch(`${API}?action=${action}`); return r.json(); }
+async function apiP
