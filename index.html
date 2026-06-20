@@ -6,792 +6,358 @@
 <title>Sănătatea Mea - Elite</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #0d0d14; --bg2: #13131f; --bg3: #1a1a2e;
-  --border: #2a2a45; --border2: #3a3a55;
-  --text: #f0eeff; --text2: #a09ec0; --text3: #6b6a85;
-  --pink: #ff6eb4; --pink2: #ff9ed4;
-  --purple: #b06bff; --purple2: #d4a8ff;
-  --teal: #4ecdc4; --red: #ff4f6e;
-  --green: #4ade80; --orange: #ff9f43; --yellow: #ffd93d;
-  --font: 'Space Grotesk', sans-serif;
-  --font2: 'Outfit', sans-serif;
-}
+:root{--bg:#0d0d14;--bg2:#13131f;--bg3:#1a1a2e;--border:#2a2a45;--text:#f0eeff;--text2:#a09ec0;--text3:#6b6a85;--pink:#ff6eb4;--purple:#b06bff;--teal:#4ecdc4;--red:#ff4f6e;--green:#4ade80;--orange:#ff9f43;--font:'Space Grotesk',sans-serif;--font2:'Outfit',sans-serif}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:2rem}
 
-/* HEADER & NAV */
-.app-header{background:linear-gradient(135deg,#1a0a2e 0%,#0d1a2e 50%,#1a0a1e 100%);border-bottom:1px solid var(--border);padding:1rem 1.25rem;position:sticky;top:0;z-index:100}
-.header-inner{display:flex;align-items:center;justify-content:space-between;max-width:900px;margin:0 auto}
+.header{background:linear-gradient(135deg,#1a0a2e,#0d1a2e,#1a0a1e);border-bottom:1px solid var(--border);padding:1rem;position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center}
 .logo{display:flex;align-items:center;gap:10px}
-.logo-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--pink),var(--purple));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 0 20px rgba(255,110,180,0.3)}
-.logo-text{font-size:17px;font-weight:700;color:var(--text)}
-.cloud-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:4px 10px;border-radius:20px;background:var(--bg3);border:1px solid var(--border)}
-.cloud-badge.ok{border-color:rgba(78,205,196,0.3);color:var(--teal)}
-.cloud-badge.err{border-color:rgba(255,79,110,0.3);color:var(--red)}
+.logo-icon{width:34px;height:34px;background:linear-gradient(135deg,var(--pink),var(--purple));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 0 15px rgba(255,110,180,0.3)}
+.logo-text{font-size:16px;font-weight:700;color:white}
+.badge{font-size:10px;padding:4px 8px;border-radius:12px;background:var(--bg3);border:1px solid var(--border);display:flex;align-items:center;gap:4px}
 
-.nav{display:flex;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--border);background:var(--bg2);padding:0 1.25rem}
+.nav{display:flex;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--border);background:var(--bg2);padding:0 1rem;gap:5px}
 .nav::-webkit-scrollbar{display:none}
-.nav-btn{padding:14px 16px;font-size:13px;font-family:var(--font);color:var(--text3);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;transition:all 0.2s;font-weight:500}
-.nav-btn.active{color:var(--pink);border-bottom-color:var(--pink)}
+.nav-btn{padding:14px;font-size:13px;font-family:var(--font);color:var(--text3);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;font-weight:500}
+.nav-btn.active{color:var(--pink);border-bottom-color:var(--pink);color:white}
 
-/* MAIN */
-.main{max-width:900px;margin:0 auto;padding:1.25rem}
-.tab-content{display:none}
-.tab-content.active{display:block}
-.section{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:1.25rem;margin-bottom:1.25rem}
-.section-title{font-size:13px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:1rem}
+.main{max-width:800px;margin:0 auto;padding:1rem}
+.tab{display:none} .tab.active{display:block}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.2rem;margin-bottom:1rem}
+.card-title{font-size:13px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin-bottom:1rem;display:flex;align-items:center;gap:8px;justify-content:space-between}
 
-/* DONUTS */
-.donuts-grid{display:flex;justify-content:space-between;gap:10px;margin-bottom:1.5rem;flex-wrap:wrap}
-.donut-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.2rem 1rem;display:flex;flex-direction:column;align-items:center;flex:1;min-width:130px}
-.donut-wrap{width:70px;height:70px;border-radius:50%;display:flex;justify-content:center;align-items:center;position:relative;background:conic-gradient(var(--bg3) 100%,transparent 0);margin-bottom:12px;transition:background 0.5s ease}
-.donut-inner{width:56px;height:56px;background:var(--bg2);border-radius:50%;display:flex;flex-direction:column;justify-content:center;align-items:center;position:absolute;z-index:2;box-shadow:inset 0 0 10px rgba(0,0,0,0.5)}
-.donut-val{font-size:15px;font-weight:700;color:var(--text);line-height:1.1}
-.donut-label{font-size:11px;font-weight:600;color:var(--text2);font-family:var(--font2);text-transform:uppercase;letter-spacing:0.5px}
-.donut-sub{font-size:10px;color:var(--text3);margin-top:4px}
+/* Donuts */
+.d-grid{display:flex;gap:10px;margin-bottom:1.5rem;flex-wrap:wrap}
+.d-card{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:15px 10px;display:flex;flex-direction:column;align-items:center;flex:1;min-width:110px}
+.d-wrap{width:64px;height:64px;border-radius:50%;display:flex;justify-content:center;align-items:center;background:conic-gradient(var(--bg3) 100%,transparent 0);position:relative;margin-bottom:10px}
+.d-in{width:50px;height:50px;background:var(--bg3);border-radius:50%;display:flex;flex-direction:column;justify-content:center;align-items:center;position:absolute;z-index:2}
+.d-val{font-size:14px;font-weight:700} .d-lbl{font-size:11px;color:var(--text2);text-transform:uppercase;font-weight:600}
+.d-sub{font-size:10px;color:var(--text3);margin-top:4px}
 
-/* WATER TRACKER */
+/* Forms & Buttons */
+.btn{padding:10px 16px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);color:var(--text);cursor:pointer;font-size:13px;transition:0.2s;font-weight:500}
+.btn:hover{border-color:var(--border2)}
+.btn-p{background:linear-gradient(135deg,var(--pink),var(--purple));border:none;font-weight:600}
+input,select{background:var(--bg3);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:10px 12px;width:100%;font-size:14px;font-family:var(--font);margin-top:5px;outline:none}
+input:focus,select:focus{border-color:var(--pink)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px}
+.form-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px}
+
+/* Lists */
+.li-item{display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;margin-bottom:8px}
+.li-n{font-size:14px;font-weight:600} .li-m{font-size:11px;color:var(--text3);margin-top:4px} .li-k{color:var(--pink);font-size:13px;font-weight:600}
+.li-del{background:none;border:none;color:var(--red);cursor:pointer;font-size:18px;padding:0 5px;margin-left:10px}
+.meal-lbl{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;margin:15px 0 8px;padding-left:4px}
+
+/* Water Tracker */
 .water-grid{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .glass{width:32px;height:42px;border:2px solid var(--teal);border-radius:4px 4px 8px 8px;cursor:pointer;position:relative;overflow:hidden;background:var(--bg3)}
 .glass.full::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:85%;background:rgba(78,205,196,0.6)}
 
-/* LISTS & BUTTONS */
-.food-item{display:flex;align-items:center;justify-content:space-between;padding:12px;background:var(--bg3);border-radius:10px;border:1px solid var(--border);margin-bottom:8px}
-.food-name{font-size:14px;color:var(--text);font-family:var(--font2);font-weight:600}
-.food-meta{font-size:11px;color:var(--text3);margin-top:4px}
-.food-kcal{font-size:13px;font-weight:600;color:var(--pink)}
-.food-delete{background:none;border:none;color:var(--red);cursor:pointer;font-size:18px;padding:0 5px;margin-left:10px}
-.meal-label{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;margin:15px 0 8px;padding-left:2px}
-
-.btn{padding:10px 16px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);color:var(--text);cursor:pointer;font-size:13px;font-family:var(--font);display:inline-flex;align-items:center;justify-content:center;gap:6px;transition:all 0.2s}
-.btn:hover{border-color:var(--border2)}
-.btn-primary{background:linear-gradient(135deg,var(--pink),var(--purple));border:none;color:white;font-weight:600}
-
-/* DATE NAV */
-.date-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
-.date-nav button{background:var(--bg2);border:1px solid var(--border);color:var(--text2);width:36px;height:36px;border-radius:8px;cursor:pointer;font-size:16px}
-.date-label{font-size:15px;font-weight:600;color:var(--text)}
-
-/* FORMS */
-.form-group{margin-bottom:1.2rem}
-.form-label{font-size:12px;color:var(--text3);margin-bottom:6px;display:block;text-transform:uppercase;letter-spacing:0.5px;font-family:var(--font2)}
-input,select{background:var(--bg3);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:10px 12px;width:100%;font-size:14px;font-family:var(--font)}
-input:focus,select:focus{outline:none;border-color:var(--pink)}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-
-/* MODALS */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;z-index:1000;padding:1rem}
-.modal{background:var(--bg2);border-radius:16px;border:1px solid var(--border);padding:1.5rem;width:100%;max-width:450px;max-height:90vh;overflow-y:auto}
-.modal-title{font-size:16px;font-weight:700;margin-bottom:1.25rem;color:var(--text)}
-
-/* SHOPPING LIST */
-.shop-item{display:flex;align-items:center;gap:10px;padding:12px;background:var(--bg3);border-radius:8px;margin-bottom:8px;border:1px solid var(--border)}
-.shop-item.done{opacity:0.5;text-decoration:line-through}
-input[type="checkbox"]{width:18px;height:18px;accent-color:var(--pink);margin:0}
-
-/* ISTORIC BAR CHART */
-.history-chart{display:flex;align-items:flex-end;gap:8px;height:140px;padding:10px 0;margin-top:10px;border-bottom:1px solid var(--border)}
-.history-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px}
-.history-bar-wrap{width:100%;height:100px;background:var(--bg3);border-radius:6px;position:relative;display:flex;align-items:flex-end;overflow:hidden}
-.history-bar{width:100%;background:linear-gradient(180deg,var(--pink),var(--purple));border-radius:6px;transition:height 0.5s ease}
-.history-val{font-size:10px;color:var(--text2);position:absolute;top:4px;width:100%;text-align:center;font-weight:600}
+/* Modals */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;z-index:999;padding:1rem}
+.modal{background:var(--bg2);width:100%;max-width:450px;padding:1.5rem;border-radius:16px;border:1px solid var(--border)}
 </style>
 </head>
 <body>
 
-<header class="app-header">
-  <div class="header-inner">
-    <div class="logo"><div class="logo-icon">🌸</div><div class="logo-text">Jurnal Nutriție Elite</div></div>
-    <span class="cloud-badge ok" id="cloud-status">☁️ Salvat local</span>
-  </div>
-</header>
+<div class="header">
+  <div class="logo"><div class="logo-icon">🌸</div><div class="logo-text">Jurnal Elite</div></div>
+  <div class="badge" id="c-status">☁️ Sync...</div>
+</div>
 
-<nav class="nav">
-  <button class="nav-btn active" onclick="switchTab('jurnal')">🥗 Jurnal</button>
-  <button class="nav-btn" onclick="switchTab('smart')">🤖 Smart</button>
-  <button class="nav-btn" onclick="switchTab('shop')">🛒 Listă</button>
-  <button class="nav-btn" onclick="switchTab('retete')">🍳 Rețete</button>
-  <button class="nav-btn" onclick="switchTab('istoric')">📈 Istoric</button>
-  <button class="nav-btn" onclick="switchTab('setari')">⚙️ Profil</button>
-</nav>
+<div class="nav">
+  <button class="nav-btn active" onclick="sTab('j')">🥗 Jurnal</button>
+  <button class="nav-btn" onclick="sTab('s')">🤖 Smart Planner</button>
+  <button class="nav-btn" onclick="sTab('h')">📈 Istoric</button>
+  <button class="nav-btn" onclick="sTab('p')">⚙️ Profil</button>
+</div>
 
-<main class="main">
+<div class="main">
 
   <!-- JURNAL -->
-  <div id="tab-jurnal" class="tab-content active">
-    
-    <div class="date-nav">
-      <button onclick="changeDay(-1)">‹</button>
-      <div class="date-label" id="date-label"></div>
-      <button onclick="changeDay(1)">›</button>
+  <div id="t-j" class="tab active">
+    <div style="display:flex;justify-content:space-between;margin-bottom:1.5rem;align-items:center">
+      <button class="btn" style="width:40px" onclick="cDay(-1)">‹</button>
+      <div id="d-lbl" style="font-weight:600;font-size:15px"></div>
+      <button class="btn" style="width:40px" onclick="cDay(1)">›</button>
     </div>
 
-    <!-- DONUTS (Acum cu etichetele din nou la locul lor) -->
-    <div class="donuts-grid">
-      <div class="donut-card">
-        <div class="donut-wrap" id="donut-kcal"><div class="donut-inner"><span class="donut-val" id="val-kcal">0</span></div></div>
-        <div class="donut-label">Calorii</div>
-        <div class="donut-sub" id="sub-kcal">din 1500</div>
-      </div>
-      <div class="donut-card">
-        <div class="donut-wrap" id="donut-prot"><div class="donut-inner"><span class="donut-val" id="val-prot" style="color:var(--pink)">0</span></div></div>
-        <div class="donut-label" style="color:var(--pink)">Prot</div>
-        <div class="donut-sub" id="sub-prot">din 100g</div>
-      </div>
-      <div class="donut-card">
-        <div class="donut-wrap" id="donut-carb"><div class="donut-inner"><span class="donut-val" id="val-carb" style="color:var(--orange)">0</span></div></div>
-        <div class="donut-label" style="color:var(--orange)">Carbo</div>
-        <div class="donut-sub" id="sub-carb">din 120g</div>
-      </div>
-      <div class="donut-card">
-        <div class="donut-wrap" id="donut-fat"><div class="donut-inner"><span class="donut-val" id="val-fat" style="color:var(--teal)">0</span></div></div>
-        <div class="donut-label" style="color:var(--teal)">Grăs</div>
-        <div class="donut-sub" id="sub-fat">din 55g</div>
-      </div>
+    <div class="d-grid">
+      <div class="d-card"><div class="d-wrap" id="dn-k"><div class="d-in"><span class="d-val" id="v-k">0</span></div></div><div class="d-lbl">Calorii</div><div class="d-sub" id="s-k">din 1500</div></div>
+      <div class="d-card"><div class="d-wrap" id="dn-p"><div class="d-in"><span class="d-val" id="v-p" style="color:var(--pink)">0</span></div></div><div class="d-lbl" style="color:var(--pink)">Prot</div><div class="d-sub" id="s-p">din 100g</div></div>
+      <div class="d-card"><div class="d-wrap" id="dn-c"><div class="d-in"><span class="d-val" id="v-c" style="color:var(--orange)">0</span></div></div><div class="d-lbl" style="color:var(--orange)">Carbo</div><div class="d-sub" id="s-c">din 120g</div></div>
+      <div class="d-card"><div class="d-wrap" id="dn-f"><div class="d-in"><span class="d-val" id="v-f" style="color:var(--teal)">0</span></div></div><div class="d-lbl" style="color:var(--teal)">Grăs</div><div class="d-sub" id="s-f">din 55g</div></div>
     </div>
 
-    <!-- APA TRACKER -->
-    <div class="section">
-      <div class="section-title">💧 Apă (Pahare de 250ml) <span id="water-label" style="margin-left:auto;color:var(--teal)">0 / 8</span></div>
-      <div class="water-grid" id="water-grid"></div>
+    <div class="card">
+      <div class="card-title">💧 Apă (Pahare 250ml) <span id="w-lbl" style="color:var(--teal)">0 / 8</span></div>
+      <div class="water-grid" id="w-grid"></div>
     </div>
 
-    <div style="display:flex;justify-content:flex-end;margin-bottom:1rem">
-      <button class="btn btn-primary" onclick="showFoodModal()">+ Adaugă Aliment/Rețetă</button>
-    </div>
-    
-    <div id="food-log-container"></div>
+    <div style="text-align:right;margin-bottom:15px"><button class="btn btn-p" onclick="openM('m-add')">+ Adaugă Aliment</button></div>
+    <div id="log-list"></div>
   </div>
 
-  <!-- SMART PLANNER -->
-  <div id="tab-smart" class="tab-content">
-    <div class="section">
-      <div class="section-title">🤖 Asistent Calcul Porții</div>
-      <p style="font-size:13px;color:var(--text3);margin-bottom:1.5rem">Alege ingredientele din frigider, iar aplicația calculează gramajele perfecte pentru o masă.</p>
+  <!-- SMART -->
+  <div id="t-s" class="tab">
+    <div class="card">
+      <div class="card-title">🤖 Asistent Inteligent</div>
+      <p style="font-size:13px;color:var(--text3);margin-bottom:1.2rem">Alege alimentele pe care vrei să le mănânci, iar aplicația îți va calcula instant gramajele perfecte pentru tine.</p>
       
-      <div class="form-group"><label class="form-label">Sursă Proteine</label><select id="smart-prot"></select></div>
-      <div class="form-group"><label class="form-label">Sursă Carbohidrați</label><select id="smart-carb"></select></div>
-      <div class="form-group"><label class="form-label">Sursă Grăsimi</label><select id="smart-fat"></select></div>
+      <div style="margin-bottom:1rem"><label class="form-label">Sursă Proteine</label><select id="sm-p"></select></div>
+      <div style="margin-bottom:1rem"><label class="form-label">Sursă Carbohidrați</label><select id="sm-c"></select></div>
+      <div style="margin-bottom:1rem"><label class="form-label">Sursă Grăsimi extra</label><select id="sm-f"></select></div>
       
-      <button class="btn btn-primary" style="width:100%;margin-top:10px" onclick="calculateSmartMeal()">⚖️ Calculează Gramajele</button>
-    </div>
-
-    <div id="smart-result-area" class="section" style="display:none;background:rgba(78,205,196,0.05);border-color:var(--teal)">
-      <div class="section-title" style="color:var(--teal)">Masa ta perfectă</div>
-      <div id="smart-items-list" style="margin-bottom:15px"></div>
-      
-      <div class="form-row">
-        <select id="smart-masa-target"><option>Mic dejun</option><option>Prânz</option><option>Cină</option></select>
-        <button class="btn btn-primary" onclick="addSmartMealToLog()">+ Adaugă în Jurnal</button>
+      <div class="form-row" style="margin-top:1.5rem">
+        <button class="btn" style="border-color:var(--purple);color:var(--purple2)" onclick="calcS(true)">🎲 Surprinde-mă</button>
+        <button class="btn btn-p" onclick="calcS()">⚖️ Calculează</button>
       </div>
-      <button class="btn" style="width:100%;margin-top:10px;border-color:var(--purple);color:var(--purple2)" onclick="addSmartMealToShop()">🛒 Trimite la Cumpărături</button>
     </div>
-  </div>
-
-  <!-- SHOPPING LIST -->
-  <div id="tab-shop" class="tab-content">
-    <div class="section">
-      <div class="section-title">🛒 Lista de Cumpărături</div>
-      <div style="display:flex;gap:10px;margin-bottom:15px">
-        <input type="text" id="shop-input" placeholder="Ce mai cumperi azi?">
-        <button class="btn btn-primary" onclick="addShopItem()">Adaugă</button>
+    <div id="sm-res" class="card" style="display:none;background:rgba(78,205,196,0.05);border-color:var(--teal)">
+      <div class="card-title" style="color:var(--teal)">Masa ta echilibrată:</div>
+      <div id="sm-items"></div>
+      <div class="form-row" style="margin-top:15px">
+        <select id="sm-m"><option>Mic dejun</option><option>Prânz</option><option>Cină</option></select>
+        <button class="btn btn-p" onclick="addSmLog()">+ Adaugă în Jurnal</button>
       </div>
-      <div id="shop-list-container"></div>
-      <button class="btn" style="width:100%;margin-top:15px;font-size:12px;border-color:var(--red);color:var(--red)" onclick="clearShopList()">🗑 Curăță lista bifată</button>
     </div>
-  </div>
-
-  <!-- CUSTOM RECIPES -->
-  <div id="tab-retete" class="tab-content">
-    <div class="section">
-      <div class="section-title">🍳 Rețetele Mele</div>
-      <p style="font-size:12px;color:var(--text3);margin-bottom:1rem">Construiește o rețetă pe care o mănânci des. O vei găsi gata calculată la adăugarea în jurnal!</p>
-      
-      <div class="form-row" style="grid-template-columns: 2fr 1fr">
-        <input type="text" id="recipe-name" placeholder="Nume rețetă (ex: Salata mea)...">
-        <button class="btn btn-primary" onclick="showRecipeIngredientModal()">+ Ingredient</button>
-      </div>
-      
-      <div id="recipe-draft-list" style="margin:15px 0;font-size:13px;color:var(--text3);background:var(--bg3);padding:10px;border-radius:8px">Nu ai adăugat niciun ingredient.</div>
-      
-      <button class="btn" style="width:100%;border-color:var(--green);color:var(--green)" onclick="saveCustomRecipe()">✓ Salvează Rețeta</button>
-    </div>
-    
-    <div id="saved-recipes-container"></div>
   </div>
 
   <!-- ISTORIC -->
-  <div id="tab-istoric" class="tab-content">
-    <div class="section"><div class="section-title">📈 Calorii (7 zile)</div><div class="history-chart" id="hist-kcal"></div></div>
-    <div class="section"><div class="section-title">🥩 Proteine (7 zile)</div><div class="history-chart" id="hist-prot"></div></div>
+  <div id="t-h" class="tab">
+    <div class="card">
+      <div class="card-title">Evoluție Calorii (7 zile)</div>
+      <div id="h-chk" style="display:flex;gap:8px;height:140px;align-items:flex-end;border-bottom:1px solid var(--border);padding-bottom:5px"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Evoluție Proteine (7 zile)</div>
+      <div id="h-chp" style="display:flex;gap:8px;height:140px;align-items:flex-end;border-bottom:1px solid var(--border);padding-bottom:5px"></div>
+    </div>
   </div>
 
-  <!-- SETARI -->
-  <div id="tab-setari" class="tab-content">
-    <div class="section">
-      <div class="section-title">👤 Profil & Ținte Macro</div>
+  <!-- PROFIL -->
+  <div id="t-p" class="tab">
+    <div class="card">
+      <div class="card-title">Setări Ținte Macro</div>
       <div class="form-row">
-        <div class="form-group"><label class="form-label">Calorii</label><input type="number" id="set-kcal" onchange="saveProfile()"></div>
-        <div class="form-group"><label class="form-label">Proteine (g)</label><input type="number" id="set-prot" onchange="saveProfile()"></div>
+        <div><label class="form-label">Calorii</label><input type="number" id="p-k"></div>
+        <div><label class="form-label">Proteine (g)</label><input type="number" id="p-p"></div>
       </div>
-      <div class="form-row">
-        <div class="form-group"><label class="form-label">Carbohidrați (g)</label><input type="number" id="set-carb" onchange="saveProfile()"></div>
-        <div class="form-group"><label class="form-label">Grăsimi (g)</label><input type="number" id="set-fat" onchange="saveProfile()"></div>
+      <div class="form-row" style="margin-top:10px">
+        <div><label class="form-label">Carbo (g)</label><input type="number" id="p-c"></div>
+        <div><label class="form-label">Grăsimi (g)</label><input type="number" id="p-f"></div>
       </div>
-      <button class="btn btn-primary" style="width:100%;margin-top:10px" onclick="backup()">💾 Salvează local</button>
+      <button class="btn btn-p" style="width:100%;margin-top:20px" onclick="saveP()">💾 Salvează Datele</button>
     </div>
   </div>
 
-</main>
-
-<!-- MODALS -->
-
-<!-- 1. Modal Adauga in Jurnal -->
-<div id="modal-food" class="modal-overlay">
-  <div class="modal">
-    <div class="modal-title">Adaugă în Jurnal</div>
-    <div class="form-group">
-      <label class="form-label">Masă</label>
-      <select id="f-masa"><option>Mic dejun</option><option>Prânz</option><option>Cină</option><option>Gustare</option></select>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Caută aliment sau rețetă</label>
-      <input type="text" id="f-search" placeholder="Ex: Ou ochi, Pui, Rețeta mea..." autocomplete="off">
-      <div id="f-suggestions" style="max-height:150px;overflow-y:auto;background:var(--bg3);border-radius:8px;margin-top:5px"></div>
-    </div>
-    <div class="form-row">
-      <div class="form-group"><label class="form-label">Cant. (g)</label><input type="number" id="f-qty" value="100" oninput="calcFood()"></div>
-      <div class="form-group"><label class="form-label">Total kcal</label><input type="number" id="f-kcal" readonly style="opacity:0.7"></div>
-    </div>
-    <div class="modal-actions">
-      <button class="btn" onclick="closeModal('modal-food')">Anulează</button>
-      <button class="btn btn-primary" onclick="addFoodToLog()">Adaugă</button>
-    </div>
-  </div>
 </div>
 
-<!-- 2. Modal Adauga Ingredient la Reteta -->
-<div id="modal-recipe-item" class="modal-overlay">
-  <div class="modal">
-    <div class="modal-title">Adaugă Ingredient</div>
-    <div class="form-group">
-      <label class="form-label">Caută aliment de bază</label>
-      <input type="text" id="ri-search" placeholder="Ex: Făină, Ou, Pui..." autocomplete="off">
-      <div id="ri-suggestions" style="max-height:130px;overflow-y:auto;background:var(--bg3);border-radius:8px;margin-top:5px"></div>
+<!-- MODAL ADAUGARE IN JURNAL (COMPLET) -->
+<div id="m-add" class="overlay"><div class="modal">
+  <h3 style="margin-bottom: 1.2rem; font-size: 18px;">Adaugă în Jurnal</h3>
+  
+  <div style="margin-bottom: 1rem;">
+    <label class="form-label">Masă</label>
+    <select id="a-m"><option>Mic dejun</option><option>Prânz</option><option>Cină</option><option>Gustare</option></select>
+  </div>
+  
+  <div style="margin-bottom: 1rem; position: relative;">
+    <label class="form-label">Caută aliment</label>
+    <input type="text" id="a-q" placeholder="Ex: Pui, Orez, Brânză..." autocomplete="off">
+    <div id="a-sug" style="position: absolute; top: 100%; left: 0; width: 100%; max-height:160px; overflow-y:auto; background:var(--bg3); border-radius:8px; z-index: 10; box-shadow: 0 4px 12px rgba(0,0,0,0.5);"></div>
+  </div>
+  
+  <div class="form-row-3">
+    <div>
+      <label class="form-label">Cant. (g)</label>
+      <input type="number" id="a-g" value="100">
     </div>
-    <div class="form-group">
-      <label class="form-label">Cantitate (g)</label>
-      <input type="number" id="ri-qty" placeholder="ex: 150">
+    <div>
+      <label class="form-label">Kcal/100g</label>
+      <input type="number" id="f-k100" readonly style="opacity:0.7">
     </div>
-    <div class="modal-actions">
-      <button class="btn" onclick="closeModal('modal-recipe-item')">Anulează</button>
-      <button class="btn btn-primary" onclick="addIngredientToDraft()">Adaugă</button>
+    <div>
+      <label class="form-label">Total Kcal</label>
+      <input type="number" id="f-k" readonly style="color:var(--pink); font-weight:bold; background:rgba(255,110,180,0.1)">
     </div>
   </div>
-</div>
+
+  <div class="form-row-3">
+    <div>
+      <label class="form-label">Prot (g)</label>
+      <input type="number" id="f-p" readonly style="opacity:0.7">
+    </div>
+    <div>
+      <label class="form-label">Carbo (g)</label>
+      <input type="number" id="f-c" readonly style="opacity:0.7">
+    </div>
+    <div>
+      <label class="form-label">Grăs (g)</label>
+      <input type="number" id="f-f" readonly style="opacity:0.7">
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:1.5rem">
+    <button class="btn" onclick="closeM('m-add')">Anulează</button>
+    <button class="btn btn-p" onclick="addL()">Adaugă</button>
+  </div>
+</div></div>
 
 <script>
-// ==========================================
-// 1. BAZA DE DATE NUTRITIONALĂ
-// ==========================================
-const DB = [
-  // Proteine
-  { name: "Ou întreg fiert / poșat", kcal: 155, prot: 13, carb: 1.1, fat: 11, type: 'p' },
-  { name: "Ou ochi (prăjit în ulei)", kcal: 190, prot: 13, carb: 1, fat: 15, type: 'p' },
-  { name: "Omletă simplă (fără ulei)", kcal: 154, prot: 11, carb: 1, fat: 12, type: 'p' },
-  { name: "Scrob / Omletă cu unt", kcal: 210, prot: 11, carb: 1, fat: 18, type: 'p' },
-  { name: "Albuș de ou", kcal: 52, prot: 11, carb: 1, fat: 0, type: 'p' },
-  { name: "Piept de pui (crud)", kcal: 110, prot: 23, carb: 0, fat: 1.2, type: 'p' },
-  { name: "Piept de pui grătar / copt", kcal: 165, prot: 31, carb: 0, fat: 3.6, type: 'p' },
-  { name: "Piept de pui șnițel (prăjit)", kcal: 260, prot: 16, carb: 18, fat: 14, type: 'p' },
-  { name: "Pulpe de pui dezosate", kcal: 180, prot: 24, carb: 0, fat: 9, type: 'p' },
-  { name: "Ficat de pui", kcal: 172, prot: 25, carb: 0, fat: 6.4, type: 'p' },
-  { name: "Ceafă de porc grătar", kcal: 250, prot: 18, carb: 0, fat: 19, type: 'p' },
-  { name: "Mușchiuleț de porc", kcal: 143, prot: 26, carb: 0, fat: 3.5, type: 'p' },
-  { name: "Carne de vită slabă", kcal: 250, prot: 26, carb: 0, fat: 15, type: 'p' },
-  { name: "Somon la cuptor", kcal: 208, prot: 20, carb: 0, fat: 13, type: 'p' },
-  { name: "Păstrăv / Doradă", kcal: 90, prot: 19, carb: 0, fat: 1.5, type: 'p' },
-  { name: "Ton în suc propriu", kcal: 116, prot: 26, carb: 0, fat: 1, type: 'p' },
-  { name: "Macrou / Sardine", kcal: 205, prot: 19, carb: 0, fat: 14, type: 'p' },
-  { name: "Cottage Cheese (Perle)", kcal: 98, prot: 11, carb: 3.4, fat: 4.3, type: 'p' },
-  { name: "Telemea de vacă", kcal: 270, prot: 18, carb: 1, fat: 21, type: 'p' },
-  { name: "Cașcaval clasic", kcal: 330, prot: 25, carb: 1, fat: 25, type: 'p' },
-  { name: "Iaurt grecesc 2%", kcal: 60, prot: 10, carb: 3, fat: 2, type: 'p' },
-  { name: "Lapte 1.5%", kcal: 44, prot: 3.4, carb: 4.5, fat: 1.5, type: 'p' },
+// DB Uriașă (n:nume, k:kcal, p:prot, c:carbo, f:grasimi, t:tip[p=prot,c=carb,f=fat,v=veg])
+const DB=[
+  {n:"Ou întreg fiert",k:155,p:13,c:1,f:11,t:'p'},{n:"Ou ochi (prăjit în puțin ulei)",k:190,p:13,c:1,f:15,t:'p'},{n:"Omletă simplă (fără ulei)",k:154,p:11,c:1,f:12,t:'p'},{n:"Scrob / Omletă cu unt",k:210,p:11,c:1,f:18,t:'p'},{n:"Albuș de ou",k:52,p:11,c:1,f:0,t:'p'},
+  {n:"Piept pui crud",k:110,p:23,c:0,f:1.2,t:'p'},{n:"Piept pui grătar/copt",k:165,p:31,c:0,f:3.6,t:'p'},{n:"Piept pui șnițel (prăjit)",k:260,p:16,c:18,f:14,t:'p'},{n:"Pulpe pui gătite",k:180,p:24,c:0,f:9,t:'p'},{n:"Ficat pui",k:172,p:25,c:0,f:6.4,t:'p'},
+  {n:"Ceafă porc grătar",k:250,p:18,c:0,f:19,t:'p'},{n:"Mușchiuleț porc",k:143,p:26,c:0,f:3.5,t:'p'},{n:"Vită slabă (mușchi)",k:250,p:26,c:0,f:15,t:'p'},{n:"Somon cuptor",k:208,p:20,c:0,f:13,t:'p'},{n:"Păstrăv grătar",k:190,p:25,c:0,f:8,t:'p'},{n:"Ton conservă suc",k:116,p:26,c:0,f:1,t:'p'},
+  {n:"Cottage Cheese (Perle)",k:98,p:11,c:3.4,f:4.3,t:'p'},{n:"Telemea vacă",k:270,p:18,c:1,f:21,t:'p'},{n:"Cașcaval clasic",k:330,p:25,c:1,f:25,t:'p'},{n:"Iaurt grecesc 2%",k:60,p:10,c:3,f:2,t:'p'},{n:"Lapte 1.5%",k:44,p:3.4,c:4.5,f:1.5,t:'p'},
   
-  // Carbohidrati
-  { name: "Orez alb crud", kcal: 360, prot: 7, carb: 80, fat: 1, type: 'c' },
-  { name: "Orez alb fiert", kcal: 130, prot: 2.7, carb: 28, fat: 0.3, type: 'c' },
-  { name: "Orez brun fiert", kcal: 112, prot: 2.6, carb: 23, fat: 0.9, type: 'c' },
-  { name: "Cartof crud", kcal: 77, prot: 2, carb: 17, fat: 0.1, type: 'c' },
-  { name: "Cartof fiert / copt", kcal: 86, prot: 1.6, carb: 20, fat: 0.1, type: 'c' },
-  { name: "Cartofi prăjiți (casă)", kcal: 312, prot: 3, carb: 41, fat: 15, type: 'c' },
-  { name: "Mămăligă (fiartă)", kcal: 70, prot: 2, carb: 15, fat: 0.2, type: 'c' },
-  { name: "Mălai uscat", kcal: 360, prot: 7, carb: 77, fat: 1, type: 'c' },
-  { name: "Paste integrale fierte", kcal: 124, prot: 5.3, carb: 26, fat: 0.5, type: 'c' },
-  { name: "Făină albă", kcal: 364, prot: 10, carb: 76, fat: 1, type: 'c' },
-  { name: "Pâine albă", kcal: 265, prot: 9, carb: 49, fat: 3, type: 'c' },
-  { name: "Pâine integrală", kcal: 247, prot: 13, carb: 41, fat: 3.4, type: 'c' },
-  { name: "Fulgi de ovăz", kcal: 389, prot: 17, carb: 66, fat: 7, type: 'c' },
-  { name: "Măr", kcal: 52, prot: 0, carb: 14, fat: 0, type: 'c' },
-  { name: "Banană", kcal: 89, prot: 1, carb: 23, fat: 0, type: 'c' },
-  { name: "Zahăr / Miere", kcal: 380, prot: 0, carb: 98, fat: 0, type: 'c' },
-
-  // Grasimi
-  { name: "Ulei de măsline / floare", kcal: 884, prot: 0, carb: 0, fat: 100, type: 'f' },
-  { name: "Unt 82%", kcal: 717, prot: 0.8, carb: 0.1, fat: 81, type: 'f' },
-  { name: "Avocado", kcal: 160, prot: 2, carb: 8, fat: 15, type: 'f' },
-  { name: "Nuci / Migdale", kcal: 600, prot: 15, carb: 14, fat: 60, type: 'f' },
-  { name: "Smântână 20%", kcal: 206, prot: 3, carb: 3, fat: 20, type: 'f' },
-
-  // Legume
-  { name: "Roșii", kcal: 18, prot: 0.9, carb: 3.9, fat: 0.2, type: 'v' },
-  { name: "Castraveți", kcal: 15, prot: 0.7, carb: 3.6, fat: 0.1, type: 'v' },
-  { name: "Salată verde", kcal: 15, prot: 1.5, carb: 3, fat: 0.2, type: 'v' },
-  { name: "Ardei gras", kcal: 20, prot: 0.9, carb: 4.6, fat: 0.2, type: 'v' },
-  { name: "Broccoli / Spanac", kcal: 30, prot: 3, carb: 5, fat: 0.3, type: 'v' },
-  { name: "Ceapă", kcal: 40, prot: 1, carb: 9, fat: 0, type: 'v' }
+  {n:"Orez alb crud",k:360,p:7,c:80,f:1,t:'c'},{n:"Orez alb fiert",k:130,p:2.7,c:28,f:0.3,t:'c'},{n:"Orez brun fiert",k:112,p:2.6,c:23,f:0.9,t:'c'},
+  {n:"Cartof crud",k:77,p:2,c:17,f:0.1,t:'c'},{n:"Cartof fiert/copt",k:86,p:1.6,c:20,f:0.1,t:'c'},{n:"Cartofi prăjiți (casă)",k:312,p:3,c:41,f:15,t:'c'},{n:"Piure cartofi (cu lapte)",k:110,p:2,c:16,f:4,t:'c'},
+  {n:"Mămăligă (fiartă)",k:70,p:2,c:15,f:0.2,t:'c'},{n:"Mălai uscat",k:360,p:7,c:77,f:1,t:'c'},{n:"Paste integrale fierte",k:124,p:5.3,c:26,f:0.5,t:'c'},{n:"Paste albe fierte",k:131,p:5,c:25,f:1,t:'c'},
+  {n:"Făină albă",k:364,p:10,c:76,f:1,t:'c'},{n:"Pâine albă",k:265,p:9,c:49,f:3,t:'c'},{n:"Pâine integrală",k:247,p:13,c:41,f:3.4,t:'c'},{n:"Fulgi ovăz",k:389,p:17,c:66,f:7,t:'c'},
+  {n:"Măr",k:52,p:0,c:14,f:0,t:'c'},{n:"Banană",k:89,p:1,c:23,f:0,t:'c'},{n:"Fructe pădure",k:57,p:0,c:14,f:0,t:'c'},{n:"Zahăr / Miere",k:380,p:0,c:98,f:0,t:'c'},
+  
+  {n:"Ulei măsline/floare",k:884,p:0,c:0,f:100,t:'f'},{n:"Unt 82%",k:717,p:0,c:0,f:81,t:'f'},{n:"Avocado proaspăt",k:160,p:2,c:8,f:15,t:'f'},{n:"Nuci / Migdale",k:600,p:15,c:14,f:60,t:'f'},{n:"Smântână 20%",k:206,p:3,c:3,f:20,t:'f'},
+  
+  {n:"Roșii proaspete",k:18,p:0.9,c:3.9,f:0.2,t:'v'},{n:"Castraveți",k:15,p:0.7,c:3.6,f:0.1,t:'v'},{n:"Salată verde",k:15,p:1.5,c:3,f:0.2,t:'v'},{n:"Ardei gras",k:20,p:0.9,c:4.6,f:0.2,t:'v'},{n:"Broccoli/Spanac la abur",k:30,p:3,c:5,f:0.3,t:'v'},{n:"Ceapă",k:40,p:1,c:9,f:0,t:'v'}
 ];
 
-// ==========================================
-// 2. STATE & INITIALIZARE
-// ==========================================
-let state = {
-  profile: { kcal: 1500, prot: 100, carb: 120, fat: 55 },
-  foods: [],       // Jurnalul zilnic
-  recipes: [],     // Rețetele create de user
-  shopping: [],    // Lista de cumpărături
-  water: {}        // Tracker apă (ex: {'2026-06-20': 4})
-};
+const API='https://script.google.com/macros/s/AKfycbzdKTvouX3f3bqV99jlHnV5iDxigEg6a3L08EQF_zjBqlo6nWiZ5KCkxsv2rAhaYyhZIQ/exec';
+let S={p:{k:1500,p:100,c:120,f:55},f:[],w:{}};
+let cD=new Date(); cD.setHours(0,0,0,0);
+let selF=null, cSM=[];
 
-let currentDay = new Date(); currentDay.setHours(0,0,0,0);
-let selectedFood = null;
-let draftRecipe = []; 
-let currentSmartResult = [];
+const gI=i=>document.getElementById(i);
+const nS=s=>s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 
-function getISO(date) {
-  let p = n => String(n).padStart(2, '0');
-  return `${date.getFullYear()}-${p(date.getMonth() + 1)}-${p(date.getDate())}`;
+async function init(){
+  gI('c-status').innerHTML='☁️ Se sincronizează...';
+  try{
+    let r=await fetch(`${API}?action=getAll`), d=await r.json();
+    if(d.healthData){let x=JSON.parse(d.healthData); S={...S,...x};}
+    gI('c-status').innerHTML='☁️ Salvat local/cloud';
+  }catch(e){gI('c-status').innerHTML='⚠️ Deconectat (Local mode)'; try{let ls=localStorage.getItem('he_db');if(ls)S=JSON.parse(ls);}catch(er){}}
+  updP(); buildSm(); rend();
 }
-function getFmtDate(date) {
-  let p = n => String(n).padStart(2, '0');
-  return `${p(date.getDate())}.${p(date.getMonth() + 1)}.${date.getFullYear()}`;
-}
+function save(){try{localStorage.setItem('he_db',JSON.stringify(S));}catch(e){} fetch(API,{method:'POST',body:JSON.stringify({action:'saveHealthData',healthData:JSON.stringify(S)})});}
 
-// Normalizare text pt cautare (ignora diacritice, litere mari)
-function normStr(str) {
-  return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-}
+function sTab(t){document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active')); event.target.classList.add('active'); document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active')); gI('t-'+t).classList.add('active'); if(t==='h')drH(); rend();}
+function cDay(x){cD.setDate(cD.getDate()+x); rend();}
+function openM(i){
+  gI(i).style.display='flex';
+  if(i === 'm-add') { gI('a-q').value=''; gI('a-sug').innerHTML=''; selF=null; gI('a-g').value='100'; ['f-k100','f-k','f-p','f-c','f-f'].forEach(x=>gI(x).value=''); }
+} 
+function closeM(i){gI(i).style.display='none';}
 
-function initApp() {
-  try {
-    let localData = localStorage.getItem('s_elite_db');
-    if (localData) {
-      let parsed = JSON.parse(localData);
-      state = { ...state, ...parsed };
-    }
-  } catch (e) {}
+// Jurnal & Apa & Donuts
+function rend(){
+  let is=iso(cD); gI('d-lbl').innerText=`${String(cD.getDate()).padStart(2,'0')}.${String(cD.getMonth()+1).padStart(2,'0')} `+(is===iso(new Date())?'(Azi)':'');
+  let fs=S.f.filter(x=>x.d===is), t={k:0,p:0,c:0,f:0};
+  fs.forEach(x=>{t.k+=x.k; t.p+=x.p; t.c+=x.c; t.f+=x.f;});
+  ['k','p','c','f'].forEach(x=>{
+    gI(`v-${x}`).innerText=Math.round(t[x]);
+    let tVal = S.p[x];
+    gI(`s-${x}`).innerText = x==='k' ? `din ${tVal}` : `din ${tVal}g`;
+    let p=Math.min(100,Math.round((t[x]/tVal)*100))||0; 
+    let c = x=='p'?'var(--pink)':x=='c'?'var(--orange)':x=='f'?'var(--teal)':'var(--purple)';
+    gI(`dn-${x}`).style.background=`conic-gradient(${t[x]>tVal?'var(--red)':c} ${p}%,var(--bg3) ${p}%)`;
+  });
   
-  applyProfileToInputs();
-  populateSmartPlanner();
-  renderApp();
-}
-
-function backupData() {
-  try { localStorage.setItem('s_elite_db', JSON.stringify(state)); } catch (e) {}
-}
-
-// ==========================================
-// 3. UI & TAB NAVIGATION
-// ==========================================
-function switchTab(tabId) {
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
-  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-  document.getElementById('tab-' + tabId).classList.add('active');
+  let lh=''; ['Mic dejun','Prânz','Cină','Gustare'].forEach(m=>{
+    let mfs=fs.filter(x=>x.m===m); if(!mfs.length)return;
+    lh+=`<div class="meal-lbl">${m}</div>`+mfs.map(x=>`<div class="li-item"><div><div class="li-n">${x.n}</div><div class="li-m">${x.q}g · P:${Math.round(x.p)}g C:${Math.round(x.c)}g G:${Math.round(x.f)}g</div></div><div style="display:flex;align-items:center"><span class="li-k">${x.k} kcal</span><button class="li-del" onclick="dlF(${x.id})">×</button></div></div>`).join('');
+  }); gI('log-list').innerHTML=lh||'<div style="text-align:center;color:var(--text3);font-size:13px;padding:20px">Niciun aliment adăugat. Folosește butonul de mai sus.</div>';
   
-  if(tabId === 'istoric') renderHistory();
-  if(tabId === 'shop') renderShoppingList();
-  if(tabId === 'retete') renderCustomRecipes();
-  renderApp();
+  // Water
+  let w = S.w[is]||0; gI('w-lbl').innerText=`${w} / 8`;
+  gI('w-grid').innerHTML=Array(8).fill(0).map((_,i)=>`<div class="glass ${i<w?'full':''}" onclick="tW(${i<w?-1:1})"></div>`).join('');
 }
+function tW(v){let i=iso(cD); S.w[i]=Math.max(0,(S.w[i]||0)+v); save(); rend();}
 
-function changeDay(delta) {
-  currentDay.setDate(currentDay.getDate() + delta);
-  renderApp();
+// Profile
+function updP(){['k','p','c','f'].forEach(x=>gI(`p-${x}`).value=S.p[x]);}
+function saveP(){['k','p','c','f'].forEach(x=>S.p[x]=+gI(`p-${x}`).value); save(); rend();}
+
+// Smart Planner
+function buildSm(){
+  gI('sm-p').innerHTML=DB.filter(x=>x.t==='p').map(x=>`<option value="${x.n}">${x.n}</option>`).join('');
+  gI('sm-c').innerHTML='<option value="-1">Fără carbohidrați extra</option>'+DB.filter(x=>x.t==='c').map(x=>`<option value="${x.n}">${x.n}</option>`).join('');
+  gI('sm-f').innerHTML='<option value="-1">Fără grăsimi extra</option>'+DB.filter(x=>x.t==='f').map(x=>`<option value="${x.n}">${x.n}</option>`).join('');
 }
-
-function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-
-// ==========================================
-// 4. JURNAL & CALCUL MACRO ZILNIC
-// ==========================================
-function updateDonutUI(id, current, target, color) {
-  document.getElementById(`val-${id}`).innerText = Math.round(current);
-  let lbl = id==='kcal' ? `din ${target} kcal` : `din ${target}g`;
-  document.getElementById(`sub-${id}`).innerText = lbl;
-  
-  let pct = Math.min(100, Math.round((current / target) * 100)) || 0;
-  let activeColor = current > target ? 'var(--red)' : color;
-  document.getElementById(`donut-${id}`).style.background = `conic-gradient(${activeColor} ${pct}%, var(--bg3) ${pct}%)`;
-}
-
-function renderApp() {
-  let iso = getISO(currentDay);
-  let isToday = iso === getISO(new Date());
-  document.getElementById('date-label').innerText = getFmtDate(currentDay) + (isToday ? ' (Azi)' : '');
-
-  // Calcul Macro
-  let dayFoods = state.foods.filter(f => f.date === iso);
-  let totals = { k: 0, p: 0, c: 0, f: 0 };
-  dayFoods.forEach(f => { totals.k += f.kcal; totals.p += f.prot; totals.c += f.carb; totals.f += f.fat; });
-
-  let p = state.profile;
-  updateDonutUI('kcal', totals.k, p.kcal, 'var(--purple)');
-  updateDonutUI('prot', totals.p, p.prot, 'var(--pink)');
-  updateDonutUI('carb', totals.c, p.carb, 'var(--orange)');
-  updateDonutUI('fat', totals.f, p.fat, 'var(--teal)');
-
-  // Liste alimente consumate
-  let container = document.getElementById('food-log-container');
-  if (!dayFoods.length) {
-    container.innerHTML = '<div style="text-align:center;color:var(--text3);padding:20px;font-size:13px">Niciun aliment adăugat.</div>';
+function calcS(rnd=false){
+  let p, c, f;
+  if(rnd){
+    let pArr=DB.filter(x=>x.t==='p'), cArr=DB.filter(x=>x.t==='c'), fArr=DB.filter(x=>x.t==='f');
+    p=pArr[Math.floor(Math.random()*pArr.length)];
+    c=Math.random()>0.8?null:cArr[Math.floor(Math.random()*cArr.length)];
+    f=fArr[Math.floor(Math.random()*fArr.length)];
+    gI('sm-p').value=p.n; gI('sm-c').value=c?c.n:"-1"; gI('sm-f').value=f.n;
   } else {
-    let html = '';
-    ['Mic dejun', 'Prânz', 'Cină', 'Gustare'].forEach(meal => {
-      let mFoods = dayFoods.filter(f => f.masa === meal);
-      if (!mFoods.length) return;
-      html += `<div class="meal-label">${meal}</div>`;
-      mFoods.forEach(f => {
-        html += `
-          <div class="food-item">
-            <div>
-              <div class="food-name">${f.name}</div>
-              <div class="food-meta">${f.qty}g · P:${Math.round(f.prot)} C:${Math.round(f.carb)} G:${Math.round(f.fat)}</div>
-            </div>
-            <div style="display:flex;align-items:center;">
-              <span class="food-kcal">${f.kcal} kcal</span>
-              <button class="food-delete" onclick="deleteFoodLog(${f.id})">×</button>
-            </div>
-          </div>
-        `;
-      });
-    });
-    container.innerHTML = html;
-  }
-
-  // Water Tracker
-  let waterCount = state.water[iso] || 0;
-  document.getElementById('water-label').innerText = `${waterCount} / 8`;
-  let wHtml = '';
-  for(let i=0; i<8; i++) {
-    wHtml += `<div class="glass ${i < waterCount ? 'full' : ''}" onclick="toggleWater(${i < waterCount ? -1 : 1})"></div>`;
-  }
-  document.getElementById('water-grid').innerHTML = wHtml;
-}
-
-function toggleWater(val) {
-  let iso = getISO(currentDay);
-  state.water[iso] = Math.max(0, (state.water[iso] || 0) + val);
-  backupData();
-  renderApp();
-}
-
-function deleteFoodLog(id) {
-  state.foods = state.foods.filter(f => f.id !== id);
-  backupData();
-  renderApp();
-}
-
-// ==========================================
-// 5. CAUTARE & ADAUGARE IN JURNAL (Inclusiv Retete)
-// ==========================================
-function setupSearch(inputId, sugId, callbackType) {
-  document.getElementById(inputId).addEventListener('input', e => {
-    let val = normStr(e.target.value);
-    let sugBox = document.getElementById(sugId);
-    sugBox.innerHTML = '';
-    if(val.length < 2) return;
-
-    // Combinăm DB-ul cu Rețetele Custom
-    let pool = [...DB, ...state.recipes.map(r => ({ name: "[Rețetă] " + r.name, kcal: r.kcal, prot: r.prot, carb: r.carb, fat: r.fat }))];
-    
-    let matches = pool.filter(x => normStr(x.name).includes(val)).slice(0, 10);
-    
-    matches.forEach(m => {
-      let div = document.createElement('div');
-      div.style.cssText = "padding:10px; border-bottom:1px solid var(--border); cursor:pointer; font-size:13px; color:var(--text)";
-      div.innerHTML = `${m.name} <span style="color:var(--text3);font-size:11px">(${Math.round(m.kcal)} kcal/100g)</span>`;
-      div.onclick = () => selectSearchResult(m, callbackType);
-      sugBox.appendChild(div);
-    });
-  });
-}
-
-// 1 = Modal Jurnal, 2 = Modal Reteta
-setupSearch('f-search', 'f-suggestions', 1);
-setupSearch('ri-search', 'ri-suggestions', 2);
-
-function selectSearchResult(item, type) {
-  selectedFood = item;
-  if (type === 1) {
-    document.getElementById('f-search').value = item.name;
-    document.getElementById('f-suggestions').innerHTML = '';
-    calcFood();
-  } else if (type === 2) {
-    document.getElementById('ri-search').value = item.name;
-    document.getElementById('ri-suggestions').innerHTML = '';
-  }
-}
-
-function showFoodModal() {
-  document.getElementById('f-search').value = '';
-  document.getElementById('f-qty').value = '100';
-  document.getElementById('f-kcal').value = '';
-  selectedFood = null;
-  openModal('modal-food');
-}
-
-function calcFood() {
-  let q = +document.getElementById('f-qty').value || 0;
-  if(selectedFood) {
-    document.getElementById('f-kcal').value = Math.round(q * selectedFood.kcal / 100);
-  }
-}
-
-function addFoodToLog() {
-  if(!selectedFood) return;
-  let q = +document.getElementById('f-qty').value || 0;
-  state.foods.push({
-    id: Date.now(),
-    date: getISO(currentDay),
-    masa: document.getElementById('f-masa').value,
-    name: selectedFood.name,
-    qty: q,
-    kcal: Math.round(q * selectedFood.kcal / 100),
-    prot: +(q * selectedFood.prot / 100).toFixed(1),
-    carb: +(q * selectedFood.carb / 100).toFixed(1),
-    fat: +(q * selectedFood.fat / 100).toFixed(1)
-  });
-  backupData();
-  closeModal('modal-food');
-  renderApp();
-}
-
-// ==========================================
-// 6. SMART PLANNER
-// ==========================================
-function populateSmartPlanner() {
-  let p = DB.filter(x => x.type === 'p');
-  let c = DB.filter(x => x.type === 'c');
-  let f = DB.filter(x => x.type === 'f');
-
-  document.getElementById('smart-prot').innerHTML = p.map(x => `<option value="${x.name}">${x.name}</option>`).join('');
-  document.getElementById('smart-carb').innerHTML = '<option value="-1">Fără carbo extra</option>' + c.map(x => `<option value="${x.name}">${x.name}</option>`).join('');
-  document.getElementById('smart-fat').innerHTML = '<option value="-1">Fără grăsimi extra</option>' + f.map(x => `<option value="${x.name}">${x.name}</option>`).join('');
-}
-
-function calculateSmartMeal() {
-  let pObj = DB.find(x => x.name === document.getElementById('smart-prot').value);
-  let cObj = document.getElementById('smart-carb').value !== "-1" ? DB.find(x => x.name === document.getElementById('smart-carb').value) : null;
-  let fObj = document.getElementById('smart-fat').value !== "-1" ? DB.find(x => x.name === document.getElementById('smart-fat').value) : null;
-
-  currentSmartResult = [];
-  let tP = state.profile.prot / 3;
-  let tC = state.profile.carb / 3;
-  let tF = state.profile.fat / 3;
-
-  let gP = (tP / pObj.prot) * 100;
-  let exC = gP * pObj.carb / 100;
-  let exF = gP * pObj.fat / 100;
-  currentSmartResult.push({ obj: pObj, qty: Math.round(gP) });
-
-  let nC = tC - exC;
-  if(cObj && nC > 0) {
-    let gC = (nC / cObj.carb) * 100;
-    exF += gC * cObj.fat / 100;
-    currentSmartResult.push({ obj: cObj, qty: Math.round(gC) });
-  }
-
-  let nF = tF - exF;
-  if(fObj && nF > 2) {
-    let gF = (nF / fObj.fat) * 100;
-    currentSmartResult.push({ obj: fObj, qty: Math.round(gF) });
-  }
-
-  let html = currentSmartResult.map(x => `
-    <div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(78,205,196,0.3);padding:8px 0">
-      <span style="font-size:13px">${x.obj.name}</span>
-      <span style="color:var(--teal);font-weight:700">${x.qty}g</span>
-    </div>
-  `).join('');
-  
-  document.getElementById('smart-items-list').innerHTML = html;
-  document.getElementById('smart-result-area').style.display = 'block';
-}
-
-function addSmartMealToLog() {
-  let masa = document.getElementById('smart-masa-target').value;
-  currentSmartResult.forEach(x => {
-    state.foods.push({
-      id: Date.now() + Math.random(),
-      date: getISO(currentDay),
-      masa: masa,
-      name: x.obj.name,
-      qty: x.qty,
-      kcal: Math.round(x.qty * x.obj.kcal / 100),
-      prot: +(x.qty * x.obj.prot / 100).toFixed(1),
-      carb: +(x.qty * x.obj.carb / 100).toFixed(1),
-      fat: +(x.qty * x.obj.fat / 100).toFixed(1)
-    });
-  });
-  backupData(); switchTab('jurnal');
-}
-
-function addSmartMealToShop() {
-  currentSmartResult.forEach(x => {
-    if(!state.shopping.find(s => s.name === x.obj.name)) {
-      state.shopping.push({ name: x.obj.name, qty: x.qty, done: false });
-    }
-  });
-  backupData(); switchTab('shop');
-}
-
-// ==========================================
-// 7. LISTA CUMPARATURI
-// ==========================================
-function renderShoppingList() {
-  let c = document.getElementById('shop-list-container');
-  if(!state.shopping.length) { c.innerHTML = '<div style="font-size:12px;color:var(--text3)">Lista e goală.</div>'; return; }
-  
-  c.innerHTML = state.shopping.map((item, i) => `
-    <label class="shop-item ${item.done ? 'done' : ''}">
-      <input type="checkbox" ${item.done ? 'checked' : ''} onchange="toggleShopItem(${i})">
-      <span>${item.name} ${item.qty ? `<small style="color:var(--text2)">(${item.qty}g)</small>` : ''}</span>
-    </label>
-  `).join('');
-}
-
-function addShopItem() {
-  let val = document.getElementById('shop-input').value.trim();
-  if(val) { state.shopping.push({ name: val, done: false }); document.getElementById('shop-input').value = ''; backupData(); renderShoppingList(); }
-}
-function toggleShopItem(i) { state.shopping[i].done = !state.shopping[i].done; backupData(); renderShoppingList(); }
-function clearShopList() { state.shopping = state.shopping.filter(x => !x.done); backupData(); renderShoppingList(); }
-
-// ==========================================
-// 8. CONSTRUCTOR RETETE
-// ==========================================
-function showRecipeIngredientModal() {
-  document.getElementById('ri-search').value = '';
-  document.getElementById('ri-qty').value = '';
-  selectedFood = null;
-  openModal('modal-recipe-item');
-}
-
-function addIngredientToDraft() {
-  if(!selectedFood) return;
-  let q = +document.getElementById('ri-qty').value;
-  if(!q) return;
-
-  draftRecipe.push({
-    name: selectedFood.name, qty: q,
-    kcal: q * selectedFood.kcal / 100,
-    prot: q * selectedFood.prot / 100,
-    carb: q * selectedFood.carb / 100,
-    fat: q * selectedFood.fat / 100
-  });
-
-  renderRecipeDraft();
-  closeModal('modal-recipe-item');
-}
-
-function renderRecipeDraft() {
-  let c = document.getElementById('recipe-draft-list');
-  if(!draftRecipe.length) { c.innerHTML = 'Nu ai adăugat niciun ingredient.'; return; }
-  c.innerHTML = draftRecipe.map(x => `<div style="padding:4px 0">• ${x.name} (${x.qty}g)</div>`).join('');
-}
-
-function saveCustomRecipe() {
-  let name = document.getElementById('recipe-name').value.trim();
-  if(!name || !draftRecipe.length) { alert("Adaugă un nume și ingrediente!"); return; }
-
-  let t = { k: 0, p: 0, c: 0, f: 0, w: 0 };
-  draftRecipe.forEach(x => { t.k+=x.kcal; t.p+=x.prot; t.c+=x.carb; t.f+=x.fat; t.w+=x.qty; });
-
-  // Salvam la 100g ca sa o putem folosi in jurnal ca pe un aliment normal
-  state.recipes.push({
-    id: Date.now(), name: name,
-    kcal: Math.round(t.k / t.w * 100),
-    prot: +(t.p / t.w * 100).toFixed(1),
-    carb: +(t.c / t.w * 100).toFixed(1),
-    fat: +(t.f / t.w * 100).toFixed(1)
-  });
-
-  draftRecipe = [];
-  document.getElementById('recipe-name').value = '';
-  renderRecipeDraft();
-  backupData();
-  renderCustomRecipes();
-}
-
-function renderCustomRecipes() {
-  let c = document.getElementById('saved-recipes-container');
-  if(!state.recipes.length) { c.innerHTML = ''; return; }
-  
-  c.innerHTML = state.recipes.map(r => `
-    <div style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">
-      <div>
-        <div style="font-size:14px;font-weight:600;color:var(--teal)">${r.name}</div>
-        <div style="font-size:11px;color:var(--text3)">${r.kcal} kcal/100g · P:${r.prot} C:${r.carb} G:${r.fat}</div>
-      </div>
-      <button class="food-delete" onclick="deleteRecipe(${r.id})">×</button>
-    </div>
-  `).join('');
-}
-
-function deleteRecipe(id) { state.recipes = state.recipes.filter(x => x.id !== id); backupData(); renderCustomRecipes(); }
-
-// ==========================================
-// 9. ISTORIC 7 ZILE
-// ==========================================
-function renderHistory() {
-  let hK='', hP='';
-  let tk = state.profile.kcal, tp = state.profile.prot;
-
-  for(let i=6; i>=0; i--) {
-    let d = new Date(); d.setDate(d.getDate() - i);
-    let iso = getISO(d);
-    
-    let t = state.foods.filter(x => x.date === iso).reduce((a,b)=>({k: a.k+b.kcal, p: a.p+b.prot}), {k:0, p:0});
-    
-    let pk = Math.min(100, (t.k / tk) * 100) || 0;
-    let pp = Math.min(100, (t.p / tp) * 100) || 0;
-
-    hK += `<div class="history-col"><div class="history-bar-wrap"><div class="history-val" style="bottom:${pk}%">${Math.round(t.k)}</div><div class="history-bar" style="height:${pk}%;${t.k>tk?'background:var(--red)':''}"></div></div><div style="font-size:9px;color:var(--text3)">${getFmtDate(d).substring(0,5)}</div></div>`;
-    hP += `<div class="history-col"><div class="history-bar-wrap"><div class="history-val" style="bottom:${pp}%">${Math.round(t.p)}g</div><div class="history-bar" style="height:${pp}%;background:linear-gradient(180deg,var(--teal),#38b2ac)"></div></div><div style="font-size:9px;color:var(--text3)">${getFmtDate(d).substring(0,5)}</div></div>`;
+    p=DB.find(x=>x.n===gI('sm-p').value);
+    c=gI('sm-c').value!="-1"?DB.find(x=>x.n===gI('sm-c').value):null;
+    f=gI('sm-f').value!="-1"?DB.find(x=>x.n===gI('sm-f').value):null;
   }
   
-  document.getElementById('hist-kcal').innerHTML = hK;
-  document.getElementById('hist-prot').innerHTML = hP;
+  cSM=[]; let tP=S.p.p/3, tC=S.p.c/3, tF=S.p.f/3;
+  let gP=(tP/p.p)*100, exC=gP*p.c/100, exF=gP*p.f/100; cSM.push({o:p,q:Math.round(gP)});
+  let nC=tC-exC; if(c&&nC>0){let gC=(nC/c.c)*100; exF+=gC*c.f/100; cSM.push({o:c,q:Math.round(gC)});}
+  let nF=tF-exF; if(f&&nF>2){let gF=(nF/f.f)*100; cSM.push({o:f,q:Math.round(gF)});}
+  
+  gI('sm-items').innerHTML=cSM.map(x=>`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border2);font-size:14px"><span>${x.o.n}</span><b style="color:var(--teal)">${x.q}g</b></div>`).join('');
+  gI('sm-res').style.display='block';
+}
+function addSmLog(){cSM.forEach(x=>S.f.push({id:Date.now()+Math.random(),d:iso(cD),m:gI('sm-m').value,n:x.o.n,q:x.q,k:Math.round(x.q*x.o.k/100),p:+(x.q*x.o.p/100).toFixed(1),c:+(x.q*x.o.c/100).toFixed(1),f:+(x.q*x.o.f/100).toFixed(1)})); save(); sTab('j');}
+
+// Search & Add Manual (Modal detaliat)
+gI('a-q').addEventListener('input',e=>{
+  let v=nS(e.target.value); gI('a-sug').innerHTML=''; if(v.length<2)return;
+  let res=DB.filter(x=>nS(x.n).includes(v)).sort((a,b)=>nS(a.n).indexOf(v)-nS(b.n).indexOf(v));
+  gI('a-sug').innerHTML=res.slice(0,10).map(x=>`<div style="padding:12px;border-bottom:1px solid var(--border);cursor:pointer;font-size:13px;color:var(--text)" onclick="sel('${x.n}')">${x.n} <span style="color:var(--text3);font-size:11px">(${x.k} kcal/100g)</span></div>`).join('');
+});
+
+function sel(n){
+  selF=DB.find(x=>x.n===n);
+  gI('a-q').value=selF.n; gI('a-sug').innerHTML='';
+  gI('f-k100').value=selF.k;
+  calcM();
 }
 
-// ==========================================
-// 10. SETARI PROFIL
-// ==========================================
-function applyProfileToInputs() {
-  ['kcal', 'prot', 'carb', 'fat'].forEach(k => document.getElementById('set-' + k).value = state.profile[k]);
+gI('a-g').addEventListener('input',calcM);
+function calcM(){
+  let q=+gI('a-g').value||0;
+  if(!selF) return;
+  gI('f-k').value=Math.round(q*selF.k/100);
+  gI('f-p').value=+(q*selF.p/100).toFixed(1);
+  gI('f-c').value=+(q*selF.c/100).toFixed(1);
+  gI('f-f').value=+(q*selF.f/100).toFixed(1);
 }
 
-function saveProfile() {
-  ['kcal', 'prot', 'carb', 'fat'].forEach(k => state.profile[k] = +document.getElementById('set-' + k).value);
-  backupData(); renderApp();
+function addL(){
+  if(!selF)return; let q=+gI('a-g').value; 
+  S.f.push({id:Date.now(),d:iso(cD),m:gI('a-m').value,n:selF.n,q:q,k:Math.round(q*selF.k/100),p:+(q*selF.p/100).toFixed(1),c:+(q*selF.c/100).toFixed(1),f:+(q*selF.f/100).toFixed(1)}); 
+  save(); closeM('m-add'); rend();
+}
+function dlF(i){S.f=S.f.filter(x=>x.id!==i); save(); rend();}
+
+// Istoric
+function drH(){
+  let hK='',hP='', tk=S.p.k, tp=S.p.p; 
+  for(let i=6;i>=0;i--){
+    let d=new Date();d.setDate(d.getDate()-i); let is=iso(d);
+    let t=S.f.filter(x=>x.d===is).reduce((a,b)=>({k:a.k+b.k,p:a.p+b.p}),{k:0,p:0});
+    let pk=Math.min(100,t.k/tk*100)||0, pp=Math.min(100,t.p/tp*100)||0;
+    let bC=t.k>tk?'var(--red)':'var(--purple)';
+    hK+=`<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:100%;height:100px;background:var(--bg3);border-radius:4px;position:relative"><div style="position:absolute;bottom:0;width:100%;height:${pk}%;background:${bC};border-radius:4px"></div></div><span style="font-size:9px">${String(d.getDate()).padStart(2,'0')}</span></div>`;
+    hP+=`<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:100%;height:100px;background:var(--bg3);border-radius:4px;position:relative"><div style="position:absolute;bottom:0;width:100%;height:${pp}%;background:var(--teal);border-radius:4px"></div></div><span style="font-size:9px">${String(d.getDate()).padStart(2,'0')}</span></div>`;
+  } 
+  gI('h-chk').innerHTML=hK; gI('h-chp').innerHTML=hP;
 }
 
-// RUN APP
-initApp();
+init();
 </script>
 </body>
 </html>
