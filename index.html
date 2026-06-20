@@ -6,7 +6,7 @@
 <title>Sănătatea Mea - Elite</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0d0d14;--bg2:#13131f;--bg3:#1a1a2e;--border:#2a2a45;--text:#f0eeff;--text2:#a09ec0;--text3:#6b6a85;--pink:#ff6eb4;--purple:#b06bff;--teal:#4ecdc4;--red:#ff4f6e;--green:#4ade80;--orange:#ff9f43;--font:'Space Grotesk',sans-serif;--font2:'Outfit',sans-serif}
+:root{--bg:#0d0d14;--bg2:#13131f;--bg3:#1a1a2e;--border:#2a2a45;--border2:#3a3a55;--text:#f0eeff;--text2:#a09ec0;--text3:#6b6a85;--pink:#ff6eb4;--purple:#b06bff;--teal:#4ecdc4;--red:#ff4f6e;--green:#4ade80;--orange:#ff9f43;--font:'Space Grotesk',sans-serif;--font2:'Outfit',sans-serif}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:2rem}
 
@@ -22,7 +22,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .nav-btn.active{color:var(--pink);border-bottom-color:var(--pink);color:white}
 
 .main{max-width:800px;margin:0 auto;padding:1rem}
-.tab{display:none} .tab.active{display:block}
+.tab-content{display:none} 
+.tab-content.active{display:block}
 .card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.2rem;margin-bottom:1rem}
 .card-title{font-size:13px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin-bottom:1rem;display:flex;align-items:center;gap:8px;justify-content:space-between}
 
@@ -75,16 +76,16 @@ input:focus,select:focus{border-color:var(--pink)}
 </div>
 
 <div class="nav">
-  <button class="nav-btn active" onclick="sTab('j')">🥗 Jurnal</button>
-  <button class="nav-btn" onclick="sTab('s')">🤖 Smart Planner</button>
-  <button class="nav-btn" onclick="sTab('h')">📈 Istoric</button>
-  <button class="nav-btn" onclick="sTab('p')">⚙️ Profil</button>
+  <button class="nav-btn active" onclick="sTab('jurnal')">🥗 Jurnal</button>
+  <button class="nav-btn" onclick="sTab('smart')">🤖 Smart Planner</button>
+  <button class="nav-btn" onclick="sTab('istoric')">📈 Istoric</button>
+  <button class="nav-btn" onclick="sTab('profil')">⚙️ Profil</button>
 </div>
 
 <div class="main">
 
   <!-- JURNAL -->
-  <div id="t-j" class="tab active">
+  <div id="tab-jurnal" class="tab-content active">
     
     <div style="display:flex;justify-content:space-between;margin-bottom:1.5rem;align-items:center">
       <button class="btn" style="width:40px" onclick="cDay(-1)">‹</button>
@@ -114,7 +115,7 @@ input:focus,select:focus{border-color:var(--pink)}
   </div>
 
   <!-- SMART PLANNER -->
-  <div id="t-s" class="tab">
+  <div id="tab-smart" class="tab-content">
     <div class="card">
       <div class="card-title">🤖 Asistent Inteligent</div>
       <p style="font-size:13px;color:var(--text3);margin-bottom:1.5rem">Aplicația verifică ce ai mâncat deja azi și calculează gramajele perfecte ca să-ți atingi milimetric țintele zilnice.</p>
@@ -148,7 +149,7 @@ input:focus,select:focus{border-color:var(--pink)}
   </div>
 
   <!-- ISTORIC -->
-  <div id="t-h" class="tab">
+  <div id="tab-istoric" class="tab-content">
     <div class="card">
       <div class="card-title">Evoluție Calorii (7 zile)</div>
       <div id="h-chk" class="history-chart"></div>
@@ -160,15 +161,17 @@ input:focus,select:focus{border-color:var(--pink)}
   </div>
 
   <!-- PROFIL -->
-  <div id="t-p" class="tab">
+  <div id="tab-profil" class="tab-content">
     <div class="card">
       <div class="card-title">Setări Ținte Macro</div>
+      <p style="font-size:12px;color:var(--text3);margin-bottom:1rem">Aici introduci necesarul tău zilnic. Aplicația se va raporta automat la aceste cifre.</p>
+      
       <div class="form-row">
         <div><label class="form-label">Calorii</label><input type="number" id="p-k"></div>
         <div><label class="form-label">Proteine (g)</label><input type="number" id="p-p"></div>
       </div>
       <div class="form-row" style="margin-top:10px">
-        <div><label class="form-label">Carbo (g)</label><input type="number" id="p-c"></div>
+        <div><label class="form-label">Carbohidrați (g)</label><input type="number" id="p-c"></div>
         <div><label class="form-label">Grăsimi (g)</label><input type="number" id="p-f"></div>
       </div>
       <button class="btn btn-p" style="width:100%;margin-top:20px" onclick="saveP()">💾 Salvează Datele</button>
@@ -325,8 +328,8 @@ function sTab(t) {
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active')); 
   event.target.classList.add('active'); 
   document.querySelectorAll('.tab-content').forEach(b=>b.classList.remove('active')); 
-  gI('t-'+t).classList.add('active'); 
-  if(t==='h') drH(); 
+  gI('tab-'+t).classList.add('active'); 
+  if(t==='istoric') drH(); 
   renderApp();
 }
 
@@ -355,9 +358,9 @@ function updateDonutUI(id, current, target, color) {
 function renderApp() {
   let is = iso(cD);
   let isToday = is === iso(new Date());
-  gI('d-lbl').innerText = getFmt(cD) + (isToday ? ' (Azi)' : '');
+  gI('date-label').innerText = getFmt(cD) + (isToday ? ' (Azi)' : '');
 
-  // Calcul Macro Jurnal Zilinic
+  // Calcul Macro
   let dayFoods = S.f.filter(x => x.d === is);
   let totals = { k: 0, p: 0, c: 0, f: 0 };
   dayFoods.forEach(x => { totals.k += x.k; totals.p += x.p; totals.c += x.c; totals.f += x.f; });
@@ -406,7 +409,7 @@ function renderApp() {
   gI('w-grid').innerHTML = wHtml;
 }
 
-function tW(v) { let i=iso(cD); S.w[i] = Math.max(0, (S.w[i] || 0) + v); backupData(); renderApp(); }
+function tW(v) { let is=iso(cD); S.w[is] = Math.max(0, (S.w[is] || 0) + v); backupData(); renderApp(); }
 
 function dlF(id) { S.f = S.f.filter(x => x.id !== id); backupData(); renderApp(); }
 
@@ -467,7 +470,7 @@ function addL() {
 }
 
 // ==========================================
-// 6. SMART PLANNER (AI-ul care citeste restul de macro)
+// 6. SMART PLANNER
 // ==========================================
 function populateSmartPlanner() {
   let p = DB.filter(x => x.t === 'p');
@@ -495,17 +498,15 @@ function calcS(rnd=false) {
     fObj=gI('sm-f').value!=="-1"?DB.find(x=>x.n===gI('sm-f').value):null;
   }
 
-  // Verificam modul de calcul ales
+  // Mod Calcul
   let mode = gI('sm-type').value;
   let tP = 0, tC = 0, tF = 0;
 
   if (mode === 'standard') {
-    // Împarte profilul la 3
     tP = S.p.p / 3;
     tC = S.p.c / 3;
     tF = S.p.f / 3;
   } else {
-    // Calculează ce a mai rămas pe ziua curentă (Din Jurnal)
     let is = iso(cD);
     let dayFoods = S.f.filter(x => x.d === is);
     let consP = 0, consC = 0, consF = 0;
@@ -564,7 +565,7 @@ function addSmLog() {
       f: +(x.q * x.o.f / 100).toFixed(1)
     });
   });
-  backupData(); sTab('j');
+  backupData(); sTab('jurnal');
 }
 
 // ==========================================
