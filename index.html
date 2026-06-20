@@ -48,7 +48,7 @@ input:focus,select:focus{border-color:var(--pink)}
 .li-item{display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;margin-bottom:8px}
 .li-n{font-size:14px;font-weight:600} .li-m{font-size:11px;color:var(--text3);margin-top:4px} .li-k{color:var(--pink);font-size:13px;font-weight:600}
 .li-del{background:none;border:none;color:var(--red);cursor:pointer;font-size:18px;padding:0 5px;margin-left:10px}
-.meal-lbl{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;margin:15px 0 8px;padding-left:4px}
+.meal-lbl{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;margin:15px 0 8px;padding-left:4px}
 
 /* Water Tracker */
 .water-grid{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
@@ -57,14 +57,21 @@ input:focus,select:focus{border-color:var(--pink)}
 
 /* Modals */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;z-index:999;padding:1rem}
-.modal{background:var(--bg2);width:100%;max-width:450px;padding:1.5rem;border-radius:16px;border:1px solid var(--border)}
+.modal{background:var(--bg2);border-radius:16px;border:1px solid var(--border);padding:1.5rem;width:100%;max-width:450px;max-height:90vh;overflow-y:auto}
+
+/* Istoric Bar Chart */
+.history-chart{display:flex;align-items:flex-end;gap:8px;height:140px;padding:10px 0;margin-top:10px;border-bottom:1px solid var(--border)}
+.history-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px}
+.history-bar-wrap{width:100%;height:100px;background:var(--bg3);border-radius:6px;position:relative;display:flex;align-items:flex-end;overflow:hidden}
+.history-bar{width:100%;background:linear-gradient(180deg,var(--pink),var(--purple));border-radius:6px;transition:height 0.5s ease}
+.history-val{font-size:10px;color:var(--text2);position:absolute;top:4px;width:100%;text-align:center;font-weight:600}
 </style>
 </head>
 <body>
 
 <div class="header">
-  <div class="logo"><div class="logo-icon">🌸</div><div class="logo-text">Jurnal Elite</div></div>
-  <div class="badge" id="c-status">☁️ Sync...</div>
+  <div class="logo"><div class="logo-icon">🌸</div><div class="logo-text">Jurnal Nutriție Elite</div></div>
+  <div class="badge" id="c-status">☁️ Salvat local</div>
 </div>
 
 <div class="nav">
@@ -78,37 +85,43 @@ input:focus,select:focus{border-color:var(--pink)}
 
   <!-- JURNAL -->
   <div id="t-j" class="tab active">
+    
     <div style="display:flex;justify-content:space-between;margin-bottom:1.5rem;align-items:center">
       <button class="btn" style="width:40px" onclick="cDay(-1)">‹</button>
       <div id="d-lbl" style="font-weight:600;font-size:15px"></div>
       <button class="btn" style="width:40px" onclick="cDay(1)">›</button>
     </div>
 
-    <div class="d-grid">
+    <!-- DONUTS -->
+    <div class="donuts-grid">
       <div class="d-card"><div class="d-wrap" id="dn-k"><div class="d-in"><span class="d-val" id="v-k">0</span></div></div><div class="d-lbl">Calorii</div><div class="d-sub" id="s-k">din 1500</div></div>
       <div class="d-card"><div class="d-wrap" id="dn-p"><div class="d-in"><span class="d-val" id="v-p" style="color:var(--pink)">0</span></div></div><div class="d-lbl" style="color:var(--pink)">Prot</div><div class="d-sub" id="s-p">din 100g</div></div>
       <div class="d-card"><div class="d-wrap" id="dn-c"><div class="d-in"><span class="d-val" id="v-c" style="color:var(--orange)">0</span></div></div><div class="d-lbl" style="color:var(--orange)">Carbo</div><div class="d-sub" id="s-c">din 120g</div></div>
       <div class="d-card"><div class="d-wrap" id="dn-f"><div class="d-in"><span class="d-val" id="v-f" style="color:var(--teal)">0</span></div></div><div class="d-lbl" style="color:var(--teal)">Grăs</div><div class="d-sub" id="s-f">din 55g</div></div>
     </div>
 
-    <div class="card">
-      <div class="card-title">💧 Apă (Pahare 250ml) <span id="w-lbl" style="color:var(--teal)">0 / 8</span></div>
-      <div class="water-grid" id="w-grid"></div>
+    <!-- APA TRACKER -->
+    <div class="card" style="padding:1rem 1.2rem">
+      <div class="card-title" style="margin-bottom:5px">💧 Apă (Pahare 250ml) <span id="water-label" style="margin-left:auto;color:var(--teal)">0 / 8</span></div>
+      <div class="water-grid" id="water-grid"></div>
     </div>
 
-    <div style="text-align:right;margin-bottom:15px"><button class="btn btn-p" onclick="openM('m-add')">+ Adaugă Aliment</button></div>
+    <div style="display:flex;justify-content:flex-end;margin-bottom:1rem">
+      <button class="btn btn-p" onclick="openM('m-add')">+ Adaugă Aliment</button>
+    </div>
+    
     <div id="log-list"></div>
   </div>
 
-  <!-- SMART -->
+  <!-- SMART PLANNER -->
   <div id="t-s" class="tab">
     <div class="card">
       <div class="card-title">🤖 Asistent Inteligent</div>
-      <p style="font-size:13px;color:var(--text3);margin-bottom:1.2rem">Alege alimentele pe care vrei să le mănânci, iar aplicația îți va calcula instant gramajele perfecte pentru tine.</p>
+      <p style="font-size:13px;color:var(--text3);margin-bottom:1.5rem">Alege alimentele pe care vrei să le mănânci, iar aplicația îți va calcula instant gramajele perfecte pentru tine.</p>
       
-      <div style="margin-bottom:1rem"><label class="form-label">Sursă Proteine</label><select id="sm-p"></select></div>
-      <div style="margin-bottom:1rem"><label class="form-label">Sursă Carbohidrați</label><select id="sm-c"></select></div>
-      <div style="margin-bottom:1rem"><label class="form-label">Sursă Grăsimi extra</label><select id="sm-f"></select></div>
+      <div class="form-group"><label class="form-label">Sursă Proteine</label><select id="sm-p"></select></div>
+      <div class="form-group"><label class="form-label">Sursă Carbohidrați</label><select id="sm-c"></select></div>
+      <div class="form-group"><label class="form-label">Sursă Grăsimi extra</label><select id="sm-f"></select></div>
       
       <div class="form-row" style="margin-top:1.5rem">
         <button class="btn" style="border-color:var(--purple);color:var(--purple2)" onclick="calcS(true)">🎲 Surprinde-mă</button>
@@ -117,8 +130,9 @@ input:focus,select:focus{border-color:var(--pink)}
     </div>
     <div id="sm-res" class="card" style="display:none;background:rgba(78,205,196,0.05);border-color:var(--teal)">
       <div class="card-title" style="color:var(--teal)">Masa ta echilibrată:</div>
-      <div id="sm-items"></div>
-      <div class="form-row" style="margin-top:15px">
+      <div id="sm-items" style="margin-bottom:15px"></div>
+      
+      <div class="form-row">
         <select id="sm-m"><option>Mic dejun</option><option>Prânz</option><option>Cină</option></select>
         <button class="btn btn-p" onclick="addSmLog()">+ Adaugă în Jurnal</button>
       </div>
@@ -129,11 +143,11 @@ input:focus,select:focus{border-color:var(--pink)}
   <div id="t-h" class="tab">
     <div class="card">
       <div class="card-title">Evoluție Calorii (7 zile)</div>
-      <div id="h-chk" style="display:flex;gap:8px;height:140px;align-items:flex-end;border-bottom:1px solid var(--border);padding-bottom:5px"></div>
+      <div id="h-chk" class="history-chart"></div>
     </div>
     <div class="card">
       <div class="card-title">Evoluție Proteine (7 zile)</div>
-      <div id="h-chp" style="display:flex;gap:8px;height:140px;align-items:flex-end;border-bottom:1px solid var(--border);padding-bottom:5px"></div>
+      <div id="h-chp" class="history-chart"></div>
     </div>
   </div>
 
@@ -155,19 +169,19 @@ input:focus,select:focus{border-color:var(--pink)}
 
 </div>
 
-<!-- MODAL ADAUGARE IN JURNAL (COMPLET) -->
+<!-- MODAL ADAUGARE IN JURNAL -->
 <div id="m-add" class="overlay"><div class="modal">
-  <h3 style="margin-bottom: 1.2rem; font-size: 18px;">Adaugă în Jurnal</h3>
+  <h3 style="margin-bottom: 1.2rem; font-size: 18px; color: var(--text)">Adaugă în Jurnal</h3>
   
-  <div style="margin-bottom: 1rem;">
+  <div class="form-group">
     <label class="form-label">Masă</label>
     <select id="a-m"><option>Mic dejun</option><option>Prânz</option><option>Cină</option><option>Gustare</option></select>
   </div>
   
-  <div style="margin-bottom: 1rem; position: relative;">
+  <div class="form-group" style="position: relative;">
     <label class="form-label">Caută aliment</label>
     <input type="text" id="a-q" placeholder="Ex: Pui, Orez, Brânză..." autocomplete="off">
-    <div id="a-sug" style="position: absolute; top: 100%; left: 0; width: 100%; max-height:160px; overflow-y:auto; background:var(--bg3); border-radius:8px; z-index: 10; box-shadow: 0 4px 12px rgba(0,0,0,0.5);"></div>
+    <div id="a-sug" style="position: absolute; top: 100%; left: 0; width: 100%; max-height:180px; overflow-y:auto; background:var(--bg2); border:1px solid var(--border); border-radius:8px; z-index: 10; box-shadow: 0 4px 15px rgba(0,0,0,0.8);"></div>
   </div>
   
   <div class="form-row-3">
@@ -207,24 +221,67 @@ input:focus,select:focus{border-color:var(--pink)}
 </div></div>
 
 <script>
-// DB Uriașă (n:nume, k:kcal, p:prot, c:carbo, f:grasimi, t:tip[p=prot,c=carb,f=fat,v=veg])
-const DB=[
-  {n:"Ou întreg fiert",k:155,p:13,c:1,f:11,t:'p'},{n:"Ou ochi (prăjit în puțin ulei)",k:190,p:13,c:1,f:15,t:'p'},{n:"Omletă simplă (fără ulei)",k:154,p:11,c:1,f:12,t:'p'},{n:"Scrob / Omletă cu unt",k:210,p:11,c:1,f:18,t:'p'},{n:"Albuș de ou",k:52,p:11,c:1,f:0,t:'p'},
-  {n:"Piept pui crud",k:110,p:23,c:0,f:1.2,t:'p'},{n:"Piept pui grătar/copt",k:165,p:31,c:0,f:3.6,t:'p'},{n:"Piept pui șnițel (prăjit)",k:260,p:16,c:18,f:14,t:'p'},{n:"Pulpe pui gătite",k:180,p:24,c:0,f:9,t:'p'},{n:"Ficat pui",k:172,p:25,c:0,f:6.4,t:'p'},
-  {n:"Ceafă porc grătar",k:250,p:18,c:0,f:19,t:'p'},{n:"Mușchiuleț porc",k:143,p:26,c:0,f:3.5,t:'p'},{n:"Vită slabă (mușchi)",k:250,p:26,c:0,f:15,t:'p'},{n:"Somon cuptor",k:208,p:20,c:0,f:13,t:'p'},{n:"Păstrăv grătar",k:190,p:25,c:0,f:8,t:'p'},{n:"Ton conservă suc",k:116,p:26,c:0,f:1,t:'p'},
-  {n:"Cottage Cheese (Perle)",k:98,p:11,c:3.4,f:4.3,t:'p'},{n:"Telemea vacă",k:270,p:18,c:1,f:21,t:'p'},{n:"Cașcaval clasic",k:330,p:25,c:1,f:25,t:'p'},{n:"Iaurt grecesc 2%",k:60,p:10,c:3,f:2,t:'p'},{n:"Lapte 1.5%",k:44,p:3.4,c:4.5,f:1.5,t:'p'},
+// ==========================================
+// 1. BAZA DE DATE NUTRITIONALĂ 
+// ==========================================
+const DB = [
+  { n: "Ou întreg fiert / poșat", k: 155, p: 13, c: 1.1, f: 11, t: 'p' },
+  { n: "Ou ochi (prăjit în puțin ulei)", k: 190, p: 13, c: 1, f: 15, t: 'p' },
+  { n: "Omletă simplă (fără ulei)", k: 154, p: 11, c: 1, f: 12, t: 'p' },
+  { n: "Scrob / Omletă cu unt", k: 210, p: 11, c: 1, f: 18, t: 'p' },
+  { n: "Albuș de ou", k: 52, p: 11, c: 1, f: 0, t: 'p' },
+  { n: "Piept de pui (crud)", k: 110, p: 23, c: 0, f: 1.2, t: 'p' },
+  { n: "Piept de pui grătar / copt", k: 165, p: 31, c: 0, f: 3.6, t: 'p' },
+  { n: "Piept de pui șnițel (prăjit)", k: 260, p: 16, c: 18, f: 14, t: 'p' },
+  { n: "Pulpe de pui gătite", k: 180, p: 24, c: 0, f: 9, t: 'p' },
+  { n: "Ficat de pui", k: 172, p: 25, c: 0, f: 6.4, t: 'p' },
+  { n: "Ceafă de porc grătar", k: 250, p: 18, c: 0, f: 19, t: 'p' },
+  { n: "Mușchiuleț de porc", k: 143, p: 26, c: 0, f: 3.5, t: 'p' },
+  { n: "Vită slabă (mușchi)", k: 250, p: 26, c: 0, f: 15, t: 'p' },
+  { n: "Somon la cuptor", k: 208, p: 20, c: 0, f: 13, t: 'p' },
+  { n: "Păstrăv / Doradă", k: 90, p: 19, c: 0, f: 1.5, t: 'p' },
+  { n: "Ton în suc propriu", k: 116, p: 26, c: 0, f: 1, t: 'p' },
+  { n: "Macrou / Sardine", k: 205, p: 19, c: 0, f: 14, t: 'p' },
+  { n: "Cottage Cheese (Perle)", k: 98, p: 11, c: 3.4, f: 4.3, t: 'p' },
+  { n: "Telemea de vacă", k: 270, p: 18, c: 1, f: 21, t: 'p' },
+  { n: "Cașcaval clasic", k: 330, p: 25, c: 1, f: 25, t: 'p' },
+  { n: "Iaurt grecesc 2%", k: 60, p: 10, c: 3, f: 2, t: 'p' },
+  { n: "Lapte 1.5%", k: 44, p: 3.4, c: 4.5, f: 1.5, t: 'p' },
   
-  {n:"Orez alb crud",k:360,p:7,c:80,f:1,t:'c'},{n:"Orez alb fiert",k:130,p:2.7,c:28,f:0.3,t:'c'},{n:"Orez brun fiert",k:112,p:2.6,c:23,f:0.9,t:'c'},
-  {n:"Cartof crud",k:77,p:2,c:17,f:0.1,t:'c'},{n:"Cartof fiert/copt",k:86,p:1.6,c:20,f:0.1,t:'c'},{n:"Cartofi prăjiți (casă)",k:312,p:3,c:41,f:15,t:'c'},{n:"Piure cartofi (cu lapte)",k:110,p:2,c:16,f:4,t:'c'},
-  {n:"Mămăligă (fiartă)",k:70,p:2,c:15,f:0.2,t:'c'},{n:"Mălai uscat",k:360,p:7,c:77,f:1,t:'c'},{n:"Paste integrale fierte",k:124,p:5.3,c:26,f:0.5,t:'c'},{n:"Paste albe fierte",k:131,p:5,c:25,f:1,t:'c'},
-  {n:"Făină albă",k:364,p:10,c:76,f:1,t:'c'},{n:"Pâine albă",k:265,p:9,c:49,f:3,t:'c'},{n:"Pâine integrală",k:247,p:13,c:41,f:3.4,t:'c'},{n:"Fulgi ovăz",k:389,p:17,c:66,f:7,t:'c'},
-  {n:"Măr",k:52,p:0,c:14,f:0,t:'c'},{n:"Banană",k:89,p:1,c:23,f:0,t:'c'},{n:"Fructe pădure",k:57,p:0,c:14,f:0,t:'c'},{n:"Zahăr / Miere",k:380,p:0,c:98,f:0,t:'c'},
-  
-  {n:"Ulei măsline/floare",k:884,p:0,c:0,f:100,t:'f'},{n:"Unt 82%",k:717,p:0,c:0,f:81,t:'f'},{n:"Avocado proaspăt",k:160,p:2,c:8,f:15,t:'f'},{n:"Nuci / Migdale",k:600,p:15,c:14,f:60,t:'f'},{n:"Smântână 20%",k:206,p:3,c:3,f:20,t:'f'},
-  
-  {n:"Roșii proaspete",k:18,p:0.9,c:3.9,f:0.2,t:'v'},{n:"Castraveți",k:15,p:0.7,c:3.6,f:0.1,t:'v'},{n:"Salată verde",k:15,p:1.5,c:3,f:0.2,t:'v'},{n:"Ardei gras",k:20,p:0.9,c:4.6,f:0.2,t:'v'},{n:"Broccoli/Spanac la abur",k:30,p:3,c:5,f:0.3,t:'v'},{n:"Ceapă",k:40,p:1,c:9,f:0,t:'v'}
+  { n: "Orez alb crud", k: 360, p: 7, c: 80, f: 1, t: 'c' },
+  { n: "Orez alb fiert", k: 130, p: 2.7, c: 28, f: 0.3, t: 'c' },
+  { n: "Orez brun fiert", k: 112, p: 2.6, c: 23, f: 0.9, t: 'c' },
+  { n: "Cartof crud", k: 77, p: 2, c: 17, f: 0.1, t: 'c' },
+  { n: "Cartof fiert / copt", k: 86, p: 1.6, c: 20, f: 0.1, t: 'c' },
+  { n: "Cartofi prăjiți (casă)", k: 312, p: 3, c: 41, f: 15, t: 'c' },
+  { n: "Mămăligă (fiartă)", k: 70, p: 2, c: 15, f: 0.2, t: 'c' },
+  { n: "Mălai uscat", k: 360, p: 7, c: 77, f: 1, t: 'c' },
+  { n: "Paste integrale fierte", k: 124, p: 5.3, c: 26, f: 0.5, t: 'c' },
+  { n: "Făină albă", k: 364, p: 10, c: 76, f: 1, t: 'c' },
+  { n: "Pâine albă", k: 265, p: 9, c: 49, f: 3, t: 'c' },
+  { n: "Pâine integrală", k: 247, p: 13, c: 41, f: 3.4, t: 'c' },
+  { n: "Fulgi de ovăz", k: 389, p: 17, c: 66, f: 7, t: 'c' },
+  { n: "Măr", k: 52, p: 0, c: 14, f: 0, t: 'c' },
+  { n: "Banană", k: 89, p: 1, c: 23, f: 0, t: 'c' },
+  { n: "Zahăr / Miere", k: 380, p: 0, c: 98, f: 0, t: 'c' },
+
+  { n: "Ulei măsline / floare", k: 884, p: 0, c: 0, f: 100, t: 'f' },
+  { n: "Unt 82%", k: 717, p: 0.8, c: 0.1, f: 81, t: 'f' },
+  { n: "Avocado", k: 160, p: 2, c: 8, f: 15, t: 'f' },
+  { n: "Nuci / Migdale", k: 600, p: 15, c: 14, f: 60, t: 'f' },
+  { n: "Smântână 20%", k: 206, p: 3, c: 3, f: 20, t: 'f' },
+
+  { n: "Roșii", k: 18, p: 0.9, c: 3.9, f: 0.2, t: 'v' },
+  { n: "Castraveți", k: 15, p: 0.7, c: 3.6, f: 0.1, t: 'v' },
+  { n: "Salată verde", k: 15, p: 1.5, c: 3, f: 0.2, t: 'v' },
+  { n: "Ardei gras", k: 20, p: 0.9, c: 4.6, f: 0.2, t: 'v' },
+  { n: "Broccoli / Spanac la abur", k: 30, p: 3, c: 5, f: 0.3, t: 'v' },
+  { n: "Ceapă", k: 40, p: 1, c: 9, f: 0, t: 'v' }
 ];
 
+// ==========================================
+// 2. STATE & INITIALIZARE
+// ==========================================
 const API='https://script.google.com/macros/s/AKfycbzdKTvouX3f3bqV99jlHnV5iDxigEg6a3L08EQF_zjBqlo6nWiZ5KCkxsv2rAhaYyhZIQ/exec';
 let S={p:{k:1500,p:100,c:120,f:55},f:[],w:{}};
 let cD=new Date(); cD.setHours(0,0,0,0);
@@ -233,131 +290,270 @@ let selF=null, cSM=[];
 const gI=i=>document.getElementById(i);
 const nS=s=>s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
 const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const getFmtDate=d=>String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+d.getFullYear();
 
-async function init(){
+async function initApp() {
   gI('c-status').innerHTML='☁️ Se sincronizează...';
-  try{
+  try {
     let r=await fetch(`${API}?action=getAll`), d=await r.json();
     if(d.healthData){let x=JSON.parse(d.healthData); S={...S,...x};}
     gI('c-status').innerHTML='☁️ Salvat local/cloud';
-  }catch(e){gI('c-status').innerHTML='⚠️ Deconectat (Local mode)'; try{let ls=localStorage.getItem('he_db');if(ls)S=JSON.parse(ls);}catch(er){}}
-  updP(); buildSm(); rend();
-}
-function save(){try{localStorage.setItem('he_db',JSON.stringify(S));}catch(e){} fetch(API,{method:'POST',body:JSON.stringify({action:'saveHealthData',healthData:JSON.stringify(S)})});}
-
-function sTab(t){document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active')); event.target.classList.add('active'); document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active')); gI('t-'+t).classList.add('active'); if(t==='h')drH(); rend();}
-function cDay(x){cD.setDate(cD.getDate()+x); rend();}
-function openM(i){
-  gI(i).style.display='flex';
-  if(i === 'm-add') { gI('a-q').value=''; gI('a-sug').innerHTML=''; selF=null; gI('a-g').value='100'; ['f-k100','f-k','f-p','f-c','f-f'].forEach(x=>gI(x).value=''); }
-} 
-function closeM(i){gI(i).style.display='none';}
-
-// Jurnal & Apa & Donuts
-function rend(){
-  let is=iso(cD); gI('d-lbl').innerText=`${String(cD.getDate()).padStart(2,'0')}.${String(cD.getMonth()+1).padStart(2,'0')} `+(is===iso(new Date())?'(Azi)':'');
-  let fs=S.f.filter(x=>x.d===is), t={k:0,p:0,c:0,f:0};
-  fs.forEach(x=>{t.k+=x.k; t.p+=x.p; t.c+=x.c; t.f+=x.f;});
-  ['k','p','c','f'].forEach(x=>{
-    gI(`v-${x}`).innerText=Math.round(t[x]);
-    let tVal = S.p[x];
-    gI(`s-${x}`).innerText = x==='k' ? `din ${tVal}` : `din ${tVal}g`;
-    let p=Math.min(100,Math.round((t[x]/tVal)*100))||0; 
-    let c = x=='p'?'var(--pink)':x=='c'?'var(--orange)':x=='f'?'var(--teal)':'var(--purple)';
-    gI(`dn-${x}`).style.background=`conic-gradient(${t[x]>tVal?'var(--red)':c} ${p}%,var(--bg3) ${p}%)`;
-  });
-  
-  let lh=''; ['Mic dejun','Prânz','Cină','Gustare'].forEach(m=>{
-    let mfs=fs.filter(x=>x.m===m); if(!mfs.length)return;
-    lh+=`<div class="meal-lbl">${m}</div>`+mfs.map(x=>`<div class="li-item"><div><div class="li-n">${x.n}</div><div class="li-m">${x.q}g · P:${Math.round(x.p)}g C:${Math.round(x.c)}g G:${Math.round(x.f)}g</div></div><div style="display:flex;align-items:center"><span class="li-k">${x.k} kcal</span><button class="li-del" onclick="dlF(${x.id})">×</button></div></div>`).join('');
-  }); gI('log-list').innerHTML=lh||'<div style="text-align:center;color:var(--text3);font-size:13px;padding:20px">Niciun aliment adăugat. Folosește butonul de mai sus.</div>';
-  
-  // Water
-  let w = S.w[is]||0; gI('w-lbl').innerText=`${w} / 8`;
-  gI('w-grid').innerHTML=Array(8).fill(0).map((_,i)=>`<div class="glass ${i<w?'full':''}" onclick="tW(${i<w?-1:1})"></div>`).join('');
-}
-function tW(v){let i=iso(cD); S.w[i]=Math.max(0,(S.w[i]||0)+v); save(); rend();}
-
-// Profile
-function updP(){['k','p','c','f'].forEach(x=>gI(`p-${x}`).value=S.p[x]);}
-function saveP(){['k','p','c','f'].forEach(x=>S.p[x]=+gI(`p-${x}`).value); save(); rend();}
-
-// Smart Planner
-function buildSm(){
-  gI('sm-p').innerHTML=DB.filter(x=>x.t==='p').map(x=>`<option value="${x.n}">${x.n}</option>`).join('');
-  gI('sm-c').innerHTML='<option value="-1">Fără carbohidrați extra</option>'+DB.filter(x=>x.t==='c').map(x=>`<option value="${x.n}">${x.n}</option>`).join('');
-  gI('sm-f').innerHTML='<option value="-1">Fără grăsimi extra</option>'+DB.filter(x=>x.t==='f').map(x=>`<option value="${x.n}">${x.n}</option>`).join('');
-}
-function calcS(rnd=false){
-  let p, c, f;
-  if(rnd){
-    let pArr=DB.filter(x=>x.t==='p'), cArr=DB.filter(x=>x.t==='c'), fArr=DB.filter(x=>x.t==='f');
-    p=pArr[Math.floor(Math.random()*pArr.length)];
-    c=Math.random()>0.8?null:cArr[Math.floor(Math.random()*cArr.length)];
-    f=fArr[Math.floor(Math.random()*fArr.length)];
-    gI('sm-p').value=p.n; gI('sm-c').value=c?c.n:"-1"; gI('sm-f').value=f.n;
-  } else {
-    p=DB.find(x=>x.n===gI('sm-p').value);
-    c=gI('sm-c').value!="-1"?DB.find(x=>x.n===gI('sm-c').value):null;
-    f=gI('sm-f').value!="-1"?DB.find(x=>x.n===gI('sm-f').value):null;
+  } catch(e) {
+    gI('c-status').innerHTML='⚠️ Deconectat (Local mode)'; 
+    try{let ls=localStorage.getItem('he_db');if(ls)S=JSON.parse(ls);}catch(er){}
   }
-  
-  cSM=[]; let tP=S.p.p/3, tC=S.p.c/3, tF=S.p.f/3;
-  let gP=(tP/p.p)*100, exC=gP*p.c/100, exF=gP*p.f/100; cSM.push({o:p,q:Math.round(gP)});
-  let nC=tC-exC; if(c&&nC>0){let gC=(nC/c.c)*100; exF+=gC*c.f/100; cSM.push({o:c,q:Math.round(gC)});}
-  let nF=tF-exF; if(f&&nF>2){let gF=(nF/f.f)*100; cSM.push({o:f,q:Math.round(gF)});}
-  
-  gI('sm-items').innerHTML=cSM.map(x=>`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border2);font-size:14px"><span>${x.o.n}</span><b style="color:var(--teal)">${x.q}g</b></div>`).join('');
-  gI('sm-res').style.display='block';
+  updP(); populateSmartPlanner(); renderApp();
 }
-function addSmLog(){cSM.forEach(x=>S.f.push({id:Date.now()+Math.random(),d:iso(cD),m:gI('sm-m').value,n:x.o.n,q:x.q,k:Math.round(x.q*x.o.k/100),p:+(x.q*x.o.p/100).toFixed(1),c:+(x.q*x.o.c/100).toFixed(1),f:+(x.q*x.o.f/100).toFixed(1)})); save(); sTab('j');}
 
-// Search & Add Manual (Modal detaliat)
-gI('a-q').addEventListener('input',e=>{
-  let v=nS(e.target.value); gI('a-sug').innerHTML=''; if(v.length<2)return;
-  let res=DB.filter(x=>nS(x.n).includes(v)).sort((a,b)=>nS(a.n).indexOf(v)-nS(b.n).indexOf(v));
-  gI('a-sug').innerHTML=res.slice(0,10).map(x=>`<div style="padding:12px;border-bottom:1px solid var(--border);cursor:pointer;font-size:13px;color:var(--text)" onclick="sel('${x.n}')">${x.n} <span style="color:var(--text3);font-size:11px">(${x.k} kcal/100g)</span></div>`).join('');
+function backupData() {
+  try{localStorage.setItem('he_db',JSON.stringify(S));}catch(e){} 
+  fetch(API,{method:'POST',body:JSON.stringify({action:'saveHealthData',healthData:JSON.stringify(S)})});
+}
+
+// ==========================================
+// 3. UI & TAB NAVIGATION
+// ==========================================
+function sTab(t) {
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active')); 
+  event.target.classList.add('active'); 
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active')); 
+  gI('t-'+t).classList.add('active'); 
+  if(t==='h') drH(); 
+  renderApp();
+}
+
+function cDay(x) { cD.setDate(cD.getDate()+x); renderApp(); }
+
+function openM(i) {
+  gI(i).style.display='flex';
+  if(i === 'm-add') { 
+    gI('a-q').value=''; gI('a-sug').innerHTML=''; selF=null; gI('a-g').value='100'; 
+    ['f-k100','f-k','f-p','f-c','f-f'].forEach(x=>gI(x).value=''); 
+  }
+} 
+function closeM(i) { gI(i).style.display='none'; }
+
+// ==========================================
+// 4. JURNAL & CALCUL MACRO ZILNIC
+// ==========================================
+function updateDonutUI(id, current, target, color) {
+  gI(`v-${id}`).innerText = Math.round(current);
+  gI(`s-${id}`).innerText = id==='k' ? `din ${target} kcal` : `din ${target}g`;
+  let pct = Math.min(100, Math.round((current / target) * 100)) || 0;
+  let activeColor = current > target ? 'var(--red)' : color;
+  gI(`dn-${id}`).style.background = `conic-gradient(${activeColor} ${pct}%, var(--bg3) ${pct}%)`;
+}
+
+function renderApp() {
+  let is = iso(cD);
+  let isToday = is === iso(new Date());
+  gI('d-lbl').innerText = getFmtDate(cD) + (isToday ? ' (Azi)' : '');
+
+  // Calcul Macro
+  let dayFoods = S.f.filter(x => x.d === is);
+  let totals = { k: 0, p: 0, c: 0, f: 0 };
+  dayFoods.forEach(x => { totals.k += x.k; totals.p += x.p; totals.c += x.c; totals.f += x.f; });
+
+  let p = S.p;
+  updateDonutUI('k', totals.k, p.k, 'var(--purple)');
+  updateDonutUI('p', totals.p, p.p, 'var(--pink)');
+  updateDonutUI('c', totals.c, p.c, 'var(--orange)');
+  updateDonutUI('f', totals.f, p.f, 'var(--teal)');
+
+  // Liste alimente
+  let container = gI('log-list');
+  if (!dayFoods.length) {
+    container.innerHTML = '<div style="text-align:center;color:var(--text3);padding:20px;font-size:13px">Niciun aliment adăugat azi.</div>';
+  } else {
+    let lh = '';
+    ['Mic dejun', 'Prânz', 'Cină', 'Gustare'].forEach(m => {
+      let mFoods = dayFoods.filter(x => x.m === m);
+      if (!mFoods.length) return;
+      lh += `<div class="meal-lbl">${m}</div>`;
+      mFoods.forEach(x => {
+        lh += `
+          <div class="li-item">
+            <div>
+              <div class="li-n">${x.n}</div>
+              <div class="li-m">${x.q}g · P:${Math.round(x.p)} C:${Math.round(x.c)} G:${Math.round(x.f)}</div>
+            </div>
+            <div style="display:flex;align-items:center;">
+              <span class="li-k">${x.k} kcal</span>
+              <button class="li-del" onclick="dlF(${x.id})">×</button>
+            </div>
+          </div>
+        `;
+      });
+    });
+    container.innerHTML = lh;
+  }
+
+  // Water Tracker
+  let waterCount = S.w[is] || 0;
+  gI('w-lbl').innerText = `${waterCount} / 8`;
+  let wHtml = '';
+  for(let i=0; i<8; i++) {
+    wHtml += `<div class="glass ${i < waterCount ? 'full' : ''}" onclick="tW(${i < waterCount ? -1 : 1})"></div>`;
+  }
+  gI('w-grid').innerHTML = wHtml;
+}
+
+function tW(v) { let i=iso(cD); S.w[i] = Math.max(0, (S.w[i] || 0) + v); backupData(); renderApp(); }
+
+function dlF(id) { S.f = S.f.filter(x => x.id !== id); backupData(); renderApp(); }
+
+// ==========================================
+// 5. CAUTARE & ADAUGARE IN JURNAL (MANUAL)
+// ==========================================
+gI('a-q').addEventListener('input', e => {
+  let val = nS(e.target.value);
+  let sugBox = gI('a-sug');
+  sugBox.innerHTML = '';
+  if(val.length < 2) return;
+
+  let matches = DB.filter(x => nS(x.n).includes(val)).slice(0, 15);
+  
+  matches.forEach(m => {
+    let div = document.createElement('div');
+    div.style.cssText = "padding:12px; border-bottom:1px solid var(--border); cursor:pointer; font-size:13px; color:var(--text)";
+    div.innerHTML = `${m.n} <span style="color:var(--text3);font-size:11px">(${Math.round(m.k)} kcal/100g)</span>`;
+    div.onclick = () => {
+      selF = m;
+      gI('a-q').value = m.n;
+      gI('f-k100').value = m.k;
+      sugBox.innerHTML = '';
+      calcM();
+    };
+    sugBox.appendChild(div);
+  });
 });
 
-function sel(n){
-  selF=DB.find(x=>x.n===n);
-  gI('a-q').value=selF.n; gI('a-sug').innerHTML='';
-  gI('f-k100').value=selF.k;
-  calcM();
-}
+gI('a-g').addEventListener('input', calcM);
 
-gI('a-g').addEventListener('input',calcM);
-function calcM(){
-  let q=+gI('a-g').value||0;
+function calcM() {
+  let q = +gI('a-g').value || 0;
   if(!selF) return;
-  gI('f-k').value=Math.round(q*selF.k/100);
-  gI('f-p').value=+(q*selF.p/100).toFixed(1);
-  gI('f-c').value=+(q*selF.c/100).toFixed(1);
-  gI('f-f').value=+(q*selF.f/100).toFixed(1);
+  gI('f-k').value = Math.round(q * selF.k / 100);
+  gI('f-p').value = +(q * selF.p / 100).toFixed(1);
+  gI('f-c').value = +(q * selF.c / 100).toFixed(1);
+  gI('f-f').value = +(q * selF.f / 100).toFixed(1);
 }
 
-function addL(){
-  if(!selF)return; let q=+gI('a-g').value; 
-  S.f.push({id:Date.now(),d:iso(cD),m:gI('a-m').value,n:selF.n,q:q,k:Math.round(q*selF.k/100),p:+(q*selF.p/100).toFixed(1),c:+(q*selF.c/100).toFixed(1),f:+(q*selF.f/100).toFixed(1)}); 
-  save(); closeM('m-add'); rend();
-}
-function dlF(i){S.f=S.f.filter(x=>x.id!==i); save(); rend();}
-
-// Istoric
-function drH(){
-  let hK='',hP='', tk=S.p.k, tp=S.p.p; 
-  for(let i=6;i>=0;i--){
-    let d=new Date();d.setDate(d.getDate()-i); let is=iso(d);
-    let t=S.f.filter(x=>x.d===is).reduce((a,b)=>({k:a.k+b.k,p:a.p+b.p}),{k:0,p:0});
-    let pk=Math.min(100,t.k/tk*100)||0, pp=Math.min(100,t.p/tp*100)||0;
-    let bC=t.k>tk?'var(--red)':'var(--purple)';
-    hK+=`<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:100%;height:100px;background:var(--bg3);border-radius:4px;position:relative"><div style="position:absolute;bottom:0;width:100%;height:${pk}%;background:${bC};border-radius:4px"></div></div><span style="font-size:9px">${String(d.getDate()).padStart(2,'0')}</span></div>`;
-    hP+=`<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px"><div style="width:100%;height:100px;background:var(--bg3);border-radius:4px;position:relative"><div style="position:absolute;bottom:0;width:100%;height:${pp}%;background:var(--teal);border-radius:4px"></div></div><span style="font-size:9px">${String(d.getDate()).padStart(2,'0')}</span></div>`;
-  } 
-  gI('h-chk').innerHTML=hK; gI('h-chp').innerHTML=hP;
+function addL() {
+  if(!selF) return;
+  let q = +gI('a-g').value || 0;
+  S.f.push({
+    id: Date.now(),
+    d: iso(cD),
+    m: gI('a-m').value,
+    n: selF.n,
+    q: q,
+    k: Math.round(q * selF.k / 100),
+    p: +(q * selF.p / 100).toFixed(1),
+    c: +(q * selF.c / 100).toFixed(1),
+    f: +(q * selF.f / 100).toFixed(1)
+  });
+  backupData();
+  closeM('m-add');
+  renderApp();
 }
 
-init();
+// ==========================================
+// 6. SMART PLANNER
+// ==========================================
+function populateSmartPlanner() {
+  let p = DB.filter(x => x.t === 'p');
+  let c = DB.filter(x => x.t === 'c');
+  let f = DB.filter(x => x.t === 'f');
+
+  gI('sm-p').innerHTML = p.map(x => `<option value="${x.n}">${x.n}</option>`).join('');
+  gI('sm-c').innerHTML = '<option value="-1">Fără carbo extra</option>' + c.map(x => `<option value="${x.n}">${x.n}</option>`).join('');
+  gI('sm-f').innerHTML = '<option value="-1">Fără grăsimi extra</option>' + f.map(x => `<option value="${x.n}">${x.n}</option>`).join('');
+}
+
+function calcS(rnd=false) {
+  let pObj, cObj, fObj;
+  
+  if(rnd) {
+    let pArr=DB.filter(x=>x.t==='p'), cArr=DB.filter(x=>x.t==='c'), fArr=DB.filter(x=>x.t==='f');
+    pObj=pArr[Math.floor(Math.random()*pArr.length)];
+    cObj=Math.random()>0.8?null:cArr[Math.floor(Math.random()*cArr.length)];
+    fObj=fArr[Math.floor(Math.random()*fArr.length)];
+    
+    gI('sm-p').value=pObj.n; gI('sm-c').value=cObj?cObj.n:"-1"; gI('sm-f').value=fObj.n;
+  } else {
+    pObj=DB.find(x=>x.n===gI('sm-p').value);
+    cObj=gI('sm-c').value!=="-1"?DB.find(x=>x.n===gI('sm-c').value):null;
+    fObj=gI('sm-f').value!=="-1"?DB.find(x=>x.n===gI('sm-f').value):null;
+  }
+
+  cSM=[]; 
+  let tP=S.p.p/3, tC=S.p.c/3, tF=S.p.f/3;
+  
+  let gP=(tP/pObj.p)*100, exC=gP*pObj.c/100, exF=gP*pObj.f/100; cSM.push({o:pObj,q:Math.round(gP)});
+  let nC=tC-exC; if(cObj&&nC>0){let gC=(nC/cObj.c)*100; exF+=gC*cObj.f/100; cSM.push({o:cObj,q:Math.round(gC)});}
+  let nF=tF-exF; if(fObj&&nF>2){let gF=(nF/fObj.f)*100; cSM.push({o:fObj,q:Math.round(gF)});}
+  
+  let html = cSM.map(x => `
+    <div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(78,205,196,0.3);padding:8px 0">
+      <span style="font-size:13px">${x.o.n}</span>
+      <span style="color:var(--teal);font-weight:700">${x.q}g</span>
+    </div>
+  `).join('');
+  
+  gI('sm-items').innerHTML = html;
+  gI('sm-res').style.display = 'block';
+}
+
+function addSmLog() {
+  let masa = gI('sm-m').value;
+  cSM.forEach(x => {
+    S.f.push({
+      id: Date.now() + Math.random(),
+      d: iso(cD), m: masa, n: x.o.n, q: x.q,
+      k: Math.round(x.q * x.o.k / 100),
+      p: +(x.q * x.o.p / 100).toFixed(1),
+      c: +(x.q * x.o.c / 100).toFixed(1),
+      f: +(x.q * x.o.f / 100).toFixed(1)
+    });
+  });
+  backupData(); sTab('j');
+}
+
+// ==========================================
+// 7. ISTORIC 7 ZILE
+// ==========================================
+function drH() {
+  let hK='', hP='';
+  let tk = S.p.k, tp = S.p.p;
+
+  for(let i=6; i>=0; i--) {
+    let d = new Date(); d.setDate(d.getDate() - i);
+    let is = iso(d);
+    
+    let t = S.f.filter(x => x.d === is).reduce((a,b)=>({k: a.k+b.k, p: a.p+b.p}), {k:0, p:0});
+    
+    let pk = Math.min(100, (t.k / tk) * 100) || 0;
+    let pp = Math.min(100, (t.p / tp) * 100) || 0;
+
+    let bC = t.k > tk ? 'var(--red)' : 'var(--purple)';
+
+    hK += `<div class="history-col"><div class="history-bar-wrap"><div class="history-val" style="bottom:${pk}%">${Math.round(t.k)}</div><div class="history-bar" style="height:${pk}%;background:${bC}"></div></div><div style="font-size:9px;color:var(--text3)">${getFmtDate(d).substring(0,5)}</div></div>`;
+    hP += `<div class="history-col"><div class="history-bar-wrap"><div class="history-val" style="bottom:${pp}%">${Math.round(t.p)}g</div><div class="history-bar" style="height:${pp}%;background:linear-gradient(180deg,var(--teal),#38b2ac)"></div></div><div style="font-size:9px;color:var(--text3)">${getFmtDate(d).substring(0,5)}</div></div>`;
+  }
+  
+  gI('h-chk').innerHTML = hK;
+  gI('h-chp').innerHTML = hP;
+}
+
+// ==========================================
+// 8. SETARI PROFIL
+// ==========================================
+function updP() { ['k', 'p', 'c', 'f'].forEach(x => gI('p-' + x).value = S.p[x]); }
+function saveP() { ['k', 'p', 'c', 'f'].forEach(x => S.p[x] = +gI('p-' + x).value); backupData(); renderApp(); }
+
+// RUN APP
+initApp();
 </script>
 </body>
 </html>
