@@ -126,7 +126,7 @@ input:focus,select:focus{outline:none;border-color:var(--pink)}
     <div class="donut-card"><div class="donut-wrap" id="donut-carb"><div class="donut-inner"><span class="donut-val" id="val-carb">0</span><span class="donut-unit">g</span></div></div><div class="donut-label" style="color:var(--orange)">Carbo</div><div class="donut-sub" id="sub-carb"></div></div>
     <div class="donut-card"><div class="donut-wrap" id="donut-fat"><div class="donut-inner"><span class="donut-val" id="val-fat">0</span><span class="donut-unit">g</span></div></div><div class="donut-label" style="color:var(--teal)">Grăsimi</div><div class="donut-sub" id="sub-fat"></div></div>
   </div>
-  <div class="add-btn-row"><button class="btn btn-primary" onclick="showFoodModal()">+ Adaugă manual</button></div>
+  <div class="add-btn-row"><button class="btn btn-primary" onclick="showFoodModal()">+ Adaugă manual (API)</button></div>
   <div id="food-log-container"></div>
 </div>
 
@@ -182,15 +182,12 @@ input:focus,select:focus{outline:none;border-color:var(--pink)}
 
 </main>
 
-<div id="modal-food" class="modal-overlay" style="display:none"><div class="modal"><div class="modal-title">🥗 Adaugă aliment</div>
+<div id="modal-food" class="modal-overlay" style="display:none"><div class="modal"><div class="modal-title">🥗 Adaugă aliment din API</div>
   <div class="form-group"><label class="form-label">Masă</label><select id="f-masa"><option>Mic dejun</option><option>Prânz</option><option>Cină</option><option>Gustare</option></select></div>
-  <div class="form-group"><label class="form-label">Caută aliment</label><input type="text" id="f-name" list="food-suggestions"><datalist id="food-suggestions"></datalist></div>
+  <div class="form-group"><label class="form-label">Caută aliment online (Open Food Facts)</label><input type="text" id="f-name" autocomplete="off" list="food-suggestions"><datalist id="food-suggestions"></datalist></div>
   <div class="form-row-3"><div class="form-group"><label class="form-label">Cant. (g)</label><input type="number" id="f-qty" oninput="calcFoodMacros()"></div><div class="form-group"><label class="form-label">kcal/100g</label><input type="number" id="f-kcal100" oninput="calcFoodMacros()"></div><div class="form-group"><label class="form-label">Total kcal</label><input type="number" id="f-kcal" readonly style="background:var(--bg2)"></div></div>
   <div class="form-row-3"><div class="form-group"><label class="form-label">Prot (g)</label><input type="number" id="f-prot" readonly style="background:var(--bg2)"></div><div class="form-group"><label class="form-label">Carbo (g)</label><input type="number" id="f-carb" readonly style="background:var(--bg2)"></div><div class="form-group"><label class="form-label">Grăs (g)</label><input type="number" id="f-fat" readonly style="background:var(--bg2)"></div></div>
   <div class="modal-actions"><button class="btn" onclick="closeM('modal-food')">Anulează</button><button class="btn btn-primary" onclick="saveFood()">✓ Adaugă</button></div>
-  <input type="hidden" id="f-prot-hidden">
-<input type="hidden" id="f-carb-hidden">
-<input type="hidden" id="f-fat-hidden">
 </div></div>
 
 <div id="modal-mas" class="modal-overlay" style="display:none"><div class="modal"><div class="modal-title">⚖️ Măsurătoare</div>
@@ -215,6 +212,7 @@ input:focus,select:focus{outline:none;border-color:var(--pink)}
 <script>
 const API='https://script.google.com/macros/s/AKfycbzdKTvouX3f3bqV99jlHnV5iDxigEg6a3L08EQF_zjBqlo6nWiZ5KCkxsv2rAhaYyhZIQ/exec';
 
+// Această bază de date este folosită STRICT de asistentul Smart Planner pentru a calcula corect procentele.
 const DB = {
   proteins: [
     { name: "Piept de pui (gătit)", kcal100: 165, prot100: 31, carb100: 0, fat100: 3.6 },
@@ -227,15 +225,10 @@ const DB = {
     { name: "Ton în saramură", kcal100: 116, prot100: 26, carb100: 0, fat100: 1 },
     { name: "Păstrăv / Doradă", kcal100: 90, prot100: 19, carb100: 0, fat100: 1.5 },
     { name: "Ou întreg (fiert/poșat)", kcal100: 155, prot100: 13, carb100: 1.1, fat100: 11 },
-    { name: "Albuș de ou", kcal100: 52, prot100: 11, carb100: 1, fat100: 0 },
     { name: "Cottage Cheese (Perle)", kcal100: 98, prot100: 11, carb100: 3.4, fat100: 4.3 },
     { name: "Iaurt grecesc 2%", kcal100: 60, prot100: 10, carb100: 3, fat100: 2 },
-    { name: "Kefir / Sana", kcal100: 50, prot100: 3.5, carb100: 4, fat100: 2 },
     { name: "Telemea de vacă", kcal100: 270, prot100: 18, carb100: 1, fat100: 21 },
-    { name: "Cașcaval", kcal100: 330, prot100: 25, carb100: 1, fat100: 25 },
-    { name: "Tofu", kcal100: 76, prot100: 8, carb100: 2, fat100: 5 },
-    { name: "Șuncă de curcan/pui", kcal100: 110, prot100: 18, carb100: 2, fat100: 3 },
-    { name: "Pudră proteică (Whey)", kcal100: 370, prot100: 80, carb100: 5, fat100: 3 }
+    { name: "Tofu", kcal100: 76, prot100: 8, carb100: 2, fat100: 5 }
   ],
   carbs: [
     { name: "Orez alb fiert", kcal100: 130, prot100: 2.7, carb100: 28, fat100: 0.3 },
@@ -245,55 +238,25 @@ const DB = {
     { name: "Paste integrale fierte", kcal100: 124, prot100: 5.3, carb100: 26, fat100: 0.5 },
     { name: "Mămăligă (fiartă)", kcal100: 70, prot100: 2, carb100: 15, fat100: 0.2 },
     { name: "Pâine integrală", kcal100: 247, prot100: 13, carb100: 41, fat100: 3.4 },
-    { name: "Pâine albă", kcal100: 265, prot100: 9, carb100: 49, fat100: 3 },
     { name: "Fulgi de ovăz", kcal100: 389, prot100: 17, carb100: 66, fat100: 7 },
     { name: "Quinoa fiartă", kcal100: 120, prot100: 4.4, carb100: 21, fat100: 1.9 },
-    { name: "Linte fiartă", kcal100: 116, prot100: 9, carb100: 20, fat100: 0.4 },
-    { name: "Năut fiert", kcal100: 164, prot100: 9, carb100: 27, fat100: 2.6 },
-    { name: "Fasole boabe fiartă", kcal100: 127, prot100: 9, carb100: 23, fat100: 0.5 },
-    { name: "Mazăre fiartă", kcal100: 81, prot100: 5, carb100: 14, fat100: 0.4 },
-    { name: "Măr (proaspăt)", kcal100: 52, prot100: 0.3, carb100: 14, fat100: 0.2 },
-    { name: "Banană", kcal100: 89, prot100: 1, carb100: 23, fat100: 0.3 },
-    { name: "Afine / Zmeură", kcal100: 57, prot100: 0.7, carb100: 14, fat100: 0.3 }
+    { name: "Mazăre fiartă", kcal100: 81, prot100: 5, carb100: 14, fat100: 0.4 }
   ],
   fats: [
     { name: "Ulei de măsline", kcal100: 884, prot100: 0, carb100: 0, fat100: 100 },
-    { name: "Ulei de floarea-soarelui", kcal100: 884, prot100: 0, carb100: 0, fat100: 100 },
     { name: "Unt 82%", kcal100: 717, prot100: 0.8, carb100: 0.1, fat100: 81 },
     { name: "Avocado", kcal100: 160, prot100: 2, carb100: 8.5, fat100: 14.7 },
     { name: "Măsline", kcal100: 115, prot100: 0.8, carb100: 6, fat100: 11 },
     { name: "Nuci românești", kcal100: 654, prot100: 15, carb100: 14, fat100: 65 },
     { name: "Migdale / Caju", kcal100: 579, prot100: 21, carb100: 22, fat100: 50 },
-    { name: "Unt de arahide (100%)", kcal100: 588, prot100: 25, carb100: 20, fat100: 50 },
     { name: "Semințe de dovleac", kcal100: 559, prot100: 30, carb100: 10, fat100: 49 },
-    { name: "Smântână 12%", kcal100: 134, prot100: 3, carb100: 4, fat100: 12 },
-    { name: "Smântână 20%", kcal100: 206, prot100: 3, carb100: 3, fat100: 20 },
-    { name: "Bacon / Pancetta", kcal100: 541, prot100: 37, carb100: 1, fat100: 42 }
-  ],
-  veggies: [
-    { name: "Broccoli", kcal100: 34, prot100: 2.8, carb100: 7, fat100: 0.4 },
-    { name: "Sparanghel", kcal100: 20, prot100: 2.2, carb100: 3.9, fat100: 0.1 },
-    { name: "Spanac (proaspăt/gătit)", kcal100: 23, prot100: 2.9, carb100: 3.6, fat100: 0.4 },
-    { name: "Salată verde / Mix frunze", kcal100: 15, prot100: 1.5, carb100: 3, fat100: 0.2 },
-    { name: "Roșii", kcal100: 18, prot100: 0.9, carb100: 3.9, fat100: 0.2 },
-    { name: "Castraveți", kcal100: 15, prot100: 0.7, carb100: 3.6, fat100: 0.1 },
-    { name: "Ardei gras", kcal100: 20, prot100: 0.9, carb100: 4.6, fat100: 0.2 },
-    { name: "Dovlecel / Zucchini", kcal100: 17, prot100: 1.2, carb100: 3.1, fat100: 0.3 },
-    { name: "Ciuperci", kcal100: 22, prot100: 3.1, carb100: 3.3, fat100: 0.3 },
-    { name: "Varză albă", kcal100: 25, prot100: 1.3, carb100: 6, fat100: 0.1 },
-    { name: "Conopidă", kcal100: 25, prot100: 1.9, carb100: 5, fat100: 0.3 },
-    { name: "Fasole verde păstăi", kcal100: 31, prot100: 1.8, carb100: 7, fat100: 0.2 },
-    { name: "Morcov", kcal100: 41, prot100: 0.9, carb100: 10, fat100: 0.2 },
-    { name: "Ceapă", kcal100: 40, prot100: 1.1, carb100: 9, fat100: 0.1 },
-    { name: "Usturoi", kcal100: 149, prot100: 6.4, carb100: 33, fat100: 0.5 }
+    { name: "Smântână 12%", kcal100: 134, prot100: 3, carb100: 4, fat100: 12 }
   ]
 };
 
-const ALL_FOODS=[...DB.proteins,...DB.carbs,...DB.fats,...DB.veggies];
-
 let state={profile:{height:165,kcal:1500,prot:100,carb:120,fat:55},foods:[],masuratori:[],analize:[],medicamente:[]};
 let currentDay=new Date(); currentDay.setHours(0,0,0,0);
-let selectedDbFood=null, currentSmartMeal=[];
+let currentSmartMeal=[];
 
 function setStatus(c,m){let el=document.getElementById('cloud-status');el.className='cloud-badge '+c;el.innerHTML=c==='loading'?`<span class="spinner"></span> ${m}`:m;}
 async function apiGet(a){let r=await fetch(`${API}?action=${a}`);return r.json();}
@@ -321,7 +284,6 @@ async function loadAll(){
       }}catch(e){}
   }
   applyProfile(); populateSmart(); 
-  document.getElementById('food-suggestions').innerHTML=ALL_FOODS.map(f=>`<option value="${f.name}">`).join('');
   render();
 }
 
@@ -387,53 +349,78 @@ function addSmartMealToLog(){
   backup();switchTab('jurnal');
 }
 
-// FOOD ADD
-function showFoodModal(){['f-name','f-qty','f-kcal100','f-kcal','f-prot','f-carb','f-fat'].forEach(i=>document.getElementById(i).value='');selectedDbFood=null;document.getElementById('modal-food').style.display='flex';}
+// FOOD ADD - EXCLUSIV API OPEN FOOD FACTS
+let apiResults = [];
+let currentFood100g = { kcal: 0, prot: 0, carb: 0, fat: 0 };
+
+function showFoodModal(){
+  ['f-name','f-qty','f-kcal100','f-kcal','f-prot','f-carb','f-fat'].forEach(i=>document.getElementById(i).value='');
+  currentFood100g = { kcal: 0, prot: 0, carb: 0, fat: 0 };
+  document.getElementById('modal-food').style.display='flex';
+}
+
 document.getElementById('f-name').addEventListener('input', async function(e) {
   const val = e.target.value.trim();
+  
+  // 1. Verificăm dacă user-ul a selectat ceva ce există deja în rezultatele descărcate
+  const match = apiResults.find(p => p.product_name === val);
+  if (match) {
+    currentFood100g.kcal = match.nutriments['energy-kcal_100g'] || 0;
+    currentFood100g.prot = match.nutriments.proteins_100g || 0;
+    currentFood100g.carb = match.nutriments.carbohydrates_100g || 0;
+    currentFood100g.fat = match.nutriments.fat_100g || 0;
+    
+    document.getElementById('f-kcal100').value = currentFood100g.kcal;
+    if(!document.getElementById('f-qty').value) document.getElementById('f-qty').value = 100;
+    calcFoodMacros();
+    return;
+  }
+
+  // 2. Facem request nou doar dacă a scris cel puțin 3 litere
   if (val.length < 3) return;
   try {
     const response = await fetch(`https://world.openfoodfacts.org/cgi/search.pl?search_terms=${val}&search_simple=1&action=process&json=1&lc=ro`);
     const data = await response.json();
+    apiResults = data.products.filter(p => p.product_name).slice(0, 15);
+    
     const datalist = document.getElementById('food-suggestions');
-    datalist.innerHTML = '';
-    data.products.slice(0, 10).forEach(p => {
-      let option = document.createElement('option');
-      option.value = p.product_name;
-      option.dataset.kcal = p.nutriments['energy-kcal_100g'] || 0;
-      option.dataset.prot = p.nutriments.proteins_100g || 0;
-      option.dataset.carb = p.nutriments.carbohydrates_100g || 0;
-      option.dataset.fat = p.nutriments.fat_100g || 0;
-      datalist.appendChild(option);
-    });
+    datalist.innerHTML = apiResults.map(p => `<option value="${p.product_name}">`).join('');
   } catch (err) { console.error("Eroare API:", err); }
 });
-  document.getElementById('f-name').addEventListener('change', function(e) {
-  const options = document.getElementById('food-suggestions').options;
-  for (let i = 0; i < options.length; i++) {
-    if (options[i].value === e.target.value) {
-      document.getElementById('f-kcal100').value = options[i].dataset.kcal;
-      document.getElementById('f-prot-hidden').value = options[i].dataset.prot;
-      document.getElementById('f-carb-hidden').value = options[i].dataset.carb;
-      document.getElementById('f-fat-hidden').value = options[i].dataset.fat;
-      calcFoodMacros();
-      break;
-    }
-  }
+
+// Dacă user-ul modifică manual caloriile/100g (în caz că nu găsește produsul pe net)
+document.getElementById('f-kcal100').addEventListener('input', function(e) {
+  currentFood100g.kcal = +e.target.value || 0;
+  calcFoodMacros();
 });
+
 function calcFoodMacros() {
   const q = +document.getElementById('f-qty').value || 0;
-  const k100 = +document.getElementById('f-kcal100').value || 0;
-  
-  // Calculează kcal
-  document.getElementById('f-kcal').value = Math.round(q * k100 / 100);
-  
-  // Calculează macro-urile din buzunarele ascunse
-  document.getElementById('f-prot').value = (q * (+document.getElementById('f-prot-hidden').value || 0) / 100).toFixed(1);
-  document.getElementById('f-carb').value = (q * (+document.getElementById('f-carb-hidden').value || 0) / 100).toFixed(1);
-  document.getElementById('f-fat').value = (q * (+document.getElementById('f-fat-hidden').value || 0) / 100).toFixed(1);
+  document.getElementById('f-kcal').value = Math.round(q * currentFood100g.kcal / 100);
+  document.getElementById('f-prot').value = (q * currentFood100g.prot / 100).toFixed(1);
+  document.getElementById('f-carb').value = (q * currentFood100g.carb / 100).toFixed(1);
+  document.getElementById('f-fat').value = (q * currentFood100g.fat / 100).toFixed(1);
 }
-function saveFood(){let n=document.getElementById('f-name').value;if(!n)return;state.foods.push({id:Date.now(),date:toISO(currentDay),masa:document.getElementById('f-masa').value,name:n,qty:document.getElementById('f-qty').value||100,kcal:+document.getElementById('f-kcal').value||0,prot:+document.getElementById('f-prot').value||0,carb:+document.getElementById('f-carb').value||0,fat:+document.getElementById('f-fat').value||0});backup();closeM('modal-food');renderJurnal();}
+
+function saveFood(){
+  let n=document.getElementById('f-name').value;
+  if(!n) return;
+  state.foods.push({
+    id:Date.now(),
+    date:toISO(currentDay),
+    masa:document.getElementById('f-masa').value,
+    name:n,
+    qty:document.getElementById('f-qty').value||100,
+    kcal:+document.getElementById('f-kcal').value||0,
+    prot:+document.getElementById('f-prot').value||0,
+    carb:+document.getElementById('f-carb').value||0,
+    fat:+document.getElementById('f-fat').value||0
+  });
+  backup();
+  closeM('modal-food');
+  renderJurnal();
+}
+
 function delFood(id){state.foods=state.foods.filter(f=>f.id!==id);backup();renderJurnal();}
 
 // ISTORIC
