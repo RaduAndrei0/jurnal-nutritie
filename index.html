@@ -114,7 +114,6 @@ input:focus,select:focus{outline:none;border-color:var(--pink)}
 
 <main class="main">
 
-<!-- JURNAL -->
 <div id="tab-jurnal" class="tab-content active">
   <div class="advisor-card">
     <div class="advisor-icon">🧬</div>
@@ -131,7 +130,6 @@ input:focus,select:focus{outline:none;border-color:var(--pink)}
   <div id="food-log-container"></div>
 </div>
 
-<!-- SMART PLANNER -->
 <div id="tab-smart" class="tab-content">
   <div class="section">
     <div class="section-title">🤖 Asistent Calcul Porții</div>
@@ -151,32 +149,27 @@ input:focus,select:focus{outline:none;border-color:var(--pink)}
   </div>
 </div>
 
-<!-- ISTORIC -->
 <div id="tab-istoric" class="tab-content">
   <div class="section"><div class="section-title">📈 Evoluție Calorii (7 zile)</div><div class="history-chart" id="history-chart-kcal"></div></div>
   <div class="section"><div class="section-title">🥩 Evoluție Proteine (7 zile)</div><div class="history-chart" id="history-chart-prot"></div></div>
 </div>
 
-<!-- MASURATORI -->
 <div id="tab-masuratori" class="tab-content">
   <div class="add-btn-row"><button class="btn btn-primary" onclick="showMasModal()">+ Adaugă</button></div>
   <div class="section"><div class="section-title">🧮 IMC Curent</div><div class="imc-display" id="imc-display"><div class="imc-val">—</div><div class="imc-label" style="font-size:14px;color:var(--text2);margin-top:4px">Adaugă greutate</div></div></div>
   <div class="section"><div class="section-title">📏 Ultimele Măsurători</div><div class="masuratori-list" id="masuratori-list"></div></div>
 </div>
 
-<!-- ANALIZE -->
 <div id="tab-analize" class="tab-content">
   <div class="add-btn-row"><button class="btn btn-primary" onclick="showAnModal()">+ Adaugă Analiză</button></div>
   <div class="section"><div class="section-title">🔬 Ficat & Metabolism</div><div class="analize-grid" id="analize-list"></div></div>
 </div>
 
-<!-- MEDICAMENTE -->
 <div id="tab-medicamente" class="tab-content">
   <div class="add-btn-row"><button class="btn btn-primary" onclick="showMedModal()">+ Adaugă Med/Supliment</button></div>
   <div class="med-list" id="med-list"></div>
 </div>
 
-<!-- SETARI -->
 <div id="tab-setari" class="tab-content">
   <div class="section">
     <div class="section-title">👤 Profil & Ținte</div>
@@ -189,7 +182,6 @@ input:focus,select:focus{outline:none;border-color:var(--pink)}
 
 </main>
 
-<!-- MODAL FOOD -->
 <div id="modal-food" class="modal-overlay" style="display:none"><div class="modal"><div class="modal-title">🥗 Adaugă aliment</div>
   <div class="form-group"><label class="form-label">Masă</label><select id="f-masa"><option>Mic dejun</option><option>Prânz</option><option>Cină</option><option>Gustare</option></select></div>
   <div class="form-group"><label class="form-label">Caută aliment</label><input type="text" id="f-name" list="food-suggestions"><datalist id="food-suggestions"></datalist></div>
@@ -198,14 +190,12 @@ input:focus,select:focus{outline:none;border-color:var(--pink)}
   <div class="modal-actions"><button class="btn" onclick="closeM('modal-food')">Anulează</button><button class="btn btn-primary" onclick="saveFood()">✓ Adaugă</button></div>
 </div></div>
 
-<!-- MODAL MASURATORI -->
 <div id="modal-mas" class="modal-overlay" style="display:none"><div class="modal"><div class="modal-title">⚖️ Măsurătoare</div>
   <div class="form-row"><div class="form-group"><label class="form-label">Data</label><input type="date" id="m-date"></div><div class="form-group"><label class="form-label">Greutate (kg)</label><input type="number" id="m-weight" step="0.1"></div></div>
   <div class="form-row"><div class="form-group"><label class="form-label">Talie (cm)</label><input type="number" id="m-waist"></div><div class="form-group"><label class="form-label">Șolduri (cm)</label><input type="number" id="m-hips"></div></div>
   <div class="modal-actions"><button class="btn" onclick="closeM('modal-mas')">Anulează</button><button class="btn btn-primary" onclick="saveMas()">✓ Salvează</button></div>
 </div></div>
 
-<!-- MODAL ANALIZE -->
 <div id="modal-an" class="modal-overlay" style="display:none"><div class="modal"><div class="modal-title">🩺 Analiză</div>
   <div class="form-row"><div class="form-group"><label class="form-label">Data</label><input type="date" id="a-date"></div><div class="form-group"><label class="form-label">Status</label><select id="a-status"><option value="ok">✅ Normal</option><option value="warn">⚠️ Limită</option><option value="bad">❌ Anormal</option></select></div></div>
   <div class="form-group"><label class="form-label">Nume analiză (ex: HOMA, Sideremie)</label><input type="text" id="a-name"></div>
@@ -213,7 +203,6 @@ input:focus,select:focus{outline:none;border-color:var(--pink)}
   <div class="modal-actions"><button class="btn" onclick="closeM('modal-an')">Anulează</button><button class="btn btn-primary" onclick="saveAn()">✓ Salvează</button></div>
 </div></div>
 
-<!-- MODAL MEDS -->
 <div id="modal-med" class="modal-overlay" style="display:none"><div class="modal"><div class="modal-title">💊 Medicament</div>
   <div class="form-group"><label class="form-label">Nume (ex: Fier, Magneziu)</label><input type="text" id="med-name"></div>
   <div class="form-row"><div class="form-group"><label class="form-label">Doză</label><input type="text" id="med-dose"></div><div class="form-group"><label class="form-label">Note</label><input type="text" id="med-notes" placeholder="ex: după masă"></div></div>
@@ -222,6 +211,7 @@ input:focus,select:focus{outline:none;border-color:var(--pink)}
 
 <script>
 const API='https://script.google.com/macros/s/AKfycbzdKTvouX3f3bqV99jlHnV5iDxigEg6a3L08EQF_zjBqlo6nWiZ5KCkxsv2rAhaYyhZIQ/exec';
+
 const DB = {
   proteins: [
     { name: "Piept de pui (gătit)", kcal100: 165, prot100: 31, carb100: 0, fat100: 3.6 },
@@ -295,6 +285,7 @@ const DB = {
     { name: "Usturoi", kcal100: 149, prot100: 6.4, carb100: 33, fat100: 0.5 }
   ]
 };
+
 const ALL_FOODS=[...DB.proteins,...DB.carbs,...DB.fats,...DB.veggies];
 
 let state={profile:{height:165,kcal:1500,prot:100,carb:120,fat:55},foods:[],masuratori:[],analize:[],medicamente:[]};
@@ -305,36 +296,32 @@ function setStatus(c,m){let el=document.getElementById('cloud-status');el.classN
 async function apiGet(a){let r=await fetch(`${API}?action=${a}`);return r.json();}
 async function apiPost(b){let r=await fetch(API,{method:'POST',body:JSON.stringify(b)});return r.json();}
 
-aasync function loadAll(){
+async function loadAll(){
   setStatus('loading','Conectare...');
   try{
     let res=await apiGet('getAll');
     if(res.healthData){
         let d=typeof res.healthData==='string'?JSON.parse(res.healthData):res.healthData; 
-        // SUPRASCRIEM DOAR DATELE DIN JURNAL/PROFIL, DAR PASTRAM BAZA DE DATE NOUA
-        state.profile = {...state.profile, ...d.profile};
-        if(d.foods) state.foods = d.foods;
-        if(d.masuratori) state.masuratori = d.masuratori;
-        if(d.analize) state.analize = d.analize;
-        if(d.medicamente) state.medicamente = d.medicamente;
+        state.profile = {...state.profile, ...(d.profile || {})};
+        state.foods = d.foods || [];
+        state.masuratori = d.masuratori || [];
+        state.analize = d.analize || [];
+        state.medicamente = d.medicamente || [];
     }
     setStatus('ok','☁️ Conectat');
   }catch(e){
       setStatus('err','⚠️ Offline');
       try{let s=localStorage.getItem('h_b');if(s){
           let d=JSON.parse(s);
-          state.profile = {...state.profile, ...d.profile};
-          if(d.foods) state.foods = d.foods;
+          state.profile = {...state.profile, ...(d.profile || {})};
+          state.foods = d.foods || [];
       }}catch(e){}
   }
-  
-  applyProfile(); 
-  populateSmart(); 
-  
-  // POPULAM DROPDOWN-UL CU BAZA DE DATE NOUA (ALL_FOODS)
+  applyProfile(); populateSmart(); 
   document.getElementById('food-suggestions').innerHTML=ALL_FOODS.map(f=>`<option value="${f.name}">`).join('');
   render();
 }
+
 function backup(){try{localStorage.setItem('h_b',JSON.stringify(state));}catch(e){}}
 async function saveToCloud(){setStatus('loading','Salvare...');try{await apiPost({action:'saveHealthData',healthData:JSON.stringify(state)});setStatus('ok','☁️ Salvat');backup();}catch(e){setStatus('err','⚠️ Eroare');}}
 
