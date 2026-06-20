@@ -305,14 +305,33 @@ function setStatus(c,m){let el=document.getElementById('cloud-status');el.classN
 async function apiGet(a){let r=await fetch(`${API}?action=${a}`);return r.json();}
 async function apiPost(b){let r=await fetch(API,{method:'POST',body:JSON.stringify(b)});return r.json();}
 
-async function loadAll(){
+aasync function loadAll(){
   setStatus('loading','Conectare...');
   try{
     let res=await apiGet('getAll');
-    if(res.healthData){let d=typeof res.healthData==='string'?JSON.parse(res.healthData):res.healthData; state={...state,...d};}
+    if(res.healthData){
+        let d=typeof res.healthData==='string'?JSON.parse(res.healthData):res.healthData; 
+        // SUPRASCRIEM DOAR DATELE DIN JURNAL/PROFIL, DAR PASTRAM BAZA DE DATE NOUA
+        state.profile = {...state.profile, ...d.profile};
+        if(d.foods) state.foods = d.foods;
+        if(d.masuratori) state.masuratori = d.masuratori;
+        if(d.analize) state.analize = d.analize;
+        if(d.medicamente) state.medicamente = d.medicamente;
+    }
     setStatus('ok','☁️ Conectat');
-  }catch(e){setStatus('err','⚠️ Offline');try{let s=localStorage.getItem('h_b');if(s)state=JSON.parse(s);}catch(e){}}
-  applyProfile(); populateSmart(); 
+  }catch(e){
+      setStatus('err','⚠️ Offline');
+      try{let s=localStorage.getItem('h_b');if(s){
+          let d=JSON.parse(s);
+          state.profile = {...state.profile, ...d.profile};
+          if(d.foods) state.foods = d.foods;
+      }}catch(e){}
+  }
+  
+  applyProfile(); 
+  populateSmart(); 
+  
+  // POPULAM DROPDOWN-UL CU BAZA DE DATE NOUA (ALL_FOODS)
   document.getElementById('food-suggestions').innerHTML=ALL_FOODS.map(f=>`<option value="${f.name}">`).join('');
   render();
 }
