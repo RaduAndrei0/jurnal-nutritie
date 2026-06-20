@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ro">
 <head>
 <meta charset="UTF-8">
@@ -197,12 +197,12 @@ input:focus,select:focus{outline:none;border-color:var(--pink)}
   <div id="food-log-container"></div>
 </div>
 
-<!-- SMART PLANNER TAB (Logica Noua) -->
+<!-- SMART PLANNER TAB -->
 <div id="tab-smart" class="tab-content">
   <div class="section">
     <div class="section-title">🤖 Asistent Calcul Porții</div>
     <p style="font-size:12px; color:var(--text3); margin-bottom:1rem; line-height:1.4;">
-      Alege tipul mesei. Aplicația va face asocieri și va calcula automat gramajele perfecte.
+      Alege tipul mesei. Aplicația va filtra ingredientele astfel încât să faci asocieri culinare corecte.
     </p>
 
     <div class="form-row" style="margin-bottom: 1rem;">
@@ -215,7 +215,7 @@ input:focus,select:focus{outline:none;border-color:var(--pink)}
         </div>
         <div class="form-group" id="group-masa-target">
           <label class="form-label">PENTRU CE MASĂ?</label>
-          <select id="smart-masa-target">
+          <select id="smart-masa-target" onchange="populateSmartSelects()">
             <option value="Mic dejun">Mic dejun</option>
             <option value="Prânz">Prânz</option>
             <option value="Cină">Cină</option>
@@ -223,26 +223,30 @@ input:focus,select:focus{outline:none;border-color:var(--pink)}
         </div>
     </div>
 
-    <!-- Zona selectii manuale (Vizibila doar pe 1 Masa) -->
+    <!-- Zona selectii manuale -->
     <div class="smart-box" id="manual-selectors-group">
       <div class="form-group">
         <label class="form-label">🥩 PROTEINE</label>
         <select id="smart-prot"></select>
       </div>
       <div class="form-group">
-        <label class="form-label">🌾 CARBOHIDRAȚI COMPLECȘI (FĂRĂ ZAHĂR)</label>
+        <label class="form-label">🌾 CARBOHIDRAȚI COMPLECȘI</label>
         <select id="smart-carb"></select>
       </div>
       <div class="form-group">
         <label class="form-label">🥑 GRĂSIMI SĂNĂTOASE</label>
         <select id="smart-fat"></select>
       </div>
-      <button class="btn btn-primary" style="width:100%" onclick="calculateSmartMeal(false)">⚖️ Calculează Masa</button>
+      
+      <div style="display:flex; gap:10px; margin-top:15px">
+        <button class="btn" id="btn-surprinde" style="flex:1; justify-content:center; border-color:var(--purple); color:var(--purple2)" onclick="calculateSmartMeal(true)">
+          🎲 Surprinde-mă
+        </button>
+        <button class="btn btn-primary" style="flex:1; justify-content:center;" onclick="calculateSmartMeal(false)">
+          ⚖️ Calculează
+        </button>
+      </div>
     </div>
-
-    <button class="btn" id="btn-surprinde" style="width:100%; justify-content:center; border-color:var(--purple); color:var(--purple2); margin-top:10px" onclick="calculateSmartMeal(true)">
-      🎲 Surprinde-mă (Generare Aleatorie)
-    </button>
 
     <!-- ZONA REZULTAT -->
     <div id="smart-result-area" class="smart-result">
@@ -320,424 +324,21 @@ input:focus,select:focus{outline:none;border-color:var(--pink)}
 <script>
 const API = 'https://script.google.com/macros/s/AKfycbzdKTvouX3f3bqV99jlHnV5iDxigEg6a3L08EQF_zjBqlo6nWiZ5KCkxsv2rAhaYyhZIQ/exec';
 
-// BAZĂ DE DATE (Urmează să fie extinsă masiv la pasul următor)
+// BAZĂ DE DATE COMPLETĂ CU TAG-URI PENTRU MESE
 const DB = {
   proteins: [
-    { name: "Piept de pui la grătar", kcal100: 165, prot100: 31, carb100: 0, fat100: 3.6 },
-    { name: "Mușchi de vită", kcal100: 250, prot100: 26, carb100: 0, fat100: 15 },
-    { name: "Somon la cuptor", kcal100: 208, prot100: 20, carb100: 0, fat100: 13 },
-    { name: "Ouă (fierte/poșate)", kcal100: 155, prot100: 13, carb100: 1.1, fat100: 11 },
-    { name: "Cottage Cheese (Perle)", kcal100: 98, prot100: 11, carb100: 3.4, fat100: 4.3 }
-  ],
-  carbs: [
-    { name: "Orez fiert (Alb/Brun)", kcal100: 130, prot100: 2.7, carb100: 28, fat100: 0.3 },
-    { name: "Cartof copt/fiert", kcal100: 86, prot100: 1.6, carb100: 20, fat100: 0.1 },
-    { name: "Pâine integrală", kcal100: 247, prot100: 13, carb100: 41, fat100: 3.4 }
-  ],
-  fats: [
-    { name: "Ulei de măsline", kcal100: 884, prot100: 0, carb100: 0, fat100: 100 },
-    { name: "Unt 82%", kcal100: 717, prot100: 0.8, carb100: 0.1, fat100: 81 },
-    { name: "Avocado", kcal100: 160, prot100: 2, carb100: 8.5, fat100: 14.7 }
-  ]
-};
-
-const ALL_FOODS = [...DB.proteins, ...DB.carbs, ...DB.fats];
-
-let state = {
-  profile: { kcal: 1500, prot: 100, carb: 120, fat: 55 },
-  foods: []
-};
-
-let currentDay = new Date();
-currentDay.setHours(0,0,0,0);
-let selectedDbFood = null;
-let currentSmartMeal = []; 
-
-function setStatus(cls, msg) {
-  const el = document.getElementById('cloud-status');
-  el.className = 'cloud-badge ' + cls;
-  el.innerHTML = cls==='loading' ? `<span class="spinner"></span> ${msg}` : msg;
-}
-
-async function apiGet(action) { const r = await fetch(`${API}?action=${action}`); return r.json(); }
-async function apiPost(body) { const r = await fetch(API, {method:'POST', body: JSON.stringify(body)}); return r.json(); }
-
-async function loadAll() {
-  setStatus('loading','Conectare...');
-  try {
-    const res = await apiGet('getAll');
-    if(res.healthData) {
-      const d = typeof res.healthData === 'string' ? JSON.parse(res.healthData) : res.healthData;
-      if(d.profile) state.profile = {...state.profile, ...d.profile};
-      if(d.foods) state.foods = d.foods;
-    }
-    setStatus('ok','☁️ Conectat');
-  } catch(e) { setStatus('err','⚠️ Offline'); }
-  
-  applyProfile();
-  populateSmartSelects();
-  document.getElementById('food-suggestions').innerHTML = ALL_FOODS.map(f=>`<option value="${f.name}">`).join('');
-  render();
-}
-
-function backup() { try { localStorage.setItem('health_backup', JSON.stringify(state)); } catch(e){} }
-async function saveToCloud() { setStatus('loading','Salvare...'); try { await apiPost({action:'saveHealthData', healthData: JSON.stringify(state)}); setStatus('ok','☁️ Salvat'); backup(); } catch(e) { setStatus('err','⚠️ Eroare'); } }
-
-function fmtDate(d) { const p=n=>String(n).padStart(2,'0'); return `${p(d.getDate())}.${p(d.getMonth()+1)}.${d.getFullYear()}`; }
-function toISO(d) { const p=n=>String(n).padStart(2,'0'); return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`; }
-function changeDay(delta) { currentDay.setDate(currentDay.getDate()+delta); renderJurnal(); }
-
-function switchTab(tab) {
-  document.querySelectorAll('.nav-btn').forEach((b,i)=>b.classList.toggle('active',['jurnal','smart','istoric','setari'][i]===tab));
-  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
-  document.getElementById('tab-'+tab).classList.add('active');
-  if(tab === 'istoric') renderHistory();
-  render();
-}
-
-function render() { 
-  document.getElementById('date-label').textContent = fmtDate(currentDay) + (toISO(currentDay)===toISO(new Date())?' — Azi':'');
-  renderJurnal(); 
-}
-
-function applyProfile() {
-  document.getElementById('set-kcal').value = state.profile.kcal;
-  document.getElementById('set-prot').value = state.profile.prot;
-  document.getElementById('set-carb').value = state.profile.carb;
-  document.getElementById('set-fat').value = state.profile.fat;
-}
-
-function saveProfile() {
-  state.profile = { kcal: +document.getElementById('set-kcal').value, prot: +document.getElementById('set-prot').value, carb: +document.getElementById('set-carb').value, fat: +document.getElementById('set-fat').value };
-  backup(); renderJurnal();
-}
-
-function updateDonut(id, val, target, color) {
-  document.getElementById(`val-${id}`).textContent = Math.round(val);
-  document.getElementById(`sub-${id}`).textContent = `din ${target}`;
-  let pct = Math.min(100, Math.round((val / target) * 100)) || 0;
-  let activeColor = val > target ? 'var(--red)' : color;
-  document.getElementById(`donut-${id}`).style.background = `conic-gradient(${activeColor} ${pct}%, var(--bg3) ${pct}%)`;
-}
-
-// ---------------------------------------------------------
-// SMART PLANNER / AI SOLVER LOGIC
-// ---------------------------------------------------------
-function toggleSmartMode() {
-    const mode = document.getElementById('smart-calc-mode').value;
-    if(mode === 'remaining') {
-        document.getElementById('manual-selectors-group').style.display = 'none';
-        document.getElementById('group-masa-target').style.display = 'none';
-        document.getElementById('btn-surprinde').textContent = "🎲 Generează Tot Restul Zilei";
-    } else {
-        document.getElementById('manual-selectors-group').style.display = 'block';
-        document.getElementById('group-masa-target').style.display = 'block';
-        document.getElementById('btn-surprinde').textContent = "🎲 Surprinde-mă (Generare Aleatorie)";
-    }
-}
-
-function populateSmartSelects() {
-  document.getElementById('smart-prot').innerHTML = DB.proteins.map((f,i)=>`<option value="${i}">${f.name}</option>`).join('');
-  document.getElementById('smart-carb').innerHTML = '<option value="-1">Fără carbo extra</option>' + DB.carbs.map((f,i)=>`<option value="${i}">${f.name}</option>`).join('');
-  document.getElementById('smart-fat').innerHTML = '<option value="-1">Fără grăsimi extra</option>' + DB.fats.map((f,i)=>`<option value="${i}">${f.name}</option>`).join('');
-}
-
-function calculateSmartMeal(randomize = false) {
-  const mode = document.getElementById('smart-calc-mode').value;
-  const resArea = document.getElementById('smart-result-area');
-  const listEl = document.getElementById('smart-items-list');
-
-  // MOD 2: TOT CE A RAMAS DIN ZI (GENEREAZA MESE AUTOMAT)
-  if (mode === 'remaining' || (mode === 'remaining' && randomize)) {
-      const dayISO = toISO(currentDay);
-      const dayFoods = state.foods.filter(f => f.date === dayISO);
-      const eaten = dayFoods.reduce((acc, f) => ({
-          prot: acc.prot + (+f.prot || 0),
-          carb: acc.carb + (+f.carb || 0),
-          fat: acc.fat + (+f.fat || 0)
-      }), { prot: 0, carb: 0, fat: 0 });
-
-      let remProt = Math.max(0, state.profile.prot - eaten.prot);
-      let remCarb = Math.max(0, state.profile.carb - eaten.carb);
-      let remFat  = Math.max(0, state.profile.fat - eaten.fat);
-
-      if (remProt <= 0 && remFat <= 0) {
-          alert("Ai atins deja țintele nutriționale pentru astăzi!");
-          return;
-      }
-
-      // Verificam ce mese lipsesc
-      const loggedMeals = [...new Set(dayFoods.map(f => f.masa))];
-      let mealsToGenerate = ['Mic dejun', 'Prânz', 'Cină'].filter(m => !loggedMeals.includes(m));
-      if (mealsToGenerate.length === 0) mealsToGenerate = ['Gustare']; // Daca a mancat tot, pune pe gustare
-
-      currentSmartMeal = [];
-      let html = '';
-
-      mealsToGenerate.forEach((mName) => {
-          let tP = remProt / mealsToGenerate.length;
-          let tC = remCarb / mealsToGenerate.length;
-          let tF = remFat / mealsToGenerate.length;
-
-          // Alegem random (aici nu mai lasam manual ca sa nu punem 1kg de branza la 3 mese)
-          let pObj = DB.proteins[Math.floor(Math.random() * DB.proteins.length)];
-          let cObj = Math.random() > 0.7 ? null : DB.carbs[Math.floor(Math.random() * DB.carbs.length)];
-          let fObj = DB.fats[Math.floor(Math.random() * DB.fats.length)];
-
-          let gP = (tP / pObj.prot100) * 100; if(gP < 0) gP=0;
-          let exC = (gP * pObj.carb100) / 100;
-          let exF = (gP * pObj.fat100) / 100;
-
-          let mealItems = [{ obj: pObj, qty: Math.round(gP), masa: mName }];
-
-          let needC = tC - exC;
-          if (cObj && needC > 0) {
-              let gC = (needC / cObj.carb100) * 100;
-              exF += (gC * cObj.fat100) / 100;
-              mealItems.push({ obj: cObj, qty: Math.round(gC), masa: mName });
-          }
-
-          let needF = tF - exF;
-          if (fObj && needF > 2) {
-              let gF = (needF / fObj.fat100) * 100;
-              mealItems.push({ obj: fObj, qty: Math.round(gF), masa: mName });
-          }
-
-          currentSmartMeal.push(...mealItems);
-
-          html += `<h5 style="color:var(--pink); margin-top:15px; text-transform:uppercase; font-size:12px;">🍽️ ${mName}</h5>`;
-          mealItems.forEach(item => {
-              html += `<div class="smart-item-row"><span>${item.obj.name}</span><span class="smart-qty">${item.qty}g</span></div>`;
-          });
-      });
-
-      listEl.innerHTML = html;
-      document.getElementById('smart-add-btn').textContent = "+ Adaugă Tot Planul în Jurnal";
-      resArea.style.display = 'block';
-  } 
-  // MOD 1: O SINGURA MASA (33% din MACRO ZILNIC)
-  else {
-      const targetProt = state.profile.prot / 3;
-      const targetCarb = state.profile.carb / 3;
-      const targetFat = state.profile.fat / 3;
-
-      let protObj, carbObj, fatObj;
-      if (randomize) {
-          protObj = DB.proteins[Math.floor(Math.random() * DB.proteins.length)];
-          carbObj = Math.random() > 0.8 ? null : DB.carbs[Math.floor(Math.random() * DB.carbs.length)];
-          fatObj = DB.fats[Math.floor(Math.random() * DB.fats.length)];
-          document.getElementById('smart-prot').value = DB.proteins.indexOf(protObj);
-          document.getElementById('smart-carb').value = carbObj ? DB.carbs.indexOf(carbObj) : "-1";
-          document.getElementById('smart-fat').value = DB.fats.indexOf(fatObj);
-      } else {
-          let pIdx = document.getElementById('smart-prot').value;
-          let cIdx = document.getElementById('smart-carb').value;
-          let fIdx = document.getElementById('smart-fat').value;
-          protObj = DB.proteins[pIdx];
-          carbObj = cIdx !== "-1" ? DB.carbs[cIdx] : null;
-          fatObj = fIdx !== "-1" ? DB.fats[fIdx] : null;
-      }
-
-      currentSmartMeal = [];
-      let gramsProt = (targetProt / protObj.prot100) * 100;
-      let extraCarbFromProt = (gramsProt * protObj.carb100) / 100;
-      let extraFatFromProt = (gramsProt * protObj.fat100) / 100;
-
-      // Adaugam mereu tag-ul default al mesei selectate din UI
-      const defMasa = document.getElementById('smart-masa-target').value;
-      currentSmartMeal.push({ obj: protObj, qty: Math.round(gramsProt), masa: defMasa });
-
-      let neededCarb = targetCarb - extraCarbFromProt;
-      if (carbObj && neededCarb > 0) {
-          let gramsCarb = (neededCarb / carbObj.carb100) * 100;
-          let extraFatFromCarb = (gramsCarb * carbObj.fat100) / 100;
-          extraFatFromProt += extraFatFromCarb;
-          currentSmartMeal.push({ obj: carbObj, qty: Math.round(gramsCarb), masa: defMasa });
-      }
-
-      let neededFat = targetFat - extraFatFromProt;
-      if (fatObj && neededFat > 2) {
-          let gramsFat = (neededFat / fatObj.fat100) * 100;
-          currentSmartMeal.push({ obj: fatObj, qty: Math.round(gramsFat), masa: defMasa });
-      }
-
-      listEl.innerHTML = currentSmartMeal.map(item => `
-          <div class="smart-item-row">
-          <span>${item.obj.name}</span>
-          <span class="smart-qty">${item.qty}g</span>
-          </div>
-      `).join('');
-
-      document.getElementById('smart-add-btn').textContent = "+ Adaugă Masa în Jurnal";
-      resArea.style.display = 'block';
-  }
-}
-
-function addSmartMealToLog() {
-  if(!currentSmartMeal.length) return;
-  const dateISO = toISO(currentDay);
-  
-  currentSmartMeal.forEach(item => {
-      state.foods.push({
-        id: Date.now() + Math.random(),
-        date: dateISO,
-        masa: item.masa, // Isi preia masa setata in momentul calculului
-        name: item.obj.name,
-        qty: item.qty,
-        kcal: Math.round((item.qty * item.obj.kcal100) / 100),
-        prot: +((item.qty * item.obj.prot100) / 100).toFixed(1),
-        carb: +((item.qty * item.obj.carb100) / 100).toFixed(1),
-        fat: +((item.qty * item.obj.fat100) / 100).toFixed(1)
-      });
-  });
-  
-  backup();
-  switchTab('jurnal');
-}
-
-// ---------------------------------------------------------
-// REFRESH & JURNAL DISPLAY
-// ---------------------------------------------------------
-function renderJurnal() {
-  const dayISO = toISO(currentDay);
-  const dayFoods = state.foods.filter(f=>f.date===dayISO);
-  const totals = dayFoods.reduce((acc,f)=>({kcal:acc.kcal+(+f.kcal||0),prot:acc.prot+(+f.prot||0),carb:acc.carb+(+f.carb||0),fat:acc.fat+(+f.fat||0)}),{kcal:0,prot:0,carb:0,fat:0});
-  const p = state.profile;
-
-  updateDonut('kcal', totals.kcal, p.kcal, 'var(--purple)');
-  updateDonut('prot', totals.prot, p.prot, 'var(--pink)');
-  updateDonut('carb', totals.carb, p.carb, 'var(--orange)');
-  updateDonut('fat', totals.fat, p.fat, 'var(--teal)');
-
-  const meals = ['Mic dejun','Prânz','Cină','Gustare'];
-  const container = document.getElementById('food-log-container');
-  if(!dayFoods.length) {
-    container.innerHTML = '<div class="empty"><span class="empty-icon">🥗</span>Niciun aliment adăugat azi</div>';
-    return;
-  }
-  let html = '';
-  meals.forEach(meal => {
-    const mealFoods = dayFoods.filter(f=>f.masa===meal);
-    if(!mealFoods.length) return;
-    html += `<div class="meal-label">${meal}</div><div class="food-log">`;
-    mealFoods.forEach(f=>{
-      html += `<div class="food-item">
-        <div>
-          <div class="food-name">${f.name}</div>
-          <div class="food-meta">${f.qty?f.qty+'g · ':''}P: ${Math.round(f.prot||0)}g · C: ${Math.round(f.carb||0)}g · G: ${Math.round(f.fat||0)}g</div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px">
-          <span class="food-kcal">${f.kcal} kcal</span>
-          <button class="food-delete" onclick="deleteFood(${f.id})">×</button>
-        </div>
-      </div>`;
-    });
-    html += '</div>';
-  });
-  container.innerHTML = html;
-}
-
-// ADĂUGARE MANUALĂ (MODAL)
-function showFoodModal() {
-  ['f-name','f-qty','f-kcal100','f-kcal','f-prot','f-carb','f-fat'].forEach(id=>document.getElementById(id).value='');
-  selectedDbFood = null;
-  document.getElementById('modal-food').style.display='flex';
-}
-
-document.getElementById('f-name').addEventListener('input', function(e) {
-  const val = e.target.value.trim().toLowerCase();
-  let match = ALL_FOODS.find(f => f.name.toLowerCase() === val);
-  if(match) {
-    selectedDbFood = match;
-    document.getElementById('f-kcal100').value = match.kcal100;
-    if(!document.getElementById('f-qty').value) document.getElementById('f-qty').value = 100;
-    calcFoodMacros();
-  } else { selectedDbFood = null; }
-});
-
-function calcFoodMacros() {
-  const qty = +document.getElementById('f-qty').value || 0;
-  if (selectedDbFood && qty) {
-    document.getElementById('f-kcal').value = Math.round((qty * selectedDbFood.kcal100) / 100);
-    document.getElementById('f-prot').value = ((qty * (selectedDbFood.prot100 || 0)) / 100).toFixed(1);
-    document.getElementById('f-carb').value = ((qty * (selectedDbFood.carb100 || 0)) / 100).toFixed(1);
-    document.getElementById('f-fat').value = ((qty * (selectedDbFood.fat100 || 0)) / 100).toFixed(1);
-  } else {
-    const kcal100 = +document.getElementById('f-kcal100').value || 0;
-    if(qty && kcal100) document.getElementById('f-kcal').value = Math.round((qty * kcal100) / 100);
-    else document.getElementById('f-kcal').value = '';
-    ['f-prot','f-carb','f-fat'].forEach(id=>document.getElementById(id).value=0);
-  }
-}
-
-function saveFood() {
-  const name = document.getElementById('f-name').value.trim();
-  if(!name) return;
-  const food = {
-    id: Date.now(),
-    date: toISO(currentDay),
-    masa: document.getElementById('f-masa').value,
-    name, qty: document.getElementById('f-qty').value || 100,
-    kcal: +document.getElementById('f-kcal').value || 0,
-    prot: +document.getElementById('f-prot').value || 0,
-    carb: +document.getElementById('f-carb').value || 0,
-    fat: +document.getElementById('f-fat').value || 0
-  };
-  state.foods.push(food); backup(); closeModal('modal-food'); renderJurnal();
-}
-
-function deleteFood(id) { state.foods = state.foods.filter(f=>f.id!==id); backup(); renderJurnal(); }
-function closeModal(id) { document.getElementById(id).style.display='none'; }
-
-// ISTORIC 7 ZILE
-function renderHistory() {
-  const chartKcal = document.getElementById('history-chart-kcal');
-  const chartProt = document.getElementById('history-chart-prot');
-  let days = [];
-  const targetKcal = state.profile.kcal || 1500;
-  const targetProt = state.profile.prot || 100;
-
-  for(let i=6; i>=0; i--) {
-    let d = new Date(); d.setDate(d.getDate() - i);
-    days.push({ iso: toISO(d), label: fmtDate(d).substring(0,5) });
-  }
-
-  let htmlKcal = '', htmlProt = '';
-  
-  days.forEach(day => {
-    const foodsForDay = state.foods.filter(f => f.date === day.iso);
-    const totals = foodsForDay.reduce((acc,f)=>({kcal:acc.kcal+(+f.kcal||0), prot:acc.prot+(+f.prot||0)}),{kcal:0, prot:0});
+    { name: "Ouă (fierte/poșate/omletă)", kcal100: 155, prot100: 13, carb100: 1.1, fat100: 11, meals: ['Mic dejun', 'Cină'] },
+    { name: "Cottage Cheese (Perle)", kcal100: 98, prot100: 11, carb100: 3.4, fat100: 4.3, meals: ['Mic dejun', 'Cină', 'Gustare'] },
+    { name: "Telemea de vacă", kcal100: 270, prot100: 18, carb100: 1, fat100: 21, meals: ['Mic dejun', 'Gustare'] },
+    { name: "Iaurt grecesc 2%", kcal100: 60, prot100: 10, carb100: 3, fat100: 2, meals: ['Mic dejun', 'Gustare'] },
     
-    let pctKcal = Math.min(100, Math.round((totals.kcal / targetKcal) * 100)) || 0;
-    let pctProt = Math.min(100, Math.round((totals.prot / targetProt) * 100)) || 0;
-    let barColorKcal = totals.kcal > targetKcal ? 'background:linear-gradient(180deg, var(--red), var(--orange))' : '';
-
-    htmlKcal += `
-      <div class="history-col">
-        <div class="history-bar-wrap">
-          <div class="history-val" style="bottom:${pctKcal}%">${Math.round(totals.kcal)}</div>
-          <div class="history-bar" style="height:${pctKcal}%; ${barColorKcal}"></div>
-        </div>
-        <div class="history-label">${day.label}</div>
-      </div>
-    `;
-
-    htmlProt += `
-      <div class="history-col">
-        <div class="history-bar-wrap">
-          <div class="history-val" style="bottom:${pctProt}%">${Math.round(totals.prot)}g</div>
-          <div class="history-bar" style="height:${pctProt}%; background:linear-gradient(180deg, var(--teal), #38b2ac)"></div>
-        </div>
-        <div class="history-label">${day.label}</div>
-      </div>
-    `;
-  });
-
-  chartKcal.innerHTML = htmlKcal;
-  chartProt.innerHTML = htmlProt;
-}
-
-loadAll();
-</script>
-</body>
-</html>
+    { name: "Piept de pui la grătar", kcal100: 165, prot100: 31, carb100: 0, fat100: 3.6, meals: ['Prânz', 'Cină'] },
+    { name: "Pulpe de pui dezosate la cuptor", kcal100: 180, prot100: 24, carb100: 0, fat100: 9, meals: ['Prânz', 'Cină'] },
+    { name: "Mușchi de vită la grătar", kcal100: 250, prot100: 26, carb100: 0, fat100: 15, meals: ['Prânz', 'Cină'] },
+    { name: "Ficat de pui la grătar", kcal100: 172, prot100: 25, carb100: 0, fat100: 6.4, meals: ['Prânz', 'Cină'] },
+    
+    { name: "Somon la cuptor", kcal100: 208, prot100: 20, carb100: 0, fat100: 13, meals: ['Prânz', 'Cină'] },
+    { name: "Cod / Pește alb", kcal100: 82, prot100: 18, carb100: 0, fat100: 0.7, meals: ['Prânz', 'Cină'] },
+    { name: "Ton în suc propriu (conservă)", kcal100: 110, prot100: 25, carb100: 0, fat100: 1, meals: ['Prânz', 'Cină'] },
+    
+    { name: "Tofu", kcal100: 76, 
